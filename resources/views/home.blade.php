@@ -240,7 +240,47 @@
                     </div>
                 </div>
             </div>
+        <!-- New Section with Counters -->
+        <div class="container mx-auto py-12 text-center">
+            <h2 class="text-4xl font-bold mb-8">Our Achievements</h2>
+            <div class="flex flex-col md:flex-row justify-around items-center gap-8">
+                <div class="flex-1">
+                    <h3 class="text-5xl font-bold text-blue-500">10k+</h3>
+                    <p class="text-xl text-gray-700">Registered Websites</p>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-5xl font-bold text-blue-500">850k+</h3>
+                    <p class="text-xl text-gray-700">Content Creators</p>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-5xl font-bold text-blue-500">10k+</h3>
+                    <p class="text-xl text-gray-700">Registered Advertisers</p>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-5xl font-bold text-blue-500">10k+</h3>
+                    <p class="text-xl text-gray-700">Tasks Completed</p>
+                </div>
+            </div>
+        </div>
 
+        <!-- New Section -->
+        <div class="relative bg-cover bg-center h-screen" style="background-image: url('pexels-tima-miroshnichenko-5685765.jpg');">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="container mx-auto h-full flex flex-col justify-center items-center px-6 py-12 relative z-10">
+                <h2 class="text-4xl font-bold text-white text-center mb-8">Are you an Advertiser or a Media Buyer?</h2>
+                <p class="text-xl text-white text-center mb-8">Boost your traffic, make more sales, and grow your business. Explore our link-building services and fortify your backlink portfolio.</p>
+
+                <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg text-center max-w-lg">
+                    <ul class="list-disc list-inside text-gray-800 mb-4">
+                        <li class="mb-2">Browse our database with 10K+ publishers</li>
+                        <li class="mb-2">Select a site and make your order</li>
+                        <li class="mb-2">Get your content published within 24 hours</li>
+                        <li>Free account, no fees, no credit card needed</li>
+                    </ul>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Get Started as an Advertiser</button>
+                </div>
+            </div>
+        </div>
 
         <!-- Start:Footer Content-->
         {{-- <footer class="section !pb-0 bg-bgdark">
@@ -369,9 +409,4 @@
   </body>
 
 </html>
-<<<<<<< HEAD
 
-=======
-=======
->>>>>>> Stashed changes
->>>>>>> 6e1c8b2 (More changes)
