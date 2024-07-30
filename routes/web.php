@@ -8,6 +8,7 @@ use App\Http\Controllers\SocialPublisherPanel\SocialPublisherController;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\UserPanel\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Publisher;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,9 +45,9 @@ require __DIR__.'/auth.php';
 */
 
 //Super Admin and Admin Routes
-Route::middleware('auth', 'role:super admin')->group(function () {
-    Route::get('superadmin/dashboard', [SuperadminController::class, 'index'])->name('superadmin.dashboard');
-    });
+// Route::middleware('auth', 'role:super admin')->group(function () {
+//     Route::get('superadmin/dashboard', [SuperadminController::class, 'index'])->name('superadmin.dashboard');
+//     });
 
 //Admin
 Route::middleware('auth', 'role:admin')->group(function () {
@@ -61,13 +62,15 @@ Route::middleware('auth','role:publisher')->group(function () {
     //Store Publishe Details
     Route::post('publisher/add-publisher', [PublisherController::class, 'store'])->name('publisher.store');
     //Show Publishe Details
-    Route::get('publisher/{id}', [PublisherController::class, 'show'])->name('publisher.show');
+    // Route::get('/publisher/edit/id', [PublisherController::class, 'edit'])->name('publisher.edit');
+    // Route to edit publisher details
+    Route::get('publisher/edit/{id}', [PublisherController::class, 'edit'])->name('publisher.edit');
     //Edit Publishe Details
-    Route::get('publisher/{id}/edit', [PublisherController::class, 'edit'])->name('publisher.edit');
+   // Route::get('publisher/{id}/edit', [PublisherController::class, 'edit'])->name('publisher.edit');
+    //Store Publisher Updated Details
+    Route::put('publisher/edit/{id}', [PublisherController::class, 'update'])->name('publisher.edit');
     //Store Publishe Details
-    Route::put('publisher/{id}}', [PublisherController::class, 'update'])->name('publisher.update');
-    //Store Publishe Details
-    Route::delete('publisher/{id}}', [PublisherController::class, 'destroy'])->name('publisher.destroy');
+    Route::delete('/publisher/{id}', [PublisherController::class, 'destroy'])->name('publisher.destroy');
 
     });
 

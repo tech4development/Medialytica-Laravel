@@ -50,6 +50,8 @@ class PublisherController extends Controller
             'link_type.*' => 'string',
             'do_follow_links' => 'required|integer',
             'mark_paid_articles_as_sponsored' => 'required|boolean',
+            'link_insertion' => 'required|in:yes,no',
+            'link_insertion_amount' => 'nullable|numeric',
             'publishing_time' => 'required|in:24Hrs,48Hrs,72Hrs',
             'normal_post_cost' => 'required|numeric',
             'betting_casino_post_cost' => 'required|numeric',
@@ -87,6 +89,8 @@ class PublisherController extends Controller
             'link_type' => implode(',', $request->input('link_type', [])), // Convert array to comma-separated string
             'do_follow_links' => $request->input('do_follow_links'),
             'mark_paid_articles_as_sponsored' => $request->input('mark_paid_articles_as_sponsored'),
+            'link_insertion' => $request->input('link_insertion'),
+            'link_insertion_amount' => $request->input('link_insertion_amount'),
             'publishing_time' => $request->input('publishing_time'),
             'normal_post_cost' => $request->input('normal_post_cost'),
             'betting_casino_post_cost' => $request->input('betting_casino_post_cost'),
@@ -118,18 +122,19 @@ class PublisherController extends Controller
     }
 
     //Show the form
-    public function show($id)
+    public function show(Publisher $publisher,$id)
     {
         // Find the publisher by ID or fail with 404 error if not found
-        $publisher = Publisher::findOrFail($id);
+        // $publisher = Publisher::findOrFail($id);
 
-        // Convert comma-separated strings back to arrays
-        $publisher->niches = explode(',', $publisher->niches);
-        $publisher->geos = explode(',', $publisher->geos);
-        $publisher->social_media_pages = explode(',', $publisher->social_media_pages);
+        // Convert comma-separated strings back to arrays (if needed)
+        // $publisher->niches = explode(',', $publisher->niches);
+        // $publisher->geos = explode(',', $publisher->geos);
+        // $publisher->social_media_pages = explode(',', $publisher->social_media_pages);
 
         // Return the view with the publisher data
-        return view('publishers.show', compact('publisher'));
+        return view('publisher.edit', compact($publisher));
+
     }
 
 
@@ -138,8 +143,12 @@ class PublisherController extends Controller
     public function edit($id)
     {
         $publisher = Publisher::findOrFail($id);
-        return view('edit', ['publisher' => $publisher]);
+
+        // dd($id);
+
+        return view('publisher.edit', compact('publisher'));
     }
+
 
 
     //Update functionality
@@ -165,6 +174,8 @@ class PublisherController extends Controller
             'link_type.*' => 'string',
             'do_follow_links' => 'required|integer',
             'mark_paid_articles_as_sponsored' => 'required|boolean',
+             'link_insertion' => 'required|string',
+            'link_insertion_amount' => 'nullable|numeric',
             'publishing_time' => 'required|in:24Hrs,48Hrs,72Hrs',
             'normal_post_cost' => 'required|numeric',
             'betting_casino_post_cost' => 'required|numeric',
@@ -175,14 +186,7 @@ class PublisherController extends Controller
             'youtube_ad_cost' => 'required|numeric',
             'paypal_email' => 'required|email',
             'social_media_pages' => 'nullable|array',
-            'social_media_pages.facebook' => 'nullable|url',
-            'social_media_pages.twitter' => 'nullable|url',
-            'social_media_pages.tiktok' => 'nullable|url',
-            'social_media_pages.youtube' => 'nullable|url',
-            'social_media_pages.linkedin' => 'nullable|url',
-            'social_media_pages.instagram' => 'nullable|url',
-            'social_media_pages.telegram' => 'nullable|url',
-
+            'social_media_pages.*' => 'nullable|url',
         ]);
 
         $publisher = Publisher::findOrFail($id);
@@ -203,6 +207,8 @@ class PublisherController extends Controller
         $publisher->link_type = $request->input('link_type');
         $publisher->do_follow_links = $request->input('do_follow_links');
         $publisher->mark_paid_articles_as_sponsored = $request->input('mark_paid_articles_as_sponsored');
+        $publisher->link_insertion = $request->input('link_insertion');
+        $publisher->link_insertion_amount= $request->input('link_insertion_amount');
         $publisher->publishing_time = $request->input('publishing_time');
         $publisher->normal_post_cost = $request->input('normal_post_cost');
         $publisher->betting_casino_post_cost = $request->input('betting_casino_post_cost');
@@ -214,9 +220,12 @@ class PublisherController extends Controller
         $publisher->paypal_email = $request->input('paypal_email');
         $publisher->social_media_pages = $request->input('social_media_pages');
 
+
+
         $publisher->save();
 
         return redirect()->route('publisher.edit', $id)->with('success', 'Publisher updated successfully!');
     }
+
 
 }

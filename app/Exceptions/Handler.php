@@ -63,15 +63,15 @@ class Handler extends ExceptionHandler
             return response()->view('errors.404', [], 404);
         }
 
-        if ($exception instanceof ModelNotFoundException) {
-            // Handle 404 errors for models not found
-            return response()->view('errors.404', [], 404);
-        }
+        // if ($exception instanceof ModelNotFoundException) {
+        //     // Handle 404 errors for models not found
+        //     return response()->view('errors.404', [], 404);
+        // }
 
-        if ($exception instanceof \ErrorException) {
-            // Handle 500 errors for general server errors
-            return response()->view('errors.500', [], 500);
-        }
+        // if ($exception instanceof \ErrorException) {
+        //     // Handle 500 errors for general server errors
+        //     return response()->view('errors.500', [], 500);
+        // }
 
         // For other exceptions, use the parent method to handle them
         return parent::render($request, $exception);

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>@yield('title', 'Publisher Dashboard')</title>
     <meta name="description" content="">
 
     <!-- Favicon -->
@@ -22,9 +22,6 @@
     <!-- Color Picker Css -->
     <link rel="stylesheet" href="{{asset('backend/assets/libs/@simonwep/pickr/themes/nano.min.css')}}">
 
-
-
-
 </head>
 
 
@@ -40,6 +37,7 @@
 
             <!-- Start::main-sidebar-header -->
             <div class="main-sidebar-header">
+                @yield('sidebar')
                 <a href="" class="">
                     <img src="{{ asset('backend/assets/img/brand-logos/desktop-logo.png') }}" alt="logo" class="main-logo desktop-logo">
                     <img src="{{ asset('backend/assets/img/brand-logos/toggle-logo.png') }}" alt="logo" class="main-logo toggle-logo">
@@ -63,6 +61,7 @@
                         </div>
                         <ul class="main-menu">
                             <!-- Start::slide__category -->
+                            @yield('sidebar')
                             <li class="slide__category"><span class="category-name">Publisher</span></li>
                             <!-- End::slide__category -->
 
@@ -106,10 +105,15 @@
 
                             <!-- Start::slide -->
                             <li class="slide">
-                                <a href="" class="side-menu__item">
-                                    <i class="ri-logout-box-line side-menu__icon"></i>
-                                    <span class="side-menu__label">Log Out</span>
-                                </a>
+                                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                    @csrf
+                                    <a href="{{ route('logout') }}" class="side-menu__item">
+                                        <i class="ri-logout-box-line side-menu__icon"></i>
+                                        <span class="side-menu__label">Log Out</span>
+                                    </a>
+
+
+                                </form>
                             </li>
                             <!-- End::slide -->
                         </ul>
@@ -123,6 +127,7 @@
                 <div class="main-sidebar" id="sidebar-scroll">
                     <!-- Start::nav -->
                     <nav class="main-menu-container nav nav-pills flex-column sub-open">
+                        @yield('header', 'Publisher Dashboard')
                         <div class="slide-left" id="slide-left">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
@@ -240,6 +245,7 @@
 
         <!-- Start::Header -->
         <header class="header custom-sticky !top-0 !w-full">
+            @yield('header', 'Publisher Dashboard')
           <nav class="main-header" aria-label="Global">
             <div class="header-content">
               <div class="header-left">
@@ -335,6 +341,7 @@
 
             <!-- Start::main-content -->
             <div class="main-content">
+                @yield('content')
 
                 <!-- Page Header -->
                 <div class="block justify-between page-header md:flex">
@@ -357,53 +364,11 @@
                 </div>
                 <!-- Page Header Close -->
 
-                <div class="p-6">
-                    <!-- Welcome Section -->
-                    <div class="mb-8">
-                        <h1 class="text-3xl font-bold text-gray-800">Welcome to the Publisher Dashboard!</h1>
-                        <p class="mt-2 text-lg text-gray-600">Manage your publisher details and forms from here.</p>
-                    </div>
 
-                    <!-- Cards Section -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Add Publisher Details Form Card -->
-                        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <h2 class="text-xl font-semibold text-gray-700">Add Publisher Details</h2>
-                            <p class="mt-2 text-gray-600">Create a new publisher profile with the details form.</p>
-                            <a href="{{ route('publisher.create') }}" class="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300">Add Publisher Details</a>
-                        </div>
-
-                        <!-- Edit Publisher Details Form Card -->
-                        <div id="edit-card" class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <h2 class="text-xl font-semibold text-gray-700">Edit Publisher Details</h2>
-                            <p class="mt-2 text-gray-600">Update existing publisher details using the edit form.</p>
-                            <!-- Link to the edit page -->
-                            <a href="" class="mt-4 inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Edit Publisher Details</a>
-                        </div>
-
-                        <!-- Update Publisher Details Form Card -->
-
-                        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <h2 class="text-xl font-semibold text-gray-700">Update Publisher Details</h2>
-                            <p class="mt-2 text-gray-600">Modify publisher details with the update form.</p>
-                            <!-- Link to the update page -->
-                            <a href="" class="mt-4 inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Update Publisher Details</a>
-                        </div>
-
-
-                        <!-- Log Out Card -->
-                        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <h2 class="text-xl font-semibold text-gray-700">Log Out</h2>
-                            <p class="mt-2 text-gray-600">Sign out from the dashboard.</p>
-                            <a href="" class="mt-4 inline-block px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Log Out</a>
-                        </div>
-                    </div>
-                </div>
                 <!-- End::main-content -->
 
             </div>
         </div>
-
 
         <!-- ========== Search Modal ========== -->
         <div id="search-modal" class="hs-overlay ti-modal hidden">
@@ -484,7 +449,7 @@
 
 
 
-    {{-- <script>
+    <script>
         function toggleMenu() {
             const submenu = document.getElementById('publisher-submenu');
             const icon = document.getElementById('menu-toggle-icon');
@@ -505,7 +470,7 @@
             const submenu = document.getElementById('publisher-submenu');
             submenu.style.display = 'block'; // Set this to 'none' if you want it collapsed by default
         });
-    </script> --}}
+    </script>
 
 
     <!-- Back To Top -->

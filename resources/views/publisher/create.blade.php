@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Publisher Details</title>
-      <!-- Main JS -->
-      <script src="{{asset('backend/assets/js/main.js')}}"></script>
 
-      <!-- Style Css -->
-      <link rel="stylesheet" href="{{asset('backend/assets/css/style.css')}}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
 
-      <!-- Simplebar Css -->
-      <link rel="stylesheet" href="{{asset('backend/assets/libs/simplebar/simplebar.min.css')}}">
+    <!-- Simplebar CSS -->
+    <link rel="stylesheet" href="{{ asset('backend/assets/libs/simplebar/simplebar.min.css') }}">
+
+    <!-- Main JS -->
+    <script src="{{ asset('backend/assets/js/main.js') }}"></script>
 
     <!-- Form-validation JS -->
-    <script src="{{asset('backend/assets/js/form-validation.js')}}"></script>
+    <script src="{{ asset('backend/assets/js/form-validation.js') }}"></script>
+
+
 
 </head>
+
 <body class="bg-gray-100">
     @if (session('success'))
     <div class="bg-success border border-success text-white alert" role="alert">
@@ -151,15 +155,43 @@
                     <span class="block text-sm font-medium text-gray-700">Do you mark paid articles as sponsored? *</span>
                     <div class="mt-2">
                         <div class="flex items-center">
-                            <input type="radio" id="mark_paid_articles_as_sponsored_yes" name="mark_paid_articles_as_sponsored" value="1" class="mr-2" required>
+                            <input type="radio" id="mark_paid_articles_as_sponsored_yes" name="mark_paid_articles_as_sponsored" value="yes" class="mr-2" required>
                             <label for="mark_paid_articles_as_sponsored_yes" class="text-gray-600">Yes</label>
                         </div>
                         <div class="flex items-center">
-                            <input type="radio" id="mark_paid_articles_as_sponsored_no" name="mark_paid_articles_as_sponsored" value="0" class="mr-2">
+                            <input type="radio" id="mark_paid_articles_as_sponsored_no" name="mark_paid_articles_as_sponsored" value="no" class="mr-2">
                             <label for="mark_paid_articles_as_sponsored_no" class="text-gray-600">No</label>
                         </div>
                     </div>
                 </div>
+                <!-- Link Insertion -->
+                <div class="mb-4">
+                    <span class="block text-sm font-medium text-gray-700">Do you accept link insertion (niche editing)?*</span>
+                    <div class="mt-2">
+                        <div class="flex items-center">
+                            <input type="radio" id="link_insertion_yes" name="link_insertion" value="yes" class="mr-2" required>
+                            <label for="link_insertion_yes" class="text-gray-600">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="link_insertion_no" name="link_insertion" value="no" class="mr-2">
+                            <label for="link_insertion_no" class="text-gray-600">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conditional Input Field -->
+                <div id="link_insertion_amount_container" class="mb-4 hidden">
+                    <label for="link_insertion_amount" class="block text-sm font-medium text-gray-700">How much do you charge per link in USD?</label>
+                    <input type="number" id="link_insertion_amount" name="link_insertion_amount" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" step="0.01">
+                </div>
+
+
+
+
+
+
+
+
 
                 <!-- Publishing Time -->
                 <div class="mb-4">
@@ -281,6 +313,33 @@
                 </body>
 </html>
 
+<!-- Popper JS -->
+<script src="{{ asset('backend/assets/libs/@popperjs/core/umd/popper.min.js') }}"></script>
+
+<!-- Color Picker JS -->
+<script src="{{ asset('backend/assets/libs/@simonwep/pickr/pickr.es5.min.js') }}"></script>
+
+<!-- Sidebar JS -->
+<script src="{{ asset('backend/assets/js/defaultmenu.js') }}"></script>
+
+<!-- Sticky JS -->
+<script src="{{ asset('backend/assets/js/sticky.js') }}"></script>
+
+<!-- Switch JS -->
+<script src="{{ asset('backend/assets/js/switch.js') }}"></script>
+
+<!-- Preline JS -->
+<script src="{{ asset('backend/assets/libs/preline/preline.js') }}"></script>
+
+<!-- Simplebar JS -->
+<script src="{{ asset('backend/assets/libs/simplebar/simplebar.min.js') }}"></script>
+
+<!-- Custom JS -->
+<script src="{{ asset('backend/assets/js/custom.js') }}"></script>
+
+<!-- Custom-Switcher JS -->
+<script src="{{ asset('backend/assets/js/custom-switcher.js') }}"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const messageElement = document.getElementById('success-message');
@@ -292,5 +351,25 @@
                 }, 500); // Delay to ensure opacity transition
             }, 5000); // 5 seconds
         }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const yesRadio = document.getElementById('link_insertion_yes');
+        const noRadio = document.getElementById('link_insertion_no');
+        const amountContainer = document.getElementById('link_insertion_amount_container');
+
+        yesRadio.addEventListener('change', function() {
+            if (yesRadio.checked) {
+                amountContainer.classList.remove('hidden');
+            }
+        });
+
+        noRadio.addEventListener('change', function() {
+            if (noRadio.checked) {
+                amountContainer.classList.add('hidden');
+            }
+        });
     });
 </script>
