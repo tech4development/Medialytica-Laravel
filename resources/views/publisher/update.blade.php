@@ -29,7 +29,7 @@
                 </div>
             @endif
 
-            <form  id="updatePublisherForm" action="{{ route('publisher.edit', $publisher->id) }}" method="POST" class="bg-white p-6 rounded-lg shadow-lg">
+            <form action="{{ route('publisher.update', $publisher->id) }}" method="POST" class="bg-white p-6 rounded-lg shadow-lg">
                 @csrf
                 @method('PUT')
 
@@ -251,57 +251,54 @@
                 <div class="mb-4">
                     <h2 class="text-lg font-semibold mb-2">Social Media Pages</h2>
 
-                  <!-- Facebook -->
-                  <div class="mb-4">
-                    <label for="facebook" class="block text-sm font-medium text-gray-700">Facebook</label>
-                    <input type="url" id="facebook" name="social_media_pages[facebook]" value="{{ old('social_media_pages.facebook', $publisher->social_media_pages['facebook'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
+                    <!-- Facebook -->
+                    <div class="mb-4">
+                        <label for="facebook" class="block text-sm font-medium text-gray-700">Facebook</label>
+                        <input type="url" id="facebook" name="social_media_pages[facebook]" value="{{ old('social_media_pages.facebook', $publisher->social_media_pages['facebook'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
 
-                <!-- Twitter -->
-                <div class="mb-4">
-                    <label for="twitter" class="block text-sm font-medium text-gray-700">Twitter (X)</label>
-                    <input type="url" id="twitter" name="social_media_pages[twitter]" value="{{ old('social_media_pages.twitter', $publisher->social_media_pages['twitter'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
+                    <!-- Twitter -->
+                    <div class="mb-4">
+                        <label for="twitter" class="block text-sm font-medium text-gray-700">Twitter (X)</label>
+                        <input type="url" id="twitter" name="social_media_pages[twitter]" value="{{ old('social_media_pages.twitter', $publisher->social_media_pages['twitter'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
 
-                <!-- Tiktok -->
-                <div class="mb-4">
-                    <label for="tiktok" class="block text-sm font-medium text-gray-700">Tiktok</label>
-                    <input type="url" id="tiktok" name="social_media_pages[tiktok]" value="{{ old('social_media_pages.tiktok', $publisher->social_media_pages['tiktok'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
+                    <!-- Tiktok -->
+                    <div class="mb-4">
+                        <label for="tiktok" class="block text-sm font-medium text-gray-700">Tiktok</label>
+                        <input type="url" id="tiktok" name="social_media_pages[tiktok]" value="{{ old('social_media_pages.tiktok', $publisher->social_media_pages['tiktok'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
 
-                <!-- YouTube -->
-                <div class="mb-4">
-                    <label for="youtube" class="block text-sm font-medium text-gray-700">YouTube</label>
-                    <input type="url" id="youtube" name="social_media_pages[youtube]" value="{{ old('social_media_pages.youtube', $publisher->social_media_pages['youtube'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
+                    <!-- YouTube -->
+                    <div class="mb-4">
+                        <label for="youtube" class="block text-sm font-medium text-gray-700">YouTube</label>
+                        <input type="url" id="youtube" name="social_media_pages[youtube]" value="{{ old('social_media_pages.youtube', $publisher->social_media_pages['youtube'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
 
-                <!-- LinkedIn -->
-                <div class="mb-4">
-                    <label for="linkedin" class="block text-sm font-medium text-gray-700">LinkedIn</label>
-                    <input type="url" id="linkedin" name="social_media_pages[linkedin]" value="{{ old('social_media_pages.linkedin', $publisher->social_media_pages['linkedin'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
+                    <!-- LinkedIn -->
+                    <div class="mb-4">
+                        <label for="linkedin" class="block text-sm font-medium text-gray-700">LinkedIn</label>
+                        <input type="url" id="linkedin" name="social_media_pages[linkedin]" value="{{ old('social_media_pages.linkedin', $publisher->social_media_pages['linkedin'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
 
-                <!-- Instagram -->
-                <div class="mb-4">
-                    <label for="instagram" class="block text-sm font-medium text-gray-700">Instagram</label>
-                    <input type="url" id="instagram" name="social_media_pages[instagram]" value="{{ old('social_media_pages.instagram', $publisher->social_media_pages['instagram'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
+                    <!-- Instagram -->
+                    <div class="mb-4">
+                        <label for="instagram" class="block text-sm font-medium text-gray-700">Instagram</label>
+                        <input type="url" id="instagram" name="social_media_pages[instagram]" value="{{ old('social_media_pages.instagram', $publisher->social_media_pages['instagram'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
 
-                <!-- Telegram -->
-                <div class="mb-4">
-                    <label for="telegram" class="block text-sm font-medium text-gray-700">Telegram</label>
-                    <input type="url" id="telegram" name="social_media_pages[telegram]" value="{{ old('social_media_pages.telegram', $publisher->social_media_pages['telegram'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
+                    <!-- Telegram -->
+                    <div class="mb-4">
+                        <label for="telegram" class="block text-sm font-medium text-gray-700">Telegram</label>
+                        <input type="url" id="telegram" name="social_media_pages[telegram]" value="{{ old('social_media_pages.telegram', $publisher->social_media_pages['telegram'] ?? '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
 
-                <div class="my-5">
-                    <input type="checkbox" class="validationCheckbox ti-form-checkbox mt-0.5" id="hs-checkbox-group-12" required>
-                    <span class="checkboxError text-red-500 text-xs hidden">error</span>
-                    <label for="hs-checkbox-group-12" class="text-sm text-gray-500 ltr:ml-3 rtl:mr-3 dark:text-white/70">I agree with the <a href="javascript:void(0);" class="text-primary hover:underline">terms and conditions</a></label>
-                </div>
-
-                <div class="flex justify-between mt-4">
-                    <button type="submit" class="inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Update</button>
-                    <a href="{{ route('publisher.dashboard') }}" class="inline-block px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors duration-300">Back</a>
+                    <div class="my-5">
+                        <input type="checkbox" class="validationCheckbox ti-form-checkbox mt-0.5" id="hs-checkbox-group-12" required>
+                        <span class="checkboxError text-red-500 text-xs hidden">error</span>
+                        <label for="hs-checkbox-group-12" class="text-sm text-gray-500 ltr:ml-3 rtl:mr-3 dark:text-white/70">I agree with the <a href="javascript:void(0);" class="text-primary hover:underline">terms and conditions</a></label>
+                    </div>
+                    <button type="submit" class="mt-4 inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Update</button>
                 </div>
 
 
@@ -334,39 +331,4 @@
     });
 </script>
 
-<script>
-    document.getElementById('updatePublisherForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
 
-        var form = this;
-        var formData = new FormData(form);
-
-        fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Show a success message or alert (optional)
-                alert('Update successful! You will be redirected shortly.');
-
-                // Redirect to the dashboard after 5 seconds
-                setTimeout(() => {
-                    window.location.href = '{{ route('publisher.dashboard') }}'; // Redirect to dashboard on success
-                }, 5000); // 5000 milliseconds = 5 seconds
-            } else {
-                // Handle validation errors or other issues
-                alert('Update failed: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while updating.');
-        });
-    });
-</script>

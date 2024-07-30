@@ -31,6 +31,8 @@ return new class extends Migration
                 $table->json('link_type');
                 $table->integer('do_follow_links');
                 $table->boolean('mark_paid_articles_as_sponsored');
+                $table->string('link_insertion')->nullable();
+                $table->decimal('link_insertion_amount', 8, 2)->nullable();
                 $table->string('publishing_time');
                 $table->decimal('normal_post_cost', 10, 2);
                 $table->decimal('betting_casino_post_cost', 10, 2);

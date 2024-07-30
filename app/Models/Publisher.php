@@ -29,6 +29,8 @@ class Publisher extends Model
          'link_type',
          'do_follow_links',
          'mark_paid_articles_as_sponsored',
+         'link_insertion_yes',
+         'link_insertion_amount',
          'publishing_time',
          'normal_post_cost',
          'betting_casino_post_cost',
