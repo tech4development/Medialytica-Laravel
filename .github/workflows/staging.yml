@@ -92,7 +92,10 @@ jobs:
           DB_DATABASE: hpqjihel_db
           DB_USERNAME: hpqjihel_admin
           DB_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-        run: php artisan migrate --force --no-interaction
+        run: |
+          php -r "echo 'Testing database connection...';"
+          php artisan migrate --force --no-interaction
+
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
