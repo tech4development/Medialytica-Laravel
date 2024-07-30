@@ -44,7 +44,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('user.dashboard');
             default:
                 // Handle any unexpected roles or redirect to a default route
-                return redirect()->route('/');
+                return redirect()->view('home');
         }
 
     }

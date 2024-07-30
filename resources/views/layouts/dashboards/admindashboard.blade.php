@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>@yield('title', 'Admin Dashboard')</title>
     <meta name="description" content="">
 
     <!-- Favicon -->
@@ -21,10 +21,6 @@
 
     <!-- Color Picker Css -->
     <link rel="stylesheet" href="{{asset('backend/assets/libs/@simonwep/pickr/themes/nano.min.css')}}">
-
-
-
-
 </head>
 
 
@@ -40,6 +36,7 @@
 
             <!-- Start::main-sidebar-header -->
             <div class="main-sidebar-header">
+                @yield('sidebar')
                 <a href="" class="">
                     <img src="{{ asset('backend/assets/img/brand-logos/desktop-logo.png') }}" alt="logo" class="main-logo desktop-logo">
                     <img src="{{ asset('backend/assets/img/brand-logos/toggle-logo.png') }}" alt="logo" class="main-logo toggle-logo">
@@ -56,6 +53,7 @@
 
                 <!-- Start::nav -->
                 <nav class="main-menu-container nav nav-pills flex-column sub-open">
+                    @yield('nav')
                     <div class="slide-left" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24"
                             height="24" viewBox="0 0 24 24">
                             <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
@@ -131,14 +129,14 @@
                         <!-- End::slide__category -->
 
                         <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">
+                            <a href="{{ route('superadmin.roles') }}" class="side-menu__item">
                                 <i class="ri-map-pin-user-line side-menu__icon"></i>
                                 <span class="side-menu__label">User Roles</span>
 
                             </a>
-                            <a href="javascript:void(0);" class="side-menu__item">
+                            <a href="{{ route('superadmin.roles') }}" class="side-menu__item">
                                 <i class="ri-map-pin-user-line side-menu__icon"></i>
-                                <span class="side-menu__label">User Permisiions</span>
+                                <span class="side-menu__label">User Permisions</span>
 
                             </a>
                         </li>
@@ -300,6 +298,7 @@
 
             <!-- Start::main-content -->
             <div class="main-content">
+                @yield('main-content')
 
                 <!-- Page Header -->
                 <div class="block justify-between page-header md:flex">
@@ -314,7 +313,7 @@
                           </a>
                         </li>
                         <li class="text-sm text-gray-500 hover:text-primary dark:text-white/70 " aria-current="page">
-                            {{ ucfirst(Auth::user()->role) }} Dashboard
+                            {{ ucfirst(Auth::user()->user_role) }} Dashboard
                         </li>
                     </ol>
                 </div>
@@ -525,185 +524,23 @@
                     </div>
 
 
-                    <div class="col-span-12 xxl:col-span-3">
-                        <div class="box">
-                            <div class="box-header">
-                                <div class="flex justify-between">
-                                    <h5 class="box-title my-auto">Recent Orders</h5>
-                                    <div class="hs-dropdown ti-dropdown block ltr:ml-auto rtl:mr-auto my-auto">
-                                        <button aria-label="button" id="hs-dropdown-custom-icon-trigger1" type="button"
-                                            class="hs-dropdown-toggle ti-dropdown-toggle rounded-sm p-2 bg-white !border border-gray-200 text-gray-500 hover:bg-gray-100  focus:ring-gray-200 dark:bg-black/20 dark:hover:bg-black/30 dark:border-white/10 dark:hover:border-white/20 dark:focus:ring-white/10 dark:focus:ring-offset-white/10">
-                                            <i class="text-sm leading-none ti ti-dots-vertical"></i> </button>
-                                        <div class="hs-dropdown-menu ti-dropdown-menu"
-                                            aria-labelledby="hs-dropdown-custom-icon-trigger1">
-                                            <a class="ti-dropdown-item" href="javascript:void(0)">Action</a>
-                                            <a class="ti-dropdown-item" href="javascript:void(0)">Another Action</a>
-                                            <a class="ti-dropdown-item" href="javascript:void(0)">Something else
-                                                here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                    </div>
-                    <div class="col-span-12 xxl:col-span-6">
-                        <div class="box">
-                            <div class="box-header">
-                                <div class="sm:flex justify-between">
-                                    <h5 class="box-title my-auto">Order Vs Sales</h5>
-                                    <div class="inline-flex rounded-md shadow-sm">
-                                        <button type="button"
-                                            class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-primary">
-                                            1D
-                                        </button>
-                                        <button type="button"
-                                            class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
-                                            1W
-                                        </button>
-                                        <button type="button"
-                                            class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
-                                            1M
-                                        </button>
-                                        <button type="button"
-                                            class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
-                                            3M
-                                        </button>
-                                        <button type="button"
-                                            class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
-                                            6M
-                                        </button>
-                                        <button type="button"
-                                            class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
-                                            1Y
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-body">
-                                <div id="earnings"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-12 xxl:col-span-3">
-                        <div class="box">
-                            <div class="box-header">
-                                <div class="flex justify-between">
-                                    <h5 class="box-title my-auto">Top Customers</h5>
-                                    <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
-                                        <button type="button" class="ti-btn m-0 rounded-sm p-1 px-3 !border border-gray-200 text-gray-400 hover:text-gray-500 hover:bg-gray-200 hover:border-gray-200 focus:ring-gray-200  dark:hover:bg-black/30 dark:border-white/10 dark:hover:border-white/20 dark:focus:ring-white/10 dark:focus:ring-offset-white/10">
-                                            View All</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-span-12 xxl:col-span-5">
-                        <div class="box">
-                            <div class="box-header">
-                                <div class="sm:flex">
-                                    <h5 class="box-title my-auto">Task List</h5>
-                                    <nav class="sm:flex sm:space-x-2 space-y-2 sm:space-y-0 rtl:space-x-reverse ltr:ml-auto rtl:mr-auto"
-                                        aria-label="Tabs" role="tablist">
-                                        <button type="button"
-                                            class=" hs-tab-active:text-info hs-tab-active:bg-info/20 dark:hs-tab-active:bg-info/20 dark:hs-tab-active:text-info py-2 px-3 inline-flex items-center w-full justify-center gap-2 leading-none font-medium text-center text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:text-white/70 dark:hover:text-gray-300 active"
-                                            id="active-item" data-hs-tab="#taskactive" aria-controls="taskactive"
-                                            role="tab">
-                                            Active
-                                        </button>
-                                        <button type="button"
-                                            class=" hs-tab-active:text-info hs-tab-active:bg-info/20 dark:hs-tab-active:bg-info/20 dark:hs-tab-active:text-info py-2 px-3 inline-flex items-center w-full justify-center gap-2 leading-none font-medium text-center text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:text-white/70 dark:hover:text-gray-300"
-                                            id="completed-item" data-hs-tab="#completed" aria-controls="completed"
-                                            role="tab">
-                                            Completed
-                                        </button>
-                                        <button type="button"
-                                            class=" hs-tab-active:text-info hs-tab-active:bg-info/20 dark:hs-tab-active:bg-info/20 dark:hs-tab-active:text-info py-2 px-3 inline-flex items-center w-full justify-center gap-2 leading-none font-medium text-center text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:text-white/70 dark:hover:text-gray-300"
-                                            id="cancelled-item" data-hs-tab="#cancelled" aria-controls="cancelled"
-                                            role="tab">
-                                            Cancelled
-                                        </button>
-                                    </nav>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-span-12 xxl:col-span-4">
-                        <div class="box">
-                            <div class="box-header flex">
-                                <h5 class="box-title my-auto">Top Selling Products</h5>
-                                <div class="hs-dropdown ti-dropdown block ltr:ml-auto rtl:mr-auto my-auto">
-                                    <button aria-label="button" id="hs-dropdown-custom-icon-trigger3" type="button"
-                                        class="hs-dropdown-toggle ti-dropdown-toggle rounded-sm p-2 bg-white !border border-gray-200 text-gray-500 hover:bg-gray-100  focus:ring-gray-200 dark:bg-black/20 dark:hover:bg-black/30 dark:border-white/10 dark:hover:border-white/20 dark:focus:ring-white/10 dark:focus:ring-offset-white/10">
-                                        <i class="text-sm leading-none ti ti-dots-vertical"></i> </button>
-                                    <div class="hs-dropdown-menu ti-dropdown-menu"
-                                        aria-labelledby="hs-dropdown-custom-icon-trigger3">
-                                        <a class="ti-dropdown-item" href="javascript:void(0)">Action</a>
-                                        <a class="ti-dropdown-item" href="javascript:void(0)">Another Action</a>
-                                        <a class="ti-dropdown-item" href="javascript:void(0)">Something else
-                                            here</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-span-12 xxl:col-span-3">
-                        <div class="box">
-                            <div class="box-header">
-                                <div class="flex justify-between">
-                                    <h5 class="box-title my-auto">Customer Reviews</h5>
-                                    <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
-                                        <button type="button"
-                                            class="ti-btn rounded-sm p-1 px-3 !border border-gray-200 text-gray-400 hover:text-gray-500 hover:bg-gray-200 hover:border-gray-200 focus:ring-gray-200  dark:hover:bg-black/30 dark:border-white/10 dark:hover:border-white/20 dark:focus:ring-white/10 dark:focus:ring-offset-white/10">
-                                            View All</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
                 <!-- End::row-1 -->
 
-                <!-- Start::row-2 -->
-                <div class="grid grid-cols-12 gap-6">
-                    <div class="col-span-12">
-                        <div class="box orders-table">
-                            <div class="box-header">
-                                <div class="sm:flex justify-between">
-                                    <h5 class="box-title my-auto">Products Overview</h5>
-                                    <div class="hs-dropdown ti-dropdown block ltr:ml-auto rtl:mr-auto my-auto">
-                                        <button id="hs-dropdown-custom-icon-trigger" type="button"
-                                            class="hs-dropdown-toggle px-2 py-1 ti-btn ti-btn-primary">Sort
-                                            By<i class="ri-arrow-down-s-line align-middle"></i></button>
-                                        <div class="hs-dropdown-menu ti-dropdown-menu"
-                                            aria-labelledby="hs-dropdown-custom-icon-trigger">
-                                            <a class="ti-dropdown-item" href="javascript:void(0)">New</a>
-                                            <a class="ti-dropdown-item" href="javascript:void(0)">popular</a>
-                                            <a class="ti-dropdown-item" href="javascript:void(0)">Relevant</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-
-                        </div>
-                    </div>
-                </div>
-                <!-- End::row-2 -->
 
 
 
             </div>
+            @yield('content')
             <!-- Start::main-content -->
 
         </div>
 
         <!-- ========== Search Modal ========== -->
         <div id="search-modal" class="hs-overlay ti-modal hidden">
+            @yield('search-modal')
           <div class="ti-modal-box">
             <div class="ti-modal-content">
               <div class="ti-modal-body">

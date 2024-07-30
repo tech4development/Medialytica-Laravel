@@ -4,11 +4,13 @@ use App\Http\Controllers\AdminPanel\AdminController;
 use App\Http\Controllers\EditorPanel\EditorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublisherPanel\PublisherController;
+use App\Http\Controllers\Roles\RoleController;
+use App\Http\Controllers\SuperAdminPanel\SuperadminController;
 use App\Http\Controllers\SocialPublisherPanel\SocialPublisherController;
-use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\UserPanel\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Publisher;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,19 +45,41 @@ require __DIR__.'/auth.php';
 |
 |
 */
+//Role Controller
+// Routes for managing roles and permissions
+Route::middleware('superadmin')->group(function () {
+    // Route to assign roles to users
+    Route::post('superadmin/assign-role/{userId}', [RoleController::class, 'assignRole'])
+        ->name('assign.role');
+
+    // Route to create a new role
+    Route::post('superadmin/create-role', [RoleController::class, 'createRole'])
+        ->name('create.role');
+
+    // Route to assign permissions to roles
+    Route::post('superadmin/assign-permissions/{roleName}', [RoleController::class, 'assignPermissions'])
+        ->name('assign.permissions');
+
+    // Route to create a new permission
+    Route::post('superadmin/create-permission', [RoleController::class, 'createPermission'])
+        ->name('create.permission');
+    //Route to show the view
+    Route::get('/superadmin/roles', [RoleController::class, 'showRoles'])
+        ->name('superadmin.roles');
+});
 
 //Super Admin and Admin Routes
-// Route::middleware('auth', 'role:super admin')->group(function () {
-//     Route::get('superadmin/dashboard', [SuperadminController::class, 'index'])->name('superadmin.dashboard');
-//     });
+Route::middleware('auth',  'user_role:super admin')->group(function () {
+    Route::get('superadmin/dashboard', [SuperAdminController::class, 'index'])->name('superadmin.dashboard');
+});
 
 //Admin
-Route::middleware('auth', 'role:admin')->group(function () {
+Route::middleware('auth', 'user_role:admin')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     });
 
 //Publisher Routes
-Route::middleware('auth','role:publisher')->group(function () {
+Route::middleware('auth','user_role:publisher')->group(function () {
     Route::get('publisher/dashboard', [PublisherController::class, 'index'])->name('publisher.dashboard');
     //Add Publisher Details
     Route::get('publisher/create-publisher', [PublisherController::class, 'create'])->name('publisher.create');
@@ -75,9 +99,8 @@ Route::middleware('auth','role:publisher')->group(function () {
     });
 
 
-
 //Social Publisher
-Route::middleware('auth','role:socialpublisher')->group(function () {
+Route::middleware('auth','user_role:socialpublisher')->group(function () {
     Route::get('socialpublisher/dashboard', [SocialPublisherController::class, 'index'])->name('socialpublisher.dashboard');
     //Create Social Publisher details
     Route::get('socialpublisher/create-publisher', [PublisherController::class, 'create'])->name('socialpublisher.create');
@@ -96,12 +119,12 @@ Route::middleware('auth','role:socialpublisher')->group(function () {
 
 
 //Editor Routes
-Route::middleware('auth','role:editor')->group(function () {
+Route::middleware('auth','user_role:editor')->group(function () {
     Route::get('editor/dashboard', [EditorController::class, 'index'])->name('editor.dashboard');
     });
 
 // User Routes
-Route::middleware('auth','role:user')->group(function () {
+Route::middleware('auth','user_role:user')->group(function () {
      Route::get('user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
         });
 
