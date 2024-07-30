@@ -42,7 +42,13 @@ jobs:
           composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
           npm install
 
+      - name: Check if home.blade.php exists
+        id: check_file
+        run: |
+          if [ -f resources/views/home.blade.php ]; then echo "file_exists=true" >> $GITHUB_ENV; else echo "file_exists=false" >> $GITHUB_ENV; fi
+
       - name: Install Laravel Breeze
+        if: env.file_exists == 'true'
         run: |
           composer require laravel/breeze --dev --no-ansi --no-interaction
           php artisan breeze:install blade --no-interaction
