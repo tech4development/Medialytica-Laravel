@@ -49,9 +49,7 @@ jobs:
 
       - name: Install Laravel Breeze
         if: env.file_exists == 'true'
-        run: |
-          composer require laravel/breeze --dev --no-ansi --no-interaction
-          php artisan breeze:install blade --no-interaction
+        run: php artisan breeze:install blade --no-interaction
 
       - name: Install Vite
         run: npm install vite
