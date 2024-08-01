@@ -21,42 +21,42 @@ class Userseeder extends Seeder
           'name' => 'Super Admin',
           'email' => 'superadmin@gmail.com',
           'password' => Hash::make('12345678'),
-          'role' => 'super admin'
+          'user_role' => 'super admin'
 
         ],
         [
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('12345678'),
-            'role' => 'admin'
+            'user_role' => 'admin'
 
           ],
           [
             'name' => 'Publisher',
             'email' => 'publisher@gmail.com',
             'password' => Hash::make('12345678'),
-            'role' => 'publisher'
+            'user_role' => 'publisher'
 
           ],
           [
             'name' => 'SocialPublisher',
             'email' => 'socialpublisher@gmail.com',
             'password' => Hash::make('12345678'),
-            'role' => 'socialpublisher'
+            'user_role' => 'socialpublisher'
 
           ],
           [
             'name' => 'Editor',
             'email' => 'editor@gmail.com',
             'password' => Hash::make('12345678'),
-            'role' => 'editor'
+            'user_role' => 'editor'
 
           ],
           [
             'name' => 'User',
             'email' => 'user@gmail.com',
             'password' => Hash::make('12345678'),
-            'role' => 'user'
+            'user_role' => 'user'
 
           ],
 

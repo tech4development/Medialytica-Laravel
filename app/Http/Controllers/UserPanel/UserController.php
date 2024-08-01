@@ -10,15 +10,15 @@ class UserController extends Controller
 {
     public function index(){
 
-        if(Auth::user()->role === 'super admin') {
+        if(Auth::user()->user_role === 'super admin') {
+            return redirect()->route('superadmin.dashboard');
+        } elseif(Auth::user()->user_role === 'admin') {
             return redirect()->route('admin.dashboard');
-        } elseif(Auth::user()->role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        }elseif(Auth::user()->role === 'publisher') {
+        }elseif(Auth::user()->user_role === 'publisher') {
             return redirect()->route('publisher.dashboard');
-        }elseif(Auth::user()->role === 'socialpublisher') {
+        }elseif(Auth::user()->user_role === 'socialpublisher') {
             return redirect()->route('socialpublisher.dashboard');
-        }elseif(Auth::user()->role === 'editor') {
+        }elseif(Auth::user()->user_role === 'editor') {
             return redirect()->route('editor.dashboard');
         }
 

@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        switch ($request->user()->role) {
+        switch ($request->user()->user_role) {
             case 'super admin':
                 return redirect()->route('superadmin.dashboard');
             case 'admin':
@@ -44,7 +44,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('user.dashboard');
             default:
                 // Handle any unexpected roles or redirect to a default route
-                return redirect()->route('/');
+                return redirect()->view('home');
         }
 
     }
