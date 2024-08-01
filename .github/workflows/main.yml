@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   web-deploy:
@@ -50,7 +50,6 @@ jobs:
       - name: Build the Project for Production
         run: export LARAVEL_BYPASS_ENV_CHECK=1
 
-
       - name: Generate key
         run: php artisan key:generate --no-interaction
 
@@ -68,7 +67,7 @@ jobs:
           MYSQL_PWD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         run: |
           mysql -u root -h 127.0.0.1 -e "CREATE USER 'hpqjihel_user'@'%' IDENTIFIED BY '${{ secrets.MYSQL_ROOT_PASSWORD }}';"
-          mysql -u root -h 127.0.0.1 -e "GRANT ALL PRIVILEGES ON hpqjihel_database.* TO 'hpqjihel_user'@'%';"
+          mysql -u root -h 127.0.0.1 -e "GRANT ALL PRIVILEGES ON hpqjihel_databse.* TO 'hpqjihel_user'@'%';"
           mysql -u root -h 127.0.0.1 -e "FLUSH PRIVILEGES;"
 
       - name: Run Migrations
@@ -78,7 +77,7 @@ jobs:
           DB_PORT: 3306
           DB_DATABASE: hpqjihel_database
           DB_USERNAME: hpqjihel_user
-          DB_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD}}
         run: php artisan migrate --force --no-interaction
 
       - name: 📂 Sync files
