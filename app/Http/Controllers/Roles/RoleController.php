@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RoleCreatedMail;
+use Illuminate\Support\Facades\Validator;
 
 
 class RoleController extends Controller
@@ -16,88 +20,112 @@ class RoleController extends Controller
         $this->middleware('superadmin');
     }
 
-    public function assignRole(Request $request, $userId)
+    public function show()
     {
-        $user = User::findOrFail($userId);
-        $role = $request->input('role');
+        // Fetch all users and roles
+        $users = User::with('roles')->get();
+        $roles = Role::all();
+        $permissions = Permission::all();
 
-        if (in_array($role, ['admin', 'editor', 'user'])) {
-            $user->syncRoles($role);
-            $this->assignPermissionsToRole($role);
-            return redirect()->back()->with('success', 'Role and permissions assigned successfully.');
-        }
-
-        return redirect()->back()->with('error', 'Invalid role.');
+        return view('superadmin.roles', compact('users', 'roles', 'permissions'));
     }
 
-    public function createRole(Request $request)
+    public function store(Request $request)
     {
-        $roleName = $request->input('role_name');
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'name' => 'required|string|in:superadmin,admin,editor,user'
+        ]);
 
-        if (!$roleName || Role::where('name', $roleName)->exists()) {
-            return redirect()->back()->with('error', 'Invalid or existing role name.');
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Role::create(['name' => $roleName]);
-        return redirect()->back()->with('success', 'Role created successfully.');
+        // Create the new user
+        $user = User::create([
+            'name' => $request->input('full_name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+            'user_role' => $request->input('name'),
+        ]);
+
+        // Manually create the role entry in the roles table
+        $role = Role::firstOrCreate([
+            'name' => $request->input('name'),
+            // 'guard_name' => 'web',
+            'full_name' => $request->input('full_name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+        // Assign the role to the user
+        $user->assignRole($role);
+
+        // Send email with password
+       // Mail::to($request->input('email'))->send(new RoleCreatedMail($request->input('full_name'), $request->input('email'), $request->input('password')));
+
+        // Redirect to show with the newly created user and role
+        return redirect()->route('roles.show')->with('success', 'User created successfully and role assiged successfully.');
     }
-
-    public function assignPermissions(Request $request, $roleName)
-    {
-        $role = Role::where('name', $roleName)->first();
-
-        if (!$role) {
-            return redirect()->back()->with('error', 'Role does not exist.');
-        }
-
-        $permissions = $request->input('permissions', []);
-        $role->syncPermissions($permissions);
-
-        return redirect()->back()->with('success', 'Permissions assigned successfully.');
-    }
-
     public function createPermission(Request $request)
     {
-        $permissionName = $request->input('permission_name');
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'permission_name' => 'required|string|unique:permissions,name'
+        ]);
 
-        if (!$permissionName || Permission::where('name', $permissionName)->exists()) {
-            return redirect()->back()->with('error', 'Invalid or existing permission name.');
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Permission::create(['name' => $permissionName]);
-        return redirect()->back()->with('success', 'Permission created successfully.');
+        // Create the new permission
+        Permission::create([
+            'name' => $request->input('permission_name'),
+            'guard_name' => 'web'
+        ]);
+
+        // Redirect to show with the newly created permission
+        return redirect()->route('roles.show')->with('success', 'Permission created successfully.');
     }
 
-    private function assignPermissionsToRole($roleName)
+    public function assignPermission(Request $request, $roleId)
     {
-        $role = Role::where('name', $roleName)->first();
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'permission_ids' => 'required|array'
+        ]);
 
-        if (!$role) {
-            return;
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $permissions = [];
+        // Find the role and assign permissions
+        $role = Role::findOrFail($roleId);
+        $role->syncPermissions($request->input('permission_ids'));
 
-        switch ($roleName) {
-            case 'admin':
-                $permissions = ['manage users', 'edit content', 'view content'];
-                break;
-            case 'editor':
-                $permissions = ['edit content', 'view content'];
-                break;
-            case 'user':
-                $permissions = ['view content'];
-                break;
-        }
-
-        $role->syncPermissions($permissions);
+        // Redirect to show with the updated role
+        return redirect()->route('roles.show')->with('success', 'Permissions assigned successfully.');
     }
 
-    public function showRoles()
+    public function revokePermission(Request $request, $roleId)
     {
-        $permissions = Permission::all(); // Fetch all permissions
-        $user = User::first(); // Example to get a user; adjust as needed
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'permission_ids' => 'required|array'
+        ]);
 
-        return view('superadmin.roles', compact('permissions', 'user'));
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Find the role and revoke permissions
+        $role = Role::findOrFail($roleId);
+        $role->revokePermissionTo($request->input('permission_ids'));
+
+        // Redirect to show with the updated role
+        return redirect()->route('roles.show')->with('success', 'Permissions revoked successfully.');
     }
 }

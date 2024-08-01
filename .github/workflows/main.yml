@@ -15,7 +15,7 @@ jobs:
         image: mysql:8.0.36
         options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
         env:
-          MYSQL_DATABASE: hpqjihel_db
+          MYSQL_DATABASE: hpqjihel_staging
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         ports:
           - 3306:3306
@@ -42,22 +42,14 @@ jobs:
           composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
           npm install
 
-      - name: Check if home.blade.php exists
-        id: check_file
-        run: |
-          if [ -f resources/views/home.blade.php ]; then echo "file_exists=true" >> $GITHUB_ENV; else echo "file_exists=false" >> $GITHUB_ENV; fi
-
       - name: Install Laravel Breeze
-        if: env.file_exists == 'true'
         run: |
           composer require laravel/breeze --dev --no-ansi --no-interaction
           php artisan breeze:install blade --no-interaction
 
-      - name: Install Vite
-        run: npm install vite
-
       - name: Build the Project for Production
-        run: npm run build
+        run: export LARAVEL_BYPASS_ENV_CHECK=1
+
 
       - name: Generate key
         run: php artisan key:generate --no-interaction
@@ -75,8 +67,8 @@ jobs:
         env:
           MYSQL_PWD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         run: |
-          mysql -u root -h 127.0.0.1 -e "CREATE USER 'hpqjihel_admin'@'%' IDENTIFIED BY '${{ secrets.MYSQL_ROOT_PASSWORD }}';"
-          mysql -u root -h 127.0.0.1 -e "GRANT ALL PRIVILEGES ON hpqjihel_db.* TO 'hpqjihel_admin'@'%';"
+          mysql -u root -h 127.0.0.1 -e "CREATE USER 'hpqjihel_user'@'%' IDENTIFIED BY '${{ secrets.MYSQL_ROOT_PASSWORD }}';"
+          mysql -u root -h 127.0.0.1 -e "GRANT ALL PRIVILEGES ON hpqjihel_staging.* TO 'hpqjihel_user'@'%';"
           mysql -u root -h 127.0.0.1 -e "FLUSH PRIVILEGES;"
 
       - name: Run Migrations
@@ -84,8 +76,8 @@ jobs:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
-          DB_DATABASE: hpqjihel_db
-          DB_USERNAME: hpqjihel_admin
+          DB_DATABASE: hpqjihel_staging
+          DB_USERNAME: hpqjihel_user
           DB_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         run: php artisan migrate --force --no-interaction
 

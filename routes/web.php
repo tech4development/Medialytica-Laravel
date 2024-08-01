@@ -48,24 +48,13 @@ require __DIR__.'/auth.php';
 //Role Controller
 // Routes for managing roles and permissions
 Route::middleware('superadmin')->group(function () {
-    // Route to assign roles to users
-    Route::post('superadmin/assign-role/{userId}', [RoleController::class, 'assignRole'])
-        ->name('assign.role');
+    Route::get('superadmin/roles', [RoleController::class, 'show'])->name('roles.show');
+    Route::post('superadmin/roles/create', [RoleController::class, 'create'])->name('role.create');
+    Route::post('superadmin/roles/store', [RoleController::class, 'store'])->name('role.store');
+    // Routes for permissions management
+    Route::get('/roles/{roleId}/assign-permissions', [RoleController::class, 'assignPermission'])->name('role.assignPermissions');
+    Route::post('/roles/{roleId}/assign-permissions', [RoleController::class, 'assignPermissions'])->name('role.assignPermissions');
 
-    // Route to create a new role
-    Route::post('superadmin/create-role', [RoleController::class, 'createRole'])
-        ->name('create.role');
-
-    // Route to assign permissions to roles
-    Route::post('superadmin/assign-permissions/{roleName}', [RoleController::class, 'assignPermissions'])
-        ->name('assign.permissions');
-
-    // Route to create a new permission
-    Route::post('superadmin/create-permission', [RoleController::class, 'createPermission'])
-        ->name('create.permission');
-    //Route to show the view
-    Route::get('/superadmin/roles', [RoleController::class, 'showRoles'])
-        ->name('superadmin.roles');
 });
 
 //Super Admin and Admin Routes
