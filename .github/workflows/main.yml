@@ -16,7 +16,6 @@ jobs:
         options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
         env:
           MYSQL_DATABASE: ${{ secrets.MYSQL_ROOT_DATABASE }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_ROOT_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         ports:
           - 3306:3306
@@ -92,5 +91,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: ${{ secrets.FTP_PORT }}
-          server-dir: '/home/hpqjihel/public_html/'
           server-dir: '/home/hpqjihel/public_html/'
