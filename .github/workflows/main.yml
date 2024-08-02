@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   web-deploy:
@@ -16,13 +16,14 @@ jobs:
         options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
         env:
           MYSQL_DATABASE: ${{ secrets.MYSQL_ROOT_DATABASE }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_ROOT_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         ports:
           - 3306:3306
 
     steps:
       - name: Get the latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -48,7 +49,9 @@ jobs:
           php artisan breeze:install blade --no-interaction
 
       - name: Build the Project for Production
-        run: export LARAVEL_BYPASS_ENV_CHECK=1
+        run: |
+          npm run build
+          export LARAVEL_BYPASS_ENV_CHECK=1
 
       - name: Generate key
         run: php artisan key:generate --no-interaction
@@ -67,6 +70,7 @@ jobs:
           MYSQL_PWD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         run: |
           mysql -u root -h 127.0.0.1 -e "CREATE USER 'hpqjihel_user'@'%' IDENTIFIED BY '${{ secrets.MYSQL_ROOT_PASSWORD }}';"
+          mysql -u root -h 127.0.0.1 -e "GRANT ALL PRIVILEGES ON ${{ secrets.MYSQL_ROOT_DATABASE }}.* TO '${{ secrets.MYSQL_ROOT_USER }}'@'%';"
           mysql -u root -h 127.0.0.1 -e "GRANT ALL PRIVILEGES ON ${{ secrets.MYSQL_ROOT_DATABASE }}.* TO '${{ secrets.MYSQL_ROOT_USER }}'@'%';"
           mysql -u root -h 127.0.0.1 -e "FLUSH PRIVILEGES;"
 
@@ -88,4 +92,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: ${{ secrets.FTP_PORT }}
+          server-dir: '/home/hpqjihel/public_html/'
           server-dir: '/home/hpqjihel/public_html/'

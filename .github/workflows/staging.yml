@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Get the latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -48,7 +48,9 @@ jobs:
           php artisan breeze:install blade --no-interaction
 
       - name: Build the Project for Production
-        run: export LARAVEL_BYPASS_ENV_CHECK=1
+        run: |
+          npm run build
+          export LARAVEL_BYPASS_ENV_CHECK=1
 
       - name: Generate key
         run: php artisan key:generate --no-interaction
@@ -77,13 +79,13 @@ jobs:
           DB_PORT: 3306
           DB_DATABASE: ${{ secrets.MYSQL_ROOT_DATABASE }}
           DB_USERNAME: ${{ secrets.MYSQL_ROOT_USER }}
-          DB_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD}}
+          DB_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         run: php artisan migrate --force --no-interaction
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          server:  ${{ secrets.FTP_SERVER }}
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
