@@ -50,7 +50,7 @@
 
             <!-- Start::main-sidebar -->
 
-            @if(Auth::user()->role === 'publisher') <!-- Replace 'editor' with the role you want -->
+            @if(Auth::user()->user_role === 'publisher') <!-- Replace 'editor' with the role you want -->
                 <div class="main-sidebar" id="sidebar-scroll">
                     <!-- Start::nav -->
                     <nav class="main-menu-container nav nav-pills flex-column sub-open">
@@ -338,36 +338,8 @@
         <!-- End::Header -->
 
         <div class="content">
+            @yield('content')
 
-            <!-- Start::main-content -->
-            <div class="main-content">
-                @yield('content')
-
-                <!-- Page Header -->
-                <div class="block justify-between page-header md:flex">
-                    <div>
-                        <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
-                            {{ ucfirst(Auth::user()->role) }} Dashboard
-                        </h3>
-                    </div>
-                    <ol class="flex items-center whitespace-nowrap min-w-0">
-                        <li class="text-sm">
-                            <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
-                                Home
-                                <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
-                            </a>
-                        </li>
-                        <li class="text-sm text-gray-500 hover:text-primary dark:text-white/70" aria-current="page">
-                            {{ ucfirst(Auth::user()->role) }} Dashboard
-                        </li>
-                    </ol>
-                </div>
-                <!-- Page Header Close -->
-
-
-                <!-- End::main-content -->
-
-            </div>
         </div>
 
         <!-- ========== Search Modal ========== -->

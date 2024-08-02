@@ -40,8 +40,10 @@ return new class extends Migration
                 $table->unsignedBigInteger($columnNames['team_foreign_key'])->nullable();
                 $table->index($columnNames['team_foreign_key'], 'roles_team_foreign_key_index');
             }
-            $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
+            $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format) // Full name of the role (if needed)
+
             $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
+
             $table->timestamps();
         });
 
@@ -95,6 +97,7 @@ return new class extends Migration
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
             $table->unsignedBigInteger($pivotPermission);
             $table->unsignedBigInteger($pivotRole);
+            $table->timestamps();
 
             $table->foreign($pivotPermission)
                 ->references('id') // permission id
@@ -106,7 +109,11 @@ return new class extends Migration
                 ->on($tableNames['roles'])
                 ->onDelete('cascade');
 
+
+
+
             $table->primary([$pivotPermission, $pivotRole], 'role_has_permissions_permission_id_role_id_primary');
+          
         });
 
         app('cache')
@@ -126,6 +133,7 @@ return new class extends Migration
         }
 
         Schema::drop($tableNames['role_has_permissions']);
+
         Schema::drop($tableNames['model_has_roles']);
         Schema::drop($tableNames['model_has_permissions']);
         Schema::drop($tableNames['roles']);

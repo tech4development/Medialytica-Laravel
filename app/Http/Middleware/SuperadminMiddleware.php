@@ -18,7 +18,8 @@ class SuperadminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->role('superadmin')) {
+           // Check if the user is authenticated
+           if (Auth::check() && Auth::user()->user_role === 'super admin') {
             return $next($request);
         }
 

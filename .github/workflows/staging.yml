@@ -15,7 +15,7 @@ jobs:
         image: mysql:8.0.36
         options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
         env:
-          MYSQL_DATABASE: hpqjihel_database
+          MYSQL_DATABASE: ${{ secrets.MYSQL_ROOT_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         ports:
           - 3306:3306
@@ -67,7 +67,7 @@ jobs:
           MYSQL_PWD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         run: |
           mysql -u root -h 127.0.0.1 -e "CREATE USER 'hpqjihel_user'@'%' IDENTIFIED BY '${{ secrets.MYSQL_ROOT_PASSWORD }}';"
-          mysql -u root -h 127.0.0.1 -e "GRANT ALL PRIVILEGES ON hpqjihel_databse.* TO 'hpqjihel_user'@'%';"
+          mysql -u root -h 127.0.0.1 -e "GRANT ALL PRIVILEGES ON ${{ secrets.MYSQL_ROOT_DATABASE }}.* TO '${{ secrets.MYSQL_ROOT_USER }}'@'%';"
           mysql -u root -h 127.0.0.1 -e "FLUSH PRIVILEGES;"
 
       - name: Run Migrations
@@ -75,17 +75,17 @@ jobs:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
-          DB_DATABASE: hpqjihel_database
-          DB_USERNAME: hpqjihel_user
+          DB_DATABASE: ${{ secrets.MYSQL_ROOT_DATABASE }}
+          DB_USERNAME: ${{ secrets.MYSQL_ROOT_USER }}
           DB_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD}}
         run: php artisan migrate --force --no-interaction
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          server: ftp.techfordevelopment.com
+          server:  ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: ${{ secrets.FTP_PORT }}
-          server-dir: '/home/public_html/staging.techfordevelopment.com/'
+          server-dir: '/home/hpqjihel/public_html/staging.techfordevelopment.com/'

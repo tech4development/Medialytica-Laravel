@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RoleCreatedMail;
+use App\Models\PermissionRole;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -22,7 +23,7 @@ class RoleController extends Controller
 
     public function show()
     {
-        // Fetch all users and roles
+        // Fetch all users, roles, and permissions
         $users = User::with('roles')->get();
         $roles = Role::all();
         $permissions = Permission::all();
@@ -30,7 +31,7 @@ class RoleController extends Controller
         return view('superadmin.roles', compact('users', 'roles', 'permissions'));
     }
 
-    public function store(Request $request)
+    public function storeUser(Request $request)
     {
         // Validate the request
         $validator = Validator::make($request->all(), [
@@ -55,7 +56,6 @@ class RoleController extends Controller
         // Manually create the role entry in the roles table
         $role = Role::firstOrCreate([
             'name' => $request->input('name'),
-            // 'guard_name' => 'web',
             'full_name' => $request->input('full_name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
@@ -64,13 +64,11 @@ class RoleController extends Controller
         // Assign the role to the user
         $user->assignRole($role);
 
-        // Send email with password
-       // Mail::to($request->input('email'))->send(new RoleCreatedMail($request->input('full_name'), $request->input('email'), $request->input('password')));
-
         // Redirect to show with the newly created user and role
-        return redirect()->route('roles.show')->with('success', 'User created successfully and role assiged successfully.');
+        return redirect()->route('roles.show')->with('success', 'User created and role assigned successfully.');
     }
-    public function createPermission(Request $request)
+
+    public function storePermission(Request $request)
     {
         // Validate the request
         $validator = Validator::make($request->all(), [
@@ -88,7 +86,16 @@ class RoleController extends Controller
         ]);
 
         // Redirect to show with the newly created permission
-        return redirect()->route('roles.show')->with('success', 'Permission created successfully.');
+        return redirect()->route('permissions.show')->with('success', 'Permission created successfully.');
+    }
+
+    public function showPermissions()
+    {
+        // Retrieve all permissions
+        $permissions = Permission::all();
+
+        // Return the view with permissions
+        return view('superadmin.permissions', compact('permissions'));
     }
 
     public function assignPermission(Request $request, $roleId)
@@ -102,13 +109,17 @@ class RoleController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // Find the role and assign permissions
+        // Find the role
         $role = Role::findOrFail($roleId);
-        $role->syncPermissions($request->input('permission_ids'));
+
+        // Sync the permissions without additional fields
+        $role->permissions()->sync($request->input('permission_ids'));
 
         // Redirect to show with the updated role
         return redirect()->route('roles.show')->with('success', 'Permissions assigned successfully.');
     }
+
+
 
     public function revokePermission(Request $request, $roleId)
     {
@@ -123,9 +134,26 @@ class RoleController extends Controller
 
         // Find the role and revoke permissions
         $role = Role::findOrFail($roleId);
-        $role->revokePermissionTo($request->input('permission_ids'));
+        $role->permissions()->detach($request->input('permission_ids'));
 
         // Redirect to show with the updated role
         return redirect()->route('roles.show')->with('success', 'Permissions revoked successfully.');
     }
+
+    public function assignPermissionsForm($roleId)
+    {
+        $role = Role::findOrFail($roleId);
+        $permissions = Permission::all();
+
+        return view('superadmin.assign_permissions', compact('role', 'permissions'));
+    }
+
+    public function destroy($id)
+    {
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        return redirect()->route('roles.show')->with('success', 'Role deleted successfully.');
+    }
 }
+

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-6">
-    <h1 class="text-2xl font-semibold mb-4 text-center">Manage Roles and Permissions</h1>
+    <h1 class="text-2xl font-semibold mb-4 text-center">Manage Roles</h1>
 
     <!-- Display Success or Error Messages -->
     @if (session('success'))
@@ -22,7 +22,7 @@
     <!-- Form to Create New User and Assign Role -->
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
         <h2 class="text-xl font-semibold mb-4">Create New User and Assign Role</h2>
-        <form action="{{ route('role.store') }}" method="POST">
+        <form action="{{ route('roles.storeUser') }}" method="POST">
             @csrf
             <div class="flex flex-col space-y-4 mb-4">
                 <input type="text" name="full_name" placeholder="Full Name" class="border border-gray-300 rounded-lg px-4 py-2 w-full" required>
@@ -48,6 +48,7 @@
         <table class="w-full border border-gray-300 rounded-lg">
             <thead>
                 <tr>
+                    <th class="border p-2 text-left text-center w-40">Role ID</th>
                     <th class="border p-2 text-left text-center w-40">Full Name</th>
                     <th class="border p-2 text-left text-center w-40">Email</th>
                     <th class="border p-2 text-left text-center  w-40">Role</th>
@@ -58,17 +59,18 @@
                 @foreach($roles as $role)
                 @if(!empty($role->full_name))
                     <tr>
+                        <td class="border p-2">{{ $role->id }}</td>
                         <td class="border p-2">{{ $role->full_name }}</td>
                         <td class="border p-2">{{ $role->email }}</td>
                         <td class="border p-2">{{ $role->name }}</td>
                         <td class="border p-2 w-530">
-                            <button type="button" onclick="window.location='{{ route('role.assignPermissions', $role->id) }}'" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                            <button type="button" onclick="window.location='{{ route('roles.assignPermissions', $role->id) }}'" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
                                 <i class="fas fa-plus"></i> Assign Permissions
                             </button>
                             <button type="button" onclick="window.location=''" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
                                 <i class="fas fa-pencil-alt"></i> Edit User
                             </button>
-                            <button type="button" onclick="window.location=''" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                            <button type="button" onclick="window.location='{{ route('roles.destroy', $role->id) }}'" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
                                 <i class="fas fa-trash-alt"></i> Delete User
                             </button>
                         </td>
@@ -78,5 +80,49 @@
             </tbody>
         </table>
     </div>
+
+    <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-4 text-center">All Roles</h2>
+        <table class="w-full border border-gray-300 rounded-lg">
+            <thead>
+                <tr>
+                    <th class="border p-2 text-left text-center w-40">Full Name</th>
+                    <th class="border p-2 text-left text-center w-40">Role Name</th>
+                    <th class="border p-2 text-left text-center w-40">Email</th>
+                    <th class="border p-2 text-left text-center w-40">Permission Name</th>
+                    <th class="border p-2 text-left text-center w-32">Actions</th> <!-- Actions column -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($roles as $role)
+                    <tr>
+                        <td class="border p-2 text-center">{{ $role->full_name }}</td>
+                        <td class="border p-2 text-center">{{ $role->name }}</td>
+                        <td class="border p-2 text-center">{{ $role->email }}</td>
+                        <td class="border p-2">
+                            @foreach($role->permissions as $permission)
+                                <div>{{ $permission->name }}</div>
+                            @endforeach
+                        </td>
+                        <td class="border p-2 text-center">
+                            <!-- Edit Button -->
+                            <a href="" class="text-blue-500 hover:text-blue-700 mr-2">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <!-- Delete Button -->
+                            <form action="{{ route('roles.destroy', $role->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-700">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
 </div>
 @endsection
