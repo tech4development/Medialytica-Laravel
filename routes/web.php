@@ -47,21 +47,41 @@ require __DIR__.'/auth.php';
 */
 //Role Controller
 // Routes for managing roles and permissions
-Route::middleware('superadmin')->group(function () {
-    Route::get('superadmin/roles', [RoleController::class, 'show'])->name('roles.show');
-    Route::post('superadmin/roles/create', [RoleController::class, 'create'])->name('role.create');
-    Route::post('superadmin/roles/store', [RoleController::class, 'store'])->name('role.store');
-    // Routes for permissions management
-    Route::get('/roles/{roleId}/assign-permissions', [RoleController::class, 'assignPermission'])->name('role.assignPermissions');
-    Route::post('/roles/{roleId}/assign-permissions', [RoleController::class, 'assignPermissions'])->name('role.assignPermissions');
+// Route::middleware('superadmin')->group(function () {
 
-});
+
+// });
 
 //Super Admin and Admin Routes
-Route::middleware('auth',  'user_role:super admin')->group(function () {
+Route::middleware('auth', 'superadmin',  'user_role:super admin')->group(function () {
     Route::get('superadmin/dashboard', [SuperAdminController::class, 'index'])->name('superadmin.dashboard');
+    Route::get('/roles', [RoleController::class, 'show'])->name('roles.show');
+    Route::post('/roles/user', [RoleController::class, 'storeUser'])->name('roles.storeUser');
+    Route::post('/permissions', [RoleController::class, 'storePermission'])->name('permissions.store');
+    Route::get('/permissions', [RoleController::class, 'showPermissions'])->name('permissions.show');
+    Route::post('/roles/{roleId}/assign-permissions', [RoleController::class, 'assignPermission'])->name('roles.assignPermissions');
+    Route::post('/roles/{roleId}/revoke-permissions', [RoleController::class, 'revokePermission'])->name('roles.revokePermissions');
+    Route::get('roles/{role}/assign-permissions', [RoleController::class, 'assignPermissionsForm'])->name('roles.assignPermissionsForm');
+    Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
 });
+/*
+|--------------------------------------------------------------------------
+| Superadmin routes, middlewares
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function () {
+    Route::get('/dashboard', [SuperAdminController::class, 'index'])->name('superadmin.dashboard');
 
+    Route::post('/roles/user', [RoleController::class, 'storeUser'])->name('roles.storeUser');
+    Route::post('/permissions', [RoleController::class, 'storePermission'])->name('permissions.store');
+    Route::get('/permissions', [RoleController::class, 'showPermissions'])->name('permissions.show');
+    Route::post('/roles/{roleId}/assign-permissions', [RoleController::class, 'assignPermission'])->name('roles.assignPermissions');
+    Route::post('/roles/{roleId}/revoke-permissions', [RoleController::class, 'revokePermission'])->name('roles.revokePermissions');
+    Route::get('/roles/{role}/assign-permissions', [RoleController::class, 'assignPermissionsForm'])->name('roles.assignPermissionsForm');
+    Route::get('/roles', [RoleController::class, 'show'])->name('roles.show');
+});
 //Admin
 Route::middleware('auth', 'user_role:admin')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
