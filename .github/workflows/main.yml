@@ -92,3 +92,4 @@ jobs:
           protocol: ftp
           port: ${{ secrets.FTP_PORT }}
           server-dir: '/home/hpqjihel/public_html/'
+
