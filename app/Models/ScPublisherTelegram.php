@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ScPublisherTelegram extends Model
 {
     use HasFactory;
-    protected $table = 'scp_telegram';
+    protected $table = 'scp_telegram_channels';
 
     // The attributes that are mass assignable
     protected $fillable = [
@@ -23,9 +23,9 @@ class ScPublisherTelegram extends Model
         'niches_themes',
         'publishing_time',
         'paypal_email',
-        'telegram_group_name',
-        'telegram_group_url',
-        'telegram_group_members',
+        'telegram_channel_name',
+        'telegram_channel_url',
+        'telegram_channel_members',
         'influencer_category',
         'target_audience',
         'post_types',
@@ -35,12 +35,6 @@ class ScPublisherTelegram extends Model
         'cost_per_week',
         'cost_per_month',
         'cpm_rate_posts',
-        'cost_per_reel',
-        'cost_per_reel_hour',
-        'cost_per_reel_day',
-        'cost_per_reel_week',
-        'cost_per_reel_month',
-        'cpm_rate_reels',
         'cost_per_video_ad',
         'cost_per_video_ad_hour',
         'cost_per_video_ad_day',

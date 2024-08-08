@@ -10,7 +10,7 @@ class ScPublisherYoutube extends Model
     use HasFactory;
 
      // Table associated with the model
-     protected $table = 'scp_youtube';
+     protected $table = 'scp_youtube_channels';
 
      // The attributes that are mass assignable
      protected $fillable = [

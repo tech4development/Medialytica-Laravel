@@ -10,7 +10,7 @@ class ScPublisherFacebook extends Model
     use HasFactory;
 
      // Specify the table name if it doesn't follow Laravel's naming convention
-     protected $table = 'scp_facebook';
+     protected $table = 'scp_facebook_profiles';
 
      // Define the fillable attributes for mass assignment
      protected $fillable = [

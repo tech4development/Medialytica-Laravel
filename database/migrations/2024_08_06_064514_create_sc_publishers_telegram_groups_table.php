@@ -63,12 +63,6 @@ return new class extends Migration
             $table->unsignedDecimal('cost_per_week', 8, 2)->nullable();
             $table->unsignedDecimal('cost_per_month', 8, 2)->nullable();
             $table->unsignedDecimal('cpm_rate_posts', 8, 2)->nullable();
-            $table->unsignedDecimal('cost_per_reel', 8, 2)->nullable();
-            $table->unsignedDecimal('cost_per_reel_hour', 8, 2)->nullable();
-            $table->unsignedDecimal('cost_per_reel_day', 8, 2)->nullable();
-            $table->unsignedDecimal('cost_per_reel_week', 8, 2)->nullable();
-            $table->unsignedDecimal('cost_per_reel_month', 8, 2)->nullable();
-            $table->unsignedDecimal('cpm_rate_reels', 8, 2)->nullable();
             $table->unsignedDecimal('cost_per_video_ad', 8, 2)->nullable();
             $table->unsignedDecimal('cost_per_video_ad_hour', 8, 2)->nullable();
             $table->unsignedDecimal('cost_per_video_ad_day', 8, 2)->nullable();

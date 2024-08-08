@@ -9,7 +9,7 @@ class ScPublisherWhatsapp extends Model
 {
     use HasFactory;
     // Table associated with the model
-    protected $table = 'scp_whatsapp';
+    protected $table = 'scp_whatsapp_groups';
 
     // The attributes that are mass assignable
     protected $fillable = [
@@ -36,12 +36,6 @@ class ScPublisherWhatsapp extends Model
         'cost_per_week',
         'cost_per_month',
         'cpm_rate_posts',
-        'cost_per_reel',
-        'cost_per_reel_hour',
-        'cost_per_reel_day',
-        'cost_per_reel_week',
-        'cost_per_reel_month',
-        'cpm_rate_reels',
         'cost_per_video_ad',
         'cost_per_video_ad_hour',
         'cost_per_video_ad_day',

@@ -10,7 +10,7 @@ class ScPublisherInstagram extends Model
     use HasFactory;
 
     // Table associated with the model
-    protected $table = 'scp_instagarm';
+    protected $table = 'scp_instagarm_pages';
 
     // The attributes that are mass assignable
     protected $fillable = [

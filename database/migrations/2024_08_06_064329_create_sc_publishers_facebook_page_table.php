@@ -44,7 +44,6 @@ return new class extends Migration
             $table->string('facebook_page_name');
             $table->string('facebook_page_url')->unique();
             $table->unsignedBigInteger('facebook_page_members');
-            $table->unsignedBigInteger('facebook_page_likes')->nullable();
             $table->enum('influencer_category', [
                 'Mega Influencers (More than 1M followers)',
                 'Macro Influencers (100K - 1M followers)',

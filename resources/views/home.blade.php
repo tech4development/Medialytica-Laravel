@@ -52,6 +52,15 @@
 
     <!-- Choices Css -->
     <link rel="stylesheet" href="{{asset('backend/assets/libs/choices.js/public/assets/styles/choices.min.css')}}">
+    <style>
+        .icon-container {
+            background-color: #e5efff;
+            color: #1a73e8;
+        }
+        .card-title {
+            color: #ffb100;
+        }
+    </style>
 </head>
 
 <body class="landing-body">
@@ -269,523 +278,639 @@
             </div>
         </div>
 
-        <!-- Advertisers Section -->
-           <div class="bg-white dark:bg-bgdark" id="about">
-            <div class="section container mx-auto">
-              <div class="grid lg:grid-cols-2 gap-6">
-                <div class="relative bg-gradient-radial from-gray-100 to-white dark:from-black/20 dark:to-bgdark">
-                  <div class="relative h-96 overflow-clip py-10 sm:h-[32rem] lg:p-20">
-                    <img src="../assets/img/landing/3.png"
-                      class="mx-auto h-80 w-96 rounded-t-sm object-cover object-top shadow-2xl dark:border-transparent sm:h-[28rem]"
-                      alt="">
-                  </div>
-                </div>
-                <div class="my-auto">
-                  <div class="space-y-2">
-                    <h2
-                      class="section-title text-center text-3xl font-bold text-gray-800 dark:text-white md:text-4xl lg:text-5xl">
-                      <span class="">Mobile Responsive View</span>
-                    </h2>
-                    <h5 class="font-medium text-2xl text-gray-800 dark:text-white">We Help to Build Your Dream Project.</h5>
-                    <h6 class="font-normal text-base">Meet our team who are experts in Web designing and Development.</h6>
-                    <p class="text-base text-gray-500 dark:text-white/70">
-                      It is a long established fact that a reader will be distracted by the readable content of a page
-                      when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                      distribution of letters, as opposed to using 'Content here, content here', making it look like
-                      readable English. .
-                    </p>
-                    <p class="text-base text-gray-500 dark:text-white/70">
-                      There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                      alteration in some form, by injected humour, or randomised words which don't look even slightly
-                      believable. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence
-                      structures, to generate Lorem Ipsum which looks reasonable.
-                    </p>
-                  </div>
-                  <a href="about.html" class="py-2 px-3 ti-btn m-0 ti-btn-primary mt-6">
-                    Read More <i class="ri-arrow-right-line rtl:rotate-180"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End::Advertisers Section -->
 
-        <!-- Start::Publishers Section-->
-        <div class="" id="our-mission">
-            <div class="section container mx-auto">
-              <div class="grid lg:grid-cols-2 gap-6">
-                <div class="my-auto">
-                  <div class="space-y-2">
-                    <h2
-                      class="section-title text-center text-3xl font-bold text-gray-800 dark:text-white md:text-4xl lg:text-5xl">
-                      <span class="">Responsive Template</span>
-                    </h2>
-                    <div class="space-y-3">
-                      <p class="text-base text-gray-500 dark:text-white/70">
-                        It is a long established fact that a reader will be distracted by the readable content of a page
-                        when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                        distribution of letters, as opposed to using 'Content here, content here', making it look like
-                        readable English. .
-                      </p>
+
+        <!-- Advertiser Section -->
+        <div class="bg-white dark:bg-bgdark py-10" id="advertiser">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Are you an Advertiser or a Media Buyer?</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                    Boost your traffic, make more sales, and grow your business. Explore our link-building services and fortify your backlink portfolio.
+                </p>
+                <div class="grid lg:grid-cols-2 gap-6 items-center">
+                    <div class="flex justify-center">
+                        <img src="../assets/img/advertiser.png" class="rounded-lg shadow-lg object-cover" alt="Advertiser meeting">
                     </div>
-                    <div class="space-y-3">
-                      <p class="text-base text-gray-500 dark:text-white/70">
-                        There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                        alteration in some form, by injected humour, or randomised words which don't look even slightly
-                        believable. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence
-                        structures, to generate Lorem Ipsum which looks reasonable.
-                      </p>
-                    </div>
-                  </div>
-                  <a href="about.html" class="py-2 px-3 ti-btn m-0 ti-btn-primary mt-6">
-                    Get Started <i class="ri-arrow-right-line rtl:rotate-180"></i>
-                  </a>
-                </div>
-                <div class="relative bg-gradient-radial from-white to-gray-100 dark:from-bgdark dark:to-black/20">
-                  <div class="relative h-96 overflow-clip py-10 sm:h-[32rem] lg:p-20">
-                    <img src="../assets/img/landing/4.png"
-                      class="mx-auto h-80 w-96 rounded-t-sm border object-cover object-top shadow-2xl dark:border-transparent sm:h-[28rem]"
-                      alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End::Publishers Content -->
-
-        <!-- Start::Social Publishers -->
-        <div class="bg-white dark:bg-bgdark" id="about">
-            <div class="section container mx-auto">
-              <div class="grid lg:grid-cols-2 gap-6">
-                <div class="relative bg-gradient-radial from-gray-100 to-white dark:from-black/20 dark:to-bgdark">
-                  <div class="relative h-96 overflow-clip py-10 sm:h-[32rem] lg:p-20">
-                    <img src="../assets/img/landing/3.png"
-                      class="mx-auto h-80 w-96 rounded-t-sm object-cover object-top shadow-2xl dark:border-transparent sm:h-[28rem]"
-                      alt="">
-                  </div>
-                </div>
-                <div class="my-auto">
-                  <div class="space-y-2">
-                    <h2
-                      class="section-title text-center text-3xl font-bold text-gray-800 dark:text-white md:text-4xl lg:text-5xl">
-                      <span class="">Mobile Responsive View</span>
-                    </h2>
-                    <h5 class="font-medium text-2xl text-gray-800 dark:text-white">We Help to Build Your Dream Project.</h5>
-                    <h6 class="font-normal text-base">Meet our team who are experts in Web designing and Development.</h6>
-                    <p class="text-base text-gray-500 dark:text-white/70">
-                      It is a long established fact that a reader will be distracted by the readable content of a page
-                      when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                      distribution of letters, as opposed to using 'Content here, content here', making it look like
-                      readable English. .
-                    </p>
-                    <p class="text-base text-gray-500 dark:text-white/70">
-                      There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                      alteration in some form, by injected humour, or randomised words which don't look even slightly
-                      believable. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence
-                      structures, to generate Lorem Ipsum which looks reasonable.
-                    </p>
-                  </div>
-                  <a href="about.html" class="py-2 px-3 ti-btn m-0 ti-btn-primary mt-6">
-                    Read More <i class="ri-arrow-right-line rtl:rotate-180"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-         <!-- Start::row-2 -->
-         <div class="grid grid-cols-12 gap-6">
-            <div class="col-span-12">
-              <div class="box">
-                <div class="box-header">
-                    <h2 class="text-3xl font-bold mb-8 text-center">Browse our database of 10K+ Publishers</h2>
-                </div>
-                <div class="box-body space-y-3">
-                  <div class="sortable-data">
-                    <div class="sm:grid grid-cols-12 gap-6 space-y-2 sm:space-y-0">
-                      <div class="col-span-12 lg:!col-span-2 sm:col-span-3">
-                        <select id="sort-field" class="ti-form-select " data-trigger>
-                          <option value="publisher_name" selected>Publishers</option>
-                          <option value="niches">Niches</option>
-                          <option value="da">DA</option>
-                          <option value="dr">DR</option>
-                          <option value="traffic">Traffic</option>
-                          <option value="country">Country</option>
-                          <option value="price">Price</option>
-                        </select>
-                      </div>
-                      {{-- <div class="col-span-12 lg:!col-span-2 sm:col-span-3">
-                        <select id="sort-direction" class="ti-form-select" data-trigger>
-                          <option value="asc" selected>asc</option>
-                          <option value="desc">desc</option>
-                        </select>
-                      </div> --}}
-                      <button type="button" class="ti-btn ti-btn-primary py-2 col-span-12 lg:!col-span-2 sm:col-span-3" id="sort-trigger">Filter</button>
-                    </div>
-                  </div>
-                  <div class="overflow-hidden table-bordered">
-                    <div id="sort-table" class="ti-custom-table ti-striped-table ti-custom-table-hover"><div class="container mx-auto py-12">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full bg-white border border-gray-200">
-                                <thead>
-                                    <tr>
-                                        <th class="px-4 py-2 border-b-2 border-gray-300">Publishers</th>
-                                        <th class="px-4 py-2 border-b-2 border-gray-300">Niches</th>
-                                        <th class="px-4 py-2 border-b-2 border-gray-300">DA</th>
-                                        <th class="px-4 py-2 border-b-2 border-gray-300">DR</th>
-                                        <th class="px-4 py-2 border-b-2 border-gray-300">Traffic</th>
-                                        <th class="px-4 py-2 border-b-2 border-gray-300">Country</th>
-                                        <th class="px-4 py-2 border-b-2 border-gray-300">Price</th>
-                                        <th class="px-4 py-2 border-b-2 border-gray-300">Order Now</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="px-4 py-2 border-b border-gray-200">Publisher 1</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">Tech</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">50</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">60</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">20,000</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">USA</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">$150</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">
-                                            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                                Order Now
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-4 py-2 border-b border-gray-200">Publisher 2</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">Health</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">45</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">55</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">15,000</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">UK</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">$100</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">
-                                            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                                Order Now
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-4 py-2 border-b border-gray-200">Publisher 3</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">Finance</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">55</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">65</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">25,000</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">Canada</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">$200</td>
-                                        <td class="px-4 py-2 border-b border-gray-200">
-                                            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                                Order Now
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <!-- Add more rows as needed -->
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End::row-2 -->
-
-
-
-                <!-- Start::Services Content -->
-                <div class="" id="services">
-                    <div class="section container mx-auto space-y-6">
-                    <div class="text-center max-w-[80rem] mx-auto mb-12">
-                        <h2
-                        class="justify-center section-title text-center text-3xl font-bold text-gray-800 dark:text-white md:text-4xl lg:text-5xl">
-                        <span class="px-3">Our
-                            Services</span>
-                        </h2>
-                        <p class="text-center text-gray-500 dark:text-white/70 text-base mt-4">Lorem ipsum dolor sit, amet
-                        consectetur adipisicing
-                        elit. Pariatur quam saepe enim maxime! Eligendi quas itaque voluptatibus, aspernatur illo, natus cumque
-                        odio, molestiae obcaecati ducimus sit ratione recusandae perferendis culpa?</p>
-                    </div>
-                    <div class="grid md:grid-cols-2 lg:!grid-cols-4 gap-6">
-                        <div class="box landing-service text-center mb-0">
-                        <div class="box-body">
-                            <div class="landing-service-img mb-4 avatar avatar-lg rounded-full bg-primary p-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="fill-transparent stroke-white" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z" />
+                    <div class="text-left space-y-4">
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
                             </svg>
-                            </div>
-                            <div>
-                            <h3 class="text-gray-800 dark:text-white text-xl font-semibold my-auto mb-2">Design Quality</h3>
-                            <p class="text-gray-500 dark:text-white/70 text-base">Lorem ipsum dolor sit, amet consectetur
-                                adipisicing
-                                elit. Pariatur quam saepe enim maxime!</p>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="box landing-service text-center mb-0">
-                        <div class="box-body">
-                            <div class="landing-service-img mb-4 avatar avatar-lg rounded-full bg-primary p-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="fill-transparent stroke-white" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+                            Browse our database with 10K+ publishers
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
                             </svg>
-                            </div>
-                            <div class="">
-                            <h3 class="text-gray-800 dark:text-white text-xl font-semibold my-auto mb-2">Customization</h3>
-                            <p class="text-gray-500 dark:text-white/70 text-base">Lorem ipsum dolor sit, amet consectetur
-                                adipisicing
-                                elit. Pariatur quam saepe enim maxime! </p>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="box landing-service text-center mb-0">
-                        <div class="box-body">
-                            <div class="landing-service-img mb-4 avatar avatar-lg rounded-full bg-primary p-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="fill-transparent stroke-white" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                            Select a site and make your order
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
                             </svg>
-                            </div>
-                            <div class="">
-                            <h3 class="text-gray-800 dark:text-white text-xl font-semibold my-auto mb-2">Documentation</h3>
-                            <p class="text-gray-500 dark:text-white/70 text-base">Lorem ipsum dolor sit, amet consectetur
-                                adipisicing
-                                elit. Pariatur quam saepe enim maxime!</p>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="box landing-service text-center mb-0">
-                        <div class="box-body">
-                            <div class="landing-service-img mb-4 avatar avatar-lg rounded-full bg-primary p-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="fill-transparent stroke-white" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m0-3l-3-3m0 0l-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
+                            Get your content published within 24 hours
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
                             </svg>
-                            </div>
-                            <div class="">
-                            <h3 class="text-gray-800 dark:text-white text-xl font-semibold my-auto mb-2">Regular Updates</h3>
-                            <p class="text-gray-500 dark:text-white/70 text-base">Lorem ipsum dolor sit, amet consectetur
-                                adipisicing
-                                elit. Pariatur quam saepe enim maxime! </p>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="box landing-service text-center mb-0">
-                            <div class="box-body">
-                            <div class="landing-service-img mb-4 avatar avatar-lg rounded-full bg-primary p-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-transparent stroke-white" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m0-3l-3-3m0 0l-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
-                                </svg>
-                            </div>
-                            <div class="">
-                                <h3 class="text-gray-800 dark:text-white text-xl font-semibold my-auto mb-2">Regular Updates</h3>
-                                <p class="text-gray-500 dark:text-white/70 text-base">Lorem ipsum dolor sit, amet consectetur
-                                adipisicing
-                                elit. Pariatur quam saepe enim maxime! </p>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="box landing-service text-center mb-0">
-                            <div class="box-body">
-                            <div class="landing-service-img mb-4 avatar avatar-lg rounded-full bg-primary p-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-transparent stroke-white" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m0-3l-3-3m0 0l-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
-                                </svg>
-                            </div>
-                            <div class="">
-                                <h3 class="text-gray-800 dark:text-white text-xl font-semibold my-auto mb-2">Regular Updates</h3>
-                                <p class="text-gray-500 dark:text-white/70 text-base">Lorem ipsum dolor sit, amet consectetur
-                                adipisicing
-                                elit. Pariatur quam saepe enim maxime! </p>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="box landing-service text-center mb-0">
-                            <div class="box-body">
-                            <div class="landing-service-img mb-4 avatar avatar-lg rounded-full bg-primary p-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-transparent stroke-white" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m0-3l-3-3m0 0l-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
-                                </svg>
-                            </div>
-                            <div class="">
-                                <h3 class="text-gray-800 dark:text-white text-xl font-semibold my-auto mb-2">Regular Updates</h3>
-                                <p class="text-gray-500 dark:text-white/70 text-base">Lorem ipsum dolor sit, amet consectetur
-                                adipisicing
-                                elit. Pariatur quam saepe enim maxime! </p>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="box landing-service text-center mb-0">
-                            <div class="box-body">
-                            <div class="landing-service-img mb-4 avatar avatar-lg rounded-full bg-primary p-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="fill-transparent stroke-white" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m0-3l-3-3m0 0l-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
-                                </svg>
-                            </div>
-                            <div class="">
-                                <h3 class="text-gray-800 dark:text-white text-xl font-semibold my-auto mb-2">Regular Updates</h3>
-                                <p class="text-gray-500 dark:text-white/70 text-base">Lorem ipsum dolor sit, amet consectetur
-                                adipisicing
-                                elit. Pariatur quam saepe enim maxime! </p>
-                            </div>
-                            </div>
-                        </div>
-
-                    </div>
+                            Free account, no fees, no credit card needed
+                        </p>
+                        <a href="#"
+                           class="inline-block mt-6 py-3 px-6 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300">
+                            Get Started as an Advertiser <i class="ri-arrow-right-line rtl:rotate-180"></i>
+                        </a>
                     </div>
                 </div>
-                <!-- End::Services Content -->
-
-
-
-
-
-        <!-- Start:Footer Content-->
-        {{-- <footer class="section !pb-0 bg-bgdark">
-          <div class=" border-b border-white/10 dark:border-white/10 pb-8">
-            <div class="container mx-auto">
-              <div class="grid grid-cols-12 gap-6">
-                <div class="col-span-12 lg:col-span-4">
-                  <div class="space-y-4 px-4">
-                    <div>
-                      <h6 class="text-white text-lg leading-none">About</h6>
-                      <hr class="w-10 border-t-4 border-primary inline-block mx-auto">
-                    </div>
-                    <img src="../assets/img/brand-logos/desktop-dark.png" class="w-auto" alt="img">
-                    <p class="text-base text-gray-400 dark:text-gray-400">Lorem, ipsum dolor sit amet consectetur
-                      adipisicing
-                      elit. Magni reprehenderit tenetur sapiente, corrupti voluptatibus numquam asperiores temporibus id
-                      molestiae cum voluptate nam.</p>
-                    <div class="flex space-x-1 rtl:space-x-reverse">
-                      <button aria-label="button" type="button"
-                        class="m-0 rounded-full p-2 ti-btn ti-btn-outline !border-0 bg-white/5 dark:bg-white/5 text-gray-400 dark:text-gray-400">
-                        <i class="ri ri-github-line text-lg leading-none"></i>
-                      </button>
-                      <button aria-label="button" type="button"
-                        class="m-0 rounded-full p-2 ti-btn ti-btn-outline !border-0 bg-white/5 dark:bg-white/5 text-gray-400 dark:text-gray-400">
-                        <i class="ri ri-instagram-line text-lg leading-none"></i>
-                      </button>
-                      <button aria-label="button" type="button"
-                        class="m-0 rounded-full p-2 ti-btn ti-btn-outline !border-0 bg-white/5 dark:bg-white/5 text-gray-400 dark:text-gray-400">
-                        <i class="ri ri-twitter-line text-lg leading-none"></i>
-                      </button>
-                      <button aria-label="button" type="button"
-                        class="m-0 rounded-full p-2 ti-btn ti-btn-outline !border-0 bg-white/5 dark:bg-white/5 text-gray-400 dark:text-gray-400">
-                        <i class="ri ri-linkedin-line text-lg leading-none"></i>
-                      </button>
-                      <button aria-label="button" type="button"
-                        class="m-0 rounded-full p-2 ti-btn ti-btn-outline !border-0 bg-white/5 dark:bg-white/5 text-gray-400 dark:text-gray-400">
-                        <i class="ri ri-google-line text-lg leading-none"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-span-12 lg:col-span-4">
-                  <div class="grid lg:grid-cols-2 gap-6">
-                    <div class="space-y-3 px-4">
-                      <div>
-                        <h6 class="text-white text-lg leading-none">Our Services</h6>
-                        <hr class="w-10 border-t-4 border-primary inline-block mx-auto">
-                      </div>
-                      <ul class="space-y-3 text-gray-400 dark:text-gray-400">
-                        <li><a href="javascript:void(0);">Our Team</a></li>
-                        <li><a href="javascript:void(0);">Contact US</a></li>
-                        <li><a href="javascript:void(0);">About</a></li>
-                        <li><a href="javascript:void(0);">Services</a></li>
-                        <li><a href="javascript:void(0);">Blog</a></li>
-                        <li><a href="javascript:void(0);">Terms and Services</a></li>
-                      </ul>
-                    </div>
-                    <div class="space-y-3 px-4">
-                      <div>
-                        <h6 class="text-white text-lg leading-none">Our Pages</h6>
-                        <hr class="w-10 border-t-4 border-primary inline-block mx-auto">
-                      </div>
-                      <ul class="space-y-3 text-gray-400 dark:text-gray-400">
-                        <li><a href="javascript:void(0);">Email</a></li>
-                        <li><a href="javascript:void(0);">Profile</a></li>
-                        <li><a href="javascript:void(0);">Timeline</a></li>
-                        <li><a href="javascript:void(0);">Projects</a></li>
-                        <li><a href="javascript:void(0);">Contacts</a></li>
-                        <li><a href="javascript:void(0);">Protfolio</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-span-12 lg:col-span-4">
-                  <div class="space-y-3 px-4">
-                    <div>
-                      <h6 class="text-white text-lg leading-none">Contact Us</h6>
-                      <hr class="w-10 border-t-4 border-primary inline-block mx-auto">
-                    </div>
-                    <ul class="space-y-3 text-gray-400 dark:text-gray-400">
-                      <li> <a href="javascript:void(0)" class="inline-flex"><i
-                            class="text-white ri-home-8-line ltr:mr-2 rtl:ml-2"></i> New
-                          York, Weq
-                          Street, NY 10012, US</a> </li>
-                      <li> <a href="javascript:void(0)" class="inline-flex"><i
-                            class="text-white ri-mail-line ltr:mr-2 rtl:ml-2"></i>info12323@example.com</a></li>
-                      <li> <a href="javascript:void(0)" class="inline-flex"><i
-                            class="text-white ri-phone-line ltr:mr-2 rtl:ml-2"></i> + 01
-                          234 567 88</a>
-                      </li>
-                      <li> <a href="javascript:void(0)" class="inline-flex"><i
-                            class="text-white ri-printer-line ltr:mr-2 rtl:ml-2"></i> + 01
-                          234 567
-                          89</a> </li>
-                      <li> <a href="javascript:void(0)" class="inline-flex"><i
-                            class="text-white ri-global-line ltr:mr-2 rtl:ml-2"></i>
-                          https://Synto.com/</a> </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-          <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <p class="text-center text-white">Copyright © <span id="year">2022</span> <a href="javascript:void(0)"
-                class="text-primary"> Synto</a>. Designed with <span class="ri ri-heart-fill text-red-500"></span> by <a
-                class="text-primary" href="javascript:void(0)"> Spruko </a> All rights reserved </p>
-          </div>
-        </footer> --}}
-        <!-- End:Footer Content-->
+        </div>
+        <!-- End::Advertiser Section -->
+
+        <!-- Advertiser Section -->
+        <div class="bg-white dark:bg-bgdark py-10" id="advertiser">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Are you an Advertiser or a Media Buyer?</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                    Boost your traffic, make more sales, and grow your business. Explore our link-building services and fortify your backlink portfolio.
+                </p>
+                <div class="grid lg:grid-cols-2 gap-6 items-center">
+                    <!-- Image on the Left -->
+                    <div class="flex justify-center lg:order-1">
+                        <img src="../assets/img/advertiser.png" class="rounded-lg shadow-lg object-cover" alt="Advertiser meeting">
+                    </div>
+                    <!-- Text on the Right -->
+                    <div class="text-left space-y-4 lg:order-2">
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            Browse our database with 10K+ publishers
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            Select a site and make your order
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            Get your content published within 24 hours
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            Free account, no fees, no credit card needed
+                        </p>
+                        <a href="#"
+                           class="inline-block mt-6 py-3 px-6 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300">
+                            Get Started as an Advertiser <i class="ri-arrow-right-line rtl:rotate-180"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End::Advertiser Section -->
+
+
+
+
+
+        <!-- Social Publisher Section -->
+        <div class="bg-white dark:bg-bgdark py-10" id="advertiser">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Are you an Advertiser or a Media Buyer?</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                    Boost your traffic, make more sales, and grow your business. Explore our link-building services and fortify your backlink portfolio.
+                </p>
+                <div class="grid lg:grid-cols-2 gap-6 items-center">
+                    <div class="flex justify-center">
+                        <img src="../assets/img/advertiser.png" class="rounded-lg shadow-lg object-cover" alt="Advertiser meeting">
+                    </div>
+                    <div class="text-left space-y-4">
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            Browse our database with 10K+ publishers
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            Select a site and make your order
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            Get your content published within 24 hours
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            Free account, no fees, no credit card needed
+                        </p>
+                        <a href="#"
+                           class="inline-block mt-6 py-3 px-6 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300">
+                            Get Started as an Advertiser <i class="ri-arrow-right-line rtl:rotate-180"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End::Social Publisher Section -->
 
       </div>
+    </div>
+
       <!-- End::main-content -->
+    <div class="">
+          <!-- Start::Services Content -->
+          <div id="services" class="container mx-auto py-12" style="background-color: #F5F7FA; 100">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">What We Do</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Service Card Template Start -->
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
+                            <line x1="8" y1="6" x2="16" y2="6"></line>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                            <line x1="8" y1="18" x2="16" y2="18"></line>
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-xl font-semibold mb-2">Sponsored Posts</h3>
+                    <p class="text-gray-600">Elevate your brand's presence with content that resonates. Reach the right audience, drive engagement and impact.</p>
+                </div>
+                <!-- Service Card Template End -->
+                <!-- Repeat the Service Card Template for other services by changing the content inside the divs -->
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zM2 22c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2v1H2v-1z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-xl font-semibold mb-2">Link Insertion & Exchanges</h3>
+                    <p class="text-gray-600">We are focused on contextual relevance, quality assurance, SEO benefits, customized strategies and search engine visibility.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm8 4h3v6h-2v-3h-1v3H8v-3H7v3H5v-3H4v6H3v-8h6V9H4v2H3V5h14v6H13z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-xl font-semibold mb-2">Banner Advertising</h3>
+                    <p class="text-gray-600">Elevate your online presence through banner advertising, focusing on targeted placement, measurable results, adaptability, and customization.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 20h14v-2H5v2zm14-9h-4v-2c0-2.22-1.78-4-4-4s-4 1.78-4 4v2H5c-1.1 0-2 .9-2 2v5h18v-5c0-1.1-.9-2-2-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-xl font-semibold mb-2">CPM Campaigns</h3>
+                    <p class="text-gray-600">Drive conversions, we are focused on precision targeting, strategic ad placement, budget efficiency, transparent reporting, and customization.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a10 10 0 1 1-7.07 17.07A10 10 0 0 1 12 2zm1 14.5h-2v-2h2v2zm0-4h-2v-6h2v6z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-xl font-semibold mb-2">Social Publishers</h3>
+                    <p class="text-gray-600">Ready to harness the power of influencers and social publishers to take your brand to new heights? Let's discuss how our influencer marketing solutions can help you achieve your business goals.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-xl font-semibold mb-2">TV/Radio Advertising</h3>
+                    <p class="text-gray-600">Let's Take Your Message to the Airwaves. Ready to elevate your brand's visibility through TV and radio advertising? Let's explore how we can help you achieve your advertising goals.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M5 12a7 7 0 1 0 14 0M5 12a7 7 0 0 1 14 0"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-xl font-semibold mb-2">Write For Me Services</h3>
+                    <p class="text-gray-600">Save time and get your message across effectively. Our content experts will create high-quality, customized content tailored to your brand and audience.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a10 10 0 1 1-7.07 17.07A10 10 0 0 1 12 2zm1 14.5h-2v-2h2v2zm0-4h-2v-6h2v6z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-xl font-semibold mb-2">Content Strategy</h3>
+                    <p class="text-gray-600">Unlock your brand's full potential with our comprehensive content strategy services, tailored to engage, inform, and convert your audience.</p>
+                </div>
+            </div>
+        </div>
+        <!-- End::Services Content -->
 
+        <!-- Niche Markets Section -->
+        <div class="relative bg-white">
+        <div class="container mx-auto py-12 bg-white">
+            <div class="text-center max-w-2xl mx-auto mb-12 pt-12">
+                <h2 class="text-3xl font-bold text-gray-800 mt-8">Our Niche Markets</h2>
+                <p class="text-gray-600">We have diverse niches to accommodate a broad audience and all your content needs.</p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-8 text-center">
+                <!-- General Posts -->
+                <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">General Posts</h3>
+                </div>
+
+                <!-- Betting and Casinos -->
+                <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect>
+                            <line x1="2" y1="10" x2="22" y2="10"></line>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Betting and Casinos</h3>
+                </div>
+
+                <!-- Real Estate -->
+                <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12l2-2 3 3 4-4 4 4 4-4 2 2v7H3v-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Real Estate</h3>
+                </div>
+
+                <!-- Automotive -->
+                <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="10" rx="2" ry="2"></rect>
+                            <path d="M16 1l-4 4-4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Automotive</h3>
+                </div>
+
+                <!-- FinTech -->
+                <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="10" rx="2" ry="2"></rect>
+                            <line x1="12" y1="4" x2="12" y2="20"></line>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">FinTech</h3>
+                </div>
+
+                <!-- Fashion -->
+                <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M12 2v4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Fashion</h3>
+                </div>
+
+                <!-- Fitness -->
+                <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20"></path>
+                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Fitness</h3>
+                </div>
+
+                <!-- Gadgets & Appliances -->
+                <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="10" rx="2" ry="2"></rect>
+                            <line x1="7" y1="11" x2="7" y2="17"></line>
+                            <line x1="17" y1="11" x2="17" y2="17"></line>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Gadgets & Appliances</h3>
+                </div>
+
+                <!-- CBD -->
+                <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M16 8v8"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">CBD</h3>
+                </div>
+
+                <!-- Active Lifestyles -->
+                <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Active Lifestyles</h3>
+                </div>
+                 <!-- Active Lifestyles -->
+                 <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Active Lifestyles</h3>
+                </div>
+                 <!-- Active Lifestyles -->
+                 <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Active Lifestyles</h3>
+                </div>
+                 <!-- Active Lifestyles -->
+                 <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Active Lifestyles</h3>
+                </div>
+                 <!-- Active Lifestyles -->
+                 <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Active Lifestyles</h3>
+                </div>
+                 <!-- Active Lifestyles -->
+                 <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Active Lifestyles</h3>
+                </div>
+                 <!-- Active Lifestyles -->
+                 <div class="flex flex-col items-center">
+                    <div class="icon-container p-4 rounded-full mb-4 inline-block text-[#D4AF37]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Active Lifestyles</h3>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="text-center">
+            <a href="#"
+               class=" w-full max-w-xs py-3 px-6 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300 text-center">
+                CLICK HERE TO VIEW OUR NICHE MARKETS
+            </a>
+        </div>
+        </div>
+
+        <!-- Write For Me Section -->
+        {{-- <div class="relative bg-blue">
+        <div class="bg-blue py-12">
+            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 text-white mb-8 md:mb-0">
+                    <h2 class="text-3xl font-bold mb-4">Write For Me</h2>
+                    <p class="mb-4">
+                        We write professional SEO articles, web page copy, and guest articles to expand your digital footprint and visibility on the internet.
+                    </p>
+                    <p>
+                        <a href="#" class="text-[#00c0ff] hover:underline">Contact us</a> today for a continuous supply of tailored digital PR content, quality essays, product descriptions, and guest blogs to help you establish a digital presence and build authority in your niche.
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="bg-[#D4AF37] text-white py-2 px-6 rounded-full inline-flex items-center hover:bg-[#b8962f] transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 20h9"></path>
+                                <path d="M12 4V20"></path>
+                            </svg>
+                            WRITE FOR ME
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="/mnt/data/write for me.png" alt="Write For Me Image" class="w-64 h-64 rounded-full">
+                </div>
+            </div>
+        </div>
+        </div> --}}
+
+
+        <!-- Advertiser Section -->
+        <div class="bg-[#667788] dark:bg-bgdark py-10 mt-8" id="advertiser">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Why Choose Medialytica?</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                    Boost your traffic, make more sales, and grow your business. Explore our link-building services and fortify your backlink portfolio.
+                </p>
+                <div class="grid lg:grid-cols-2 gap-6 items-center">
+                    <div class="flex justify-center">
+                        <img src="../assets/img/advertiser.png" class="rounded-lg shadow-lg object-cover" alt="Advertiser meeting">
+                    </div>
+                    <div class="text-left space-y-4">
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            We have taken time to build an extensive network of publishers, media outlets, and influencers.
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            We are committed to transparency and open communication through regular updates and detailed reports.
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            We assign every project a dedicated Account Manager for efficiency and personalized support.
+                        </p>
+                        <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+                            <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+                            </svg>
+                            We have fulfilled thousands of orders, demonstrating our credibility and track record of excellence
+
+                        </p>
+                        <a href="#"
+                           class="inline-block mt-6 py-3 px-6 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300">
+                           Contact Us <i class="ri-arrow-right-line rtl:rotate-180"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End::Advertiser Section -->
     </div>
 
-    <!-- Back To Top -->
-    <div class="scrollToTop">
-      <span class="arrow"><i class="ri-arrow-up-s-fill text-xl"></i></span>
-    </div>
-
-    <div id="responsive-overlay"></div>
-     <!-- Tabulator JS -->
-     <script src="{{asset('backend/assets/libs/tabulator-tables/js/tabulator.min.js')}}"></script>
-
-     <!-- Choices JS -->
-     <script src="{{asset('backend/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
 
 
   </body>
+
+    <!-- Start:Footer Content-->
+    {{-- <footer class="section !pb-0 bg-bgdark">
+      <div class=" border-b border-white/10 dark:border-white/10 pb-8">
+        <div class="container mx-auto">
+          <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-12 lg:col-span-4">
+              <div class="space-y-4 px-4">
+                <div>
+                  <h6 class="text-white text-lg leading-none">About</h6>
+                  <hr class="w-10 border-t-4 border-primary inline-block mx-auto">
+                </div>
+                <img src="../assets/img/brand-logos/desktop-dark.png" class="w-auto" alt="img">
+                <p class="text-base text-gray-400 dark:text-gray-400">Lorem, ipsum dolor sit amet consectetur
+                  adipisicing
+                  elit. Magni reprehenderit tenetur sapiente, corrupti voluptatibus numquam asperiores temporibus id
+                  molestiae cum voluptate nam.</p>
+                <div class="flex space-x-1 rtl:space-x-reverse">
+                  <button aria-label="button" type="button"
+                    class="m-0 rounded-full p-2 ti-btn ti-btn-outline !border-0 bg-white/5 dark:bg-white/5 text-gray-400 dark:text-gray-400">
+                    <i class="ri ri-github-line text-lg leading-none"></i>
+                  </button>
+                  <button aria-label="button" type="button"
+                    class="m-0 rounded-full p-2 ti-btn ti-btn-outline !border-0 bg-white/5 dark:bg-white/5 text-gray-400 dark:text-gray-400">
+                    <i class="ri ri-instagram-line text-lg leading-none"></i>
+                  </button>
+                  <button aria-label="button" type="button"
+                    class="m-0 rounded-full p-2 ti-btn ti-btn-outline !border-0 bg-white/5 dark:bg-white/5 text-gray-400 dark:text-gray-400">
+                    <i class="ri ri-twitter-line text-lg leading-none"></i>
+                  </button>
+                  <button aria-label="button" type="button"
+                    class="m-0 rounded-full p-2 ti-btn ti-btn-outline !border-0 bg-white/5 dark:bg-white/5 text-gray-400 dark:text-gray-400">
+                    <i class="ri ri-linkedin-line text-lg leading-none"></i>
+                  </button>
+                  <button aria-label="button" type="button"
+                    class="m-0 rounded-full p-2 ti-btn ti-btn-outline !border-0 bg-white/5 dark:bg-white/5 text-gray-400 dark:text-gray-400">
+                    <i class="ri ri-google-line text-lg leading-none"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-12 lg:col-span-4">
+              <div class="grid lg:grid-cols-2 gap-6">
+                <div class="space-y-3 px-4">
+                  <div>
+                    <h6 class="text-white text-lg leading-none">Our Services</h6>
+                    <hr class="w-10 border-t-4 border-primary inline-block mx-auto">
+                  </div>
+                  <ul class="space-y-3 text-gray-400 dark:text-gray-400">
+                    <li><a href="javascript:void(0);">Our Team</a></li>
+                    <li><a href="javascript:void(0);">Contact US</a></li>
+                    <li><a href="javascript:void(0);">About</a></li>
+                    <li><a href="javascript:void(0);">Services</a></li>
+                    <li><a href="javascript:void(0);">Blog</a></li>
+                    <li><a href="javascript:void(0);">Terms and Services</a></li>
+                  </ul>
+                </div>
+                <div class="space-y-3 px-4">
+                  <div>
+                    <h6 class="text-white text-lg leading-none">Our Pages</h6>
+                    <hr class="w-10 border-t-4 border-primary inline-block mx-auto">
+                  </div>
+                  <ul class="space-y-3 text-gray-400 dark:text-gray-400">
+                    <li><a href="javascript:void(0);">Email</a></li>
+                    <li><a href="javascript:void(0);">Profile</a></li>
+                    <li><a href="javascript:void(0);">Timeline</a></li>
+                    <li><a href="javascript:void(0);">Projects</a></li>
+                    <li><a href="javascript:void(0);">Contacts</a></li>
+                    <li><a href="javascript:void(0);">Protfolio</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-12 lg:col-span-4">
+              <div class="space-y-3 px-4">
+                <div>
+                  <h6 class="text-white text-lg leading-none">Contact Us</h6>
+                  <hr class="w-10 border-t-4 border-primary inline-block mx-auto">
+                </div>
+                <ul class="space-y-3 text-gray-400 dark:text-gray-400">
+                  <li> <a href="javascript:void(0)" class="inline-flex"><i
+                        class="text-white ri-home-8-line ltr:mr-2 rtl:ml-2"></i> New
+                      York, Weq
+                      Street, NY 10012, US</a> </li>
+                  <li> <a href="javascript:void(0)" class="inline-flex"><i
+                        class="text-white ri-mail-line ltr:mr-2 rtl:ml-2"></i>info12323@example.com</a></li>
+                  <li> <a href="javascript:void(0)" class="inline-flex"><i
+                        class="text-white ri-phone-line ltr:mr-2 rtl:ml-2"></i> + 01
+                      234 567 88</a>
+                  </li>
+                  <li> <a href="javascript:void(0)" class="inline-flex"><i
+                        class="text-white ri-printer-line ltr:mr-2 rtl:ml-2"></i> + 01
+                      234 567
+                      89</a> </li>
+                  <li> <a href="javascript:void(0)" class="inline-flex"><i
+                        class="text-white ri-global-line ltr:mr-2 rtl:ml-2"></i>
+                      https://Synto.com/</a> </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <p class="text-center text-white">Copyright © <span id="year">2022</span> <a href="javascript:void(0)"
+            class="text-primary"> Synto</a>. Designed with <span class="ri ri-heart-fill text-red-500"></span> by <a
+            class="text-primary" href="javascript:void(0)"> Spruko </a> All rights reserved </p>
+      </div>
+    </footer> --}}
+    <!-- End:Footer Content-->
+
+
+    <!-- Back To Top -->
+    <div class="scrollToTop">
+        <span class="arrow"><i class="ri-arrow-up-s-fill text-xl"></i></span>
+      </div>
+
+      <div id="responsive-overlay"></div>
+       <!-- Tabulator JS -->
+       <script src="{{asset('backend/assets/libs/tabulator-tables/js/tabulator.min.js')}}"></script>
+
+       <!-- Choices JS -->
+       <script src="{{asset('backend/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
+
 
 </html>
 
