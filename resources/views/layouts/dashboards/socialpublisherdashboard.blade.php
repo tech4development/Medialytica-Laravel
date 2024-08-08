@@ -10,6 +10,12 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{asset('backend/assets/img/brand-logos/favicon.ico')}}">
 
+     <!-- Font Awesome CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+     <!-- Your Tailwind CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <!-- Main JS -->
     <script src="{{asset('backend/assets/js/main.js')}}"></script>
 
@@ -50,7 +56,7 @@
 
             <!-- Start::main-sidebar -->
 
-            @if(Auth::user()->user_role === 'publisher') <!-- Replace 'editor' with the role you want -->
+            @if(Auth::user()->user_role === 'socialpublisher') <!-- Replace 'editor' with the role you want -->
                 <div class="main-sidebar" id="sidebar-scroll">
                     <!-- Start::nav -->
                     <nav class="main-menu-container nav nav-pills flex-column sub-open">

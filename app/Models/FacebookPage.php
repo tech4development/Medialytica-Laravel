@@ -28,7 +28,6 @@ class FacebookPage extends Model
         'facebook_page_name',
         'facebook_page_url',
         'facebook_page_members',
-        'facebook_page_likes',
         'influencer_category',
         'target_audience',
         'post_types',

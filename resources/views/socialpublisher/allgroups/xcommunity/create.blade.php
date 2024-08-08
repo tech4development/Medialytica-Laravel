@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X Handle Details</title>
+    <title>X Community Details</title>
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
@@ -32,8 +32,8 @@
 @endif
     <div class="container mx-auto p-6 max-w-4xl">
         <div class="bg-white p-8 rounded-lg shadow-md">
-            <h1 class="text-2xl font-bold mb-4 text-center">Add your X handle Details</h1>
-            <form action="{{ route('scp_x.store') }}" method="POST">
+            <h1 class="text-2xl font-bold mb-4 text-center">Add your X Community Details</h1>
+            <form action="{{ route('scp_xcommunity.store') }}" method="POST">
                 @csrf
                 <!-- Name -->
                 <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
@@ -164,22 +164,22 @@
                  <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
                     <h2 class="text-lg font-semibold mb-2 text-gray-800">X Handle</h2>
                  <div class="mb-4">
-                    <label for="twitter_handle_name" class="block text-sm font-medium text-gray-700">Enter your X handle name *</label>
-                    <input type="text" id="twitter_handle_name" name="twitter_handle_name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <label for="twitter_community_name" class="block text-sm font-medium text-gray-700">Enter your X Community name *</label>
+                    <input type="text" id="twitter_community_name" name="twitter_community_name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
 
 
                 <!-- X Handle URL -->
                 <div class="mb-4">
-                    <label for="twitter_handle_url" class="block text-sm font-medium text-gray-700">Enter your X handle URL *</label>
-                    <input type="url" id="twitter_handle_url" name="twitter_handle_url" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <label for=" 'twitter_community_url" class="block text-sm font-medium text-gray-700">Enter your X Community URL *</label>
+                    <input type="url" id=" 'twitter_community_url" name=" 'twitter_community_url" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
 
 
                 <!-- No of followers -->
                 <div class="mb-4">
-                    <label for="number_of_followers" class="block text-sm font-medium text-gray-700">Number of followers on your X Handle</label>
-                    <input type="number" id="number_of_followers" name="number_of_followers" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="1" required>
+                    <label for="twitter_community_members" class="block text-sm font-medium text-gray-700">Number of memmbers on your X Community</label>
+                    <input type="number" id="twitter_community_members" name="twitter_community_members" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="1" required>
                 </div>
 
 
@@ -223,10 +223,6 @@
                                 <label for="post_type_video_ads" class="text-gray-600">Video Ads</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox" id="post_type_reels" name="post_types[]" value="Reels" class="mr-2" onchange="toggleDivs()">
-                                <label for="post_type_reels" class="text-gray-600">Reels</label>
-                            </div>
-                            <div class="flex items-center">
                                 <input type="checkbox" id="post_type_posts" name="post_types[]" value="Image/Poster/Banner/Text posts" class="mr-2" onchange="toggleDivs()">
                                 <label for="post_type_image_poster_banner_text" class="text-gray-600">Image/Poster/Banner/Text posts</label>
                             </div>
@@ -258,31 +254,31 @@
                         <p class="text-gray-600 mb-4">Indicate how much you charge for posts on X. All rates should be in USD.</p>
                         <!-- How much do you charge per X post Per Post -->
                         <div class="mb-4">
-                            <label for="cost_per_post" class="block text-sm font-medium text-gray-700">How much do you charge per X post per post? *</label>
+                            <label for="cost_per_post" class="block text-sm font-medium text-gray-700">How much do you charge per post on X? *</label>
                             <input type="number" id="cost_per_post" name="cost_per_post" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
                         </div>
 
                         <!-- How much do you charge per X post Per Hour -->
                         <div class="mb-4">
-                            <label for="cost_per_hour" class="block text-sm font-medium text-gray-700">How much do you charge per X post per hour? *</label>
+                            <label for="cost_per_hour" class="block text-sm font-medium text-gray-700">How much do you charge a post per hour on X? *</label>
                             <input type="number" id="cost_per_hour" name="cost_per_hour" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
                         </div>
 
                         <!-- How much do you charge per X post Per Day -->
                         <div class="mb-4">
-                            <label for="cost_per_day" class="block text-sm font-medium text-gray-700">How much do you charge per X post per day? *</label>
+                            <label for="cost_per_day" class="block text-sm font-medium text-gray-700">How much do you charge a post per day  on X? *</label>
                             <input type="number" id="cost_per_day" name="cost_per_day" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
                         </div>
 
                         <!-- How much do you charge per X post Per Week -->
                         <div class="mb-4">
-                            <label for="cost_per_week" class="block text-sm font-medium text-gray-700">How much do you charge per X post weekly? *</label>
+                            <label for="cost_per_week" class="block text-sm font-medium text-gray-700">How much do you charge a post weekly  on X? *</label>
                             <input type="number" id="cost_per_week" name="cost_per_week" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
                         </div>
 
                         <!-- How much do you charge per X post Per Month -->
                         <div class="mb-4">
-                            <label for="cost_per_month" class="block text-sm font-medium text-gray-700">How much do you charge per X post monthly? *</label>
+                            <label for="cost_per_month" class="block text-sm font-medium text-gray-700">How much do you charge a post monthly on X? *</label>
                             <input type="number" id="cost_per_month" name="cost_per_month" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
                         </div>
 
@@ -290,63 +286,6 @@
                         <div class="mb-4">
                             <label for="cpm_rate_posts" class="block text-sm font-medium text-gray-700">What is the CPM Rate for X Posts on your page? *</label>
                             <input type="number" id="cpm_rate_posts" name="cpm_rate_posts" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-
-
-                 <!-- X Post Rates -->
-                 <div  id="reels_div" class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white" style="display: none;">
-                    <h2 class="text-lg font-semibold mb-2 text-gray-800">X Reel Rates</h2>
-
-                    <p class="text-gray-600 mb-4">Indicate how much you charge for reels on X. All rates should be in USD.</p>
-
-                    <p class="text-gray-600 mb-4">Kindly provide the rates where applicable.</p>
-
-                     <!-- X Reels Rates -->
-                     <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white" >
-                        <h2 class="text-lg font-semibold mb-2 text-gray-800">X Reels</h2>
-
-                        <p class="text-gray-600 mb-4">Indicate how much you charge for reels on X. All rates should be in USD.</p>
-                        <!-- How much do you charge per X post Per Post -->
-                        <div class="mb-4">
-                            <label for="cost_per_reel" class="block text-sm font-medium text-gray-700">How much do you charge per reel on X ?*</label>
-                            <input type="number" id="cost_per_reel" name="cost_per_reel" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
-                        </div>
-
-                        <!-- How much do you charge per X post Per Hour -->
-                        <div class="mb-4">
-                            <label for="cost_per_reel_hour" class="block text-sm font-medium text-gray-700">How much do you charge per reel on X  per hour? *</label>
-                            <input type="number" id="cost_per_reel_hour" name="cost_per_reel_hour" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
-                        </div>
-
-                        <!-- How much do you charge per X post Per Day -->
-                        <div class="mb-4">
-                            <label for="cost_per_reel_day" class="block text-sm font-medium text-gray-700">How much do you charge per reel on X per day? *</label>
-                            <input type="number" id="cost_per_reel_day" name="cost_per_reel_day" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
-                        </div>
-
-                        <!-- How much do you charge per X post Per Week -->
-                        <div class="mb-4">
-                            <label for="cost_per_reel_week" class="block text-sm font-medium text-gray-700">How much do you charge per rel on X weekly? *</label>
-                            <input type="number" id="cost_per_reel_week" name="cost_per_reel_week" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
-                        </div>
-
-                        <!-- How much do you charge per X post Per Month -->
-                        <div class="mb-4">
-                            <label for="cost_per_reel_month" class="block text-sm font-medium text-gray-700">How much do you charge per post on X monthly? *</label>
-                            <input type="number" id="cost_per_reel_month" name="cost_per_reel_month" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
-                        </div>
-
-                        <!-- CPM Rate Posts -->
-                        <div class="mb-4">
-                            <label for="cpm_rate_reels" class="block text-sm font-medium text-gray-700">What is the CPM Rate for X reels on your page? *</label>
-                            <input type="number" id="cpm_rate_reels" name="cpm_rate_reels" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
                         </div>
 
 
@@ -518,16 +457,15 @@
             const skitsDiv = document.getElementById('skits_div');
             const postsDiv = document.getElementById('posts_div');
             const videoAdsDiv = document.getElementById('video_ads_div');
-            const reelsDiv = document.getElementById('reels_div');
+
 
             skitsDiv.style.display = document.getElementById('post_type_skits').checked ? 'block' : 'none';
             postsDiv.style.display = document.getElementById('post_type_posts').checked ? 'block' : 'none';
             videoAdsDiv.style.display = document.getElementById('post_type_video_ads').checked ? 'block' : 'none';
-            reelsDiv.style.display = document.getElementById('post_type_reels').checked ? 'block' : 'none';
+
 
                // Attach the event listener to the checkboxes
             document.getElementById('post_types_posts').onchange = toggleSections;
-            document.getElementById('post_types_reels').onchange = toggleSections;
             document.getElementById('post_types_skits').onchange = toggleSections;
             document.getElementById('post_types_video_ads').onchange = toggleSections;
         }

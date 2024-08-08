@@ -270,8 +270,8 @@ Route::middleware('auth','user_role:socialpublisher')->group(function () {
 
 
                                       // Social Publisher Whatsapp Community Routes
-    Route::get('socialpublisher/whatsappcommunity/create', [WhatsappCommunityController::class, 'create'])->name('scp_whatsappchannel.create');
-    Route::post('socialpublisher/whatsappcommunity/store', [WhatsappCommunityController::class, 'store'])->name('scp_whatsappchannel.store');
+    Route::get('socialpublisher/whatsappcommunity/create', [WhatsappCommunityController::class, 'create'])->name('scp_whatsappcommunity.create');
+    Route::post('socialpublisher/whatsappcommunity/store', [WhatsappCommunityController::class, 'store'])->name('scp_whatsappcommunity.store');
     /*
     |--------------------------------------------------------------------------
                         Social Publisher Tiktok routes

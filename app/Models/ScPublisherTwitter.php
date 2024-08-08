@@ -9,7 +9,7 @@ class ScPublisherTwitter extends Model
 {
     use HasFactory;
      // Table associated with the model
-     protected $table = 'scp_twitter';
+     protected $table = 'scp_twitter_handles';
 
      // The attributes that are mass assignable
      protected $fillable = [

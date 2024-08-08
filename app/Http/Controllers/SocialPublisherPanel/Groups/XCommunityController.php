@@ -9,21 +9,14 @@ use Illuminate\Validation\Rule;
 
 class XCommunityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $twitterCommunities = TwitterCommunities::all();
-        return view('socialmediapanel.group.twittercommunities.index', compact('twitterCommunities'));
-    }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('socialmediapanel.group.twittercommunities.create');
+        return view('socialpublisher.allgroups.xcommunity.create');
     }
 
     /**
