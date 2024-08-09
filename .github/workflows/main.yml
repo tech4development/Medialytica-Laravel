@@ -91,4 +91,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: ${{ secrets.FTP_PORT }}
-          server-dir: '/home/hpqjihel/public_html/'
+          server-dir: '/home/public_html/'
