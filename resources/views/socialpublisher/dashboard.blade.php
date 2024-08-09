@@ -58,9 +58,9 @@
                             <!-- Social Media Logo -->
 
                             <div class="flex gap-2">
-                                <a href="{{ route('scp_facebook.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Profile</a>
-                                <a href="{{ route('scp_facebookpage.create') }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Page</a>
-                                <a href="{{ route('scp_facebookgroup.create') }}" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Group</a>
+                                <a href="{{ route('facebook.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Profile</a>
+                                <a href="{{ route('facebookpage.create') }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Page</a>
+                                <a href="{{ route('facebookgroup.create') }}" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Group</a>
                             </div>
                             <a href="" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300">Edit</a>
                         </div>
@@ -78,8 +78,8 @@
                             <!-- Social Media Logo -->
 
                             <div class="flex gap-2">
-                                <a href="{{ route('scp_x.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Handle</a>
-                                <a href="{{ route('scp_xcommunity.create') }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Community</a>
+                                <a href="{{ route('x.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Handle</a>
+                                <a href="{{ route('xcommunity.create') }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Community</a>
 
                             </div>
                             <a href="" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300">Edit</a>
@@ -97,8 +97,8 @@
                         <div class="flex justify-between items-center mb-4">
 
                             <div class="flex gap-2">
-                                <a href="{{ route('scp_instagram.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Page</a>
-                                <a href="{{ route('scp_instagramgroup.create') }}"  class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Group</a>
+                                <a href="{{ route('instagram.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Page</a>
+                                <a href="{{ route('instagramgroup.create') }}"  class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Group</a>
                             </div>
                             <a href="" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300">Edit</a>
                         </div>
@@ -115,8 +115,8 @@
                         <div class="flex justify-between items-center mb-4">
 
                             <div class="flex gap-2">
-                                <a href="{{ route('scp_telegram.create') }}" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Channel</a>
-                                <a href="{{ route('scp_telegramgroup.create') }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Group</a>
+                                <a href="{{ route('telegram.create') }}" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Channel</a>
+                                <a href="{{ route('telegramgroup.create') }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Group</a>
                             </div>
                             <a href="" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300">Edit</a>
                         </div>
@@ -133,8 +133,8 @@
                         <div class="flex justify-between items-center mb-4">
 
                             <div class="flex gap-2">
-                                <a href="{{ route('scp_tiktok.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Page</a>
-                                <a href="{{ route('scp_tiktokgroup.create') }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Group</a>
+                                <a href="{{ route('tiktok.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Page</a>
+                                <a href="{{ route('tiktokgroup.create') }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Group</a>
                             </div>
                             <a href="" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300">Edit</a>
                         </div>
@@ -150,9 +150,9 @@
                         </div>
                         <div class="flex flex-col gap-4 mb-4">
                             <div class="flex justify-between">
-                                <a href="{{ route('scp_whatsapp.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Group </a>
-                                <a href="{{ route('scp_whatsappcommunity.create') }}" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Community</a>
-                                <a href="{{ route('scp_whatsappchannel.create') }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Channel</a>
+                                <a href="{{ route('whatsapp.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300">Group </a>
+                                <a href="{{ route('whatsappcommunity.create') }}" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Community</a>
+                                <a href="{{ route('whatsappchannel.create') }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors duration-300">Channel</a>
                             </div>
                             <div class="flex justify-center">
                                 <a href="" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300">Edit</a>
@@ -174,7 +174,7 @@
                         <div class="flex justify-between items-center mb-4">
 
                             <div class="flex gap-2">
-                                <a href="{{ route('scp_youtube.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Channel</a>
+                                <a href="{{ route('youtube.create') }}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-red-600 transition-colors duration-300">Channel</a>
                             </div>
                             <a href="" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300">Edit</a>
                         </div>

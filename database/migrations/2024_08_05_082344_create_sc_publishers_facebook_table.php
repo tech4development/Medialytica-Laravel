@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+        if (!Schema::hasTable('scp_facebook_profiles')) {
         Schema::create('scp_facebook_profiles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -45,14 +47,14 @@ return new class extends Migration
             $table->string('facebook_profile_url')->unique();
             $table->unsignedBigInteger('number_of_followers')->nullable();
             $table->enum('influencer_category', [
-                'Mega Influencers (More than 1M followers)',
-                'Macro Influencers (100K - 1M followers)',
-                'Micro Influencers (1K - 100K followers)',
-                'Nano Influencers (Below 1K followers)'
+                'Mega Influencers(More than 1M followers)',
+                'Macro Influencers(100K - 1M followers)',
+                'Micro Influencers(1K - 100K followers)',
+                'Nano Influencers(Below 1K followers)'
             ]);
 
             $table->enum('target_audience', ['Below 18 years', '18 to 35 years', 'Over 35 years']);
-            $table->enum('post_types', ['Skits', 'Video Ads', 'Reels', 'Image/Poster/Banner/Text posts']);
+            $table->enum('post_types', ['Skits', 'Video Ads', 'Reels', 'Image/Poster/Banner/Text posts'])->nullable();
             $table->unsignedDecimal('cost_per_post', 8, 2)->nullable();
             $table->unsignedDecimal('cost_per_hour', 8, 2)->nullable();
             $table->unsignedDecimal('cost_per_day', 8, 2)->nullable();
@@ -82,6 +84,7 @@ return new class extends Migration
 
 
     }
+}
 
     /**
      * Reverse the migrations.

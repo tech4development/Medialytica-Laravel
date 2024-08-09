@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ScPublisherTelegram extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
     protected $table = 'scp_telegram_channels';
 
     // The attributes that are mass assignable

@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ScPublisherTiktok extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
     protected $table = 'scp_tiktok_pages';
 
     // The attributes that are mass assignable

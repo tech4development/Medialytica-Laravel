@@ -9,6 +9,8 @@ class ScPublisherInstagram extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     // Table associated with the model
     protected $table = 'scp_instagarm_pages';
 

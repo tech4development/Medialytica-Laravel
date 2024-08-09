@@ -20,6 +20,29 @@
     <!-- Form-validation JS -->
     <script src="{{ asset('backend/assets/js/form-validation.js') }}"></script>
 
+    <style>
+            .ti-btn-primary {
+                background-color: #007bff; /* Default button background color */
+                color: #fff; /* Default text color */
+                border: 1px solid transparent;
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                border-radius: 0.25rem;
+                transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            }
+
+            .ti-btn-primary:hover {
+                background-color: #0056b3; /* Darker background color on hover */
+                color: #fff; /* Text color on hover */
+                transform: scale(1.05); /* Slightly enlarge the button on hover */
+                cursor: pointer; /* Change cursor to pointer on hover */
+            }
+
+            .ti-btn-primary:active {
+                transform: scale(0.98); /* Slightly reduce the size when the button is clicked */
+            }
+
+        </style>
 
 
 </head>
@@ -33,7 +56,7 @@
     <div class="container mx-auto p-6 max-w-4xl">
         <div class="bg-white p-8 rounded-lg shadow-md">
             <h1 class="text-2xl font-bold mb-4 text-center">Add your Facebook Profile Details</h1>
-            <form action="{{ route('scp_facebook.store') }}" method="POST">
+            <form action="{{ route('facebook.store') }}" method="POST">
                 @csrf
                 <!-- Name -->
                 <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
@@ -41,49 +64,49 @@
 
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-700">Enter your name *</label>
-                    <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
 
                  <!-- Email -->
                  <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700">Enter your email address</label>
-                    <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
 
                 <!-- Phone Number -->
                 <div class="mb-4">
                     <label for="phone_number" class="block text-sm font-medium text-gray-700">Enter your Phone Number *</label>
-                    <input type="tel" id="phone_number" name="phone_number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="tel" id="phone_number" name="phone_number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
 
                 <!-- Contact Person Name -->
                 <div class="mb-4">
                     <label for="contact_person_name" class="block text-sm font-medium text-gray-700">Contact Person Name *</label>
-                    <input type="text" id="contact_person_name" name="contact_person_name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="text" id="contact_person_name" name="contact_person_name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
 
                 <!-- Contact Person Email -->
                 <div class="mb-4">
                     <label for="contact_person_email" class="block text-sm font-medium text-gray-700">Contact Person Email *</label>
-                    <input type="email" id="contact_person_email" name="contact_person_email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="email" id="contact_person_email" name="contact_person_email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
 
                 <!-- Contact Person Phone -->
                 <div class="mb-4">
                     <label for="contact_person_phone" class="block text-sm font-medium text-gray-700">Contact Person Phone *</label>
-                    <input type="tel" id="contact_person_phone" name="contact_person_phone" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="tel" id="contact_person_phone" name="contact_person_phone" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
 
                 <!-- Language -->
                    <div class="mb-4">
                     <label for="language" class="block text-sm font-medium text-gray-700">Language *</label>
-                    <input type="text" id="language" name="language" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="text" id="language" name="language" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
 
                 <!-- Country -->
                 <div class="mb-4">
                     <label for="country" class="block text-sm font-medium text-gray-700">Country *</label>
-                    <input type="text" id="country" name="country" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="text" id="country" name="country" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
                 </div>
 
@@ -121,7 +144,7 @@
                  <!-- Niches -->
                  <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
                  <div class="mb-4">
-                    <span class="block text-sm font-medium text-gray-700">Niches/Themes *Select all content niches/themes that you accept on your social media pages</span>
+                    <span class="block text-sm font-medium text-gray-700">Niches/Themes *Select all content niches/themes that you accept on your social media profiles</span>
                     <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach (['General Posts', 'Betting and Casinos', 'Real Estate', 'Automotive', 'FinTech', 'Fashion', 'Gadgets & appliances', 'CBD', 'Active lifestyles and fitness', 'Crypto & Forex', 'Sports', 'Home Improvement'] as $niche)
                             <div class="flex items-center">
@@ -136,7 +159,7 @@
                 <!-- Others -->
                 <div class="mb-4">
                     <label for="others" class="block text-sm font-medium text-gray-700">Others (specify)</label>
-                    <input type="text" id="others" name="other_influencer_types" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="text" id="others" name="other_influencer_types" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
                  </div>
 
@@ -144,7 +167,7 @@
                  <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
                  <div class="mb-4">
                     <label for="publishing_time" class="block text-sm font-medium text-gray-700">Publishing Time *</label>
-                    <select id="publishing_time" name="publishing_time" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <select id="publishing_time" name="publishing_time" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                         <option value="0" selected>Select publishing time</option>
                         <option value="24Hrs">24Hrs</option>
                         <option value="48Hrs">48Hrs</option>
@@ -155,45 +178,38 @@
                   <!-- Paypal Email -->
                   <div class="mb-4">
                     <label for="paypal_email" class="block text-sm font-medium text-gray-700">Paypal Email *</label>
-                    <input type="email" id="paypal_email" name="paypal_email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="email" id="paypal_email" name="paypal_email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
                  </div>
 
 
-                 <!-- Facebook Page Name -->
+                 <!-- Facebook Profile Name -->
                  <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
                     <h2 class="text-lg font-semibold mb-2 text-gray-800">Faceboom Profile</h2>
                  <div class="mb-4">
-                    <label for="facebook_page_name" class="block text-sm font-medium text-gray-700">Enter your facebook page name *</label>
-                    <input type="text" id="facebook_page_name" name="facebook_page_name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <label for="facebook_profile_name" class="block text-sm font-medium text-gray-700">Enter your facebook profile name *</label>
+                    <input type="text" id="facebook_profile_name" name="facebook_profile_name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
 
 
-                <!-- Facebook Page URL -->
+                <!-- Facebook Profile URL -->
                 <div class="mb-4">
-                    <label for="facebook_page__url" class="block text-sm font-medium text-gray-700">Enter your facebook page URL *</label>
-                    <input type="url" id="facebook_page_url" name="facebook_page_url" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <label for="facebook_profile__url" class="block text-sm font-medium text-gray-700">Enter your facebook profile URL *</label>
+                    <input type="url" id="facebook_profile_url" name="facebook_profile_url" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                 </div>
 
 
                 <!-- No of followers -->
                 <div class="mb-4">
-                    <label for="number_of_followers" class="block text-sm font-medium text-gray-700">Number of followers on Facebook Page</label>
-                    <input type="number" id="number_of_followers" name="number_of_followers" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="1" required>
+                    <label for="number_of_followers" class="block text-sm font-medium text-gray-700">Number of followers on Facebook Profile</label>
+                    <input type="number" id="number_of_followers" name="number_of_followers" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="1" >
                 </div>
-
-                <!-- No of Likes -->
-                <div class="mb-4">
-                    <label for="number_of_page_likes" class="block text-sm font-medium text-gray-700">Number of likes on Facebook Page</label>
-                    <input type="number" id="number_of_page_likes" name="number_of_page_likes" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="1" required>
-                </div>
-
 
                 <!-- Target Audience -->
                 <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
                 <div class="mb-4">
                     <label for="target_audience" class="block text-sm font-medium text-gray-700">Target Audience *</label>
-                    <select id="target_audience" name="target_audience" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <select id="target_audience" name="target_audience" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                         <option value="" disabled selected>Select your target audience</option>
                         <option value="Below 18 years">Below 18 years</option>
                         <option value="18 to 35 years">18 to 35 years</option>
@@ -205,7 +221,7 @@
                 <!-- Influencer Category -->
                 <div class="mb-4">
                     <label for="influencer_category" class="block text-sm font-medium text-gray-700">Influencer Category *</label>
-                    <select id="influencer_category" name="influencer_category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <select id="influencer_category" name="influencer_category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
                         <option value="" disabled selected>Select your influencer category</option>
                         <option value="Mega Influencers">Mega Influencers (More than 1M followers)</option>
                         <option value="Macro Influencers">Macro Influencers (100K - 1M followers)</option>
@@ -218,7 +234,7 @@
                 <!-- Post Types -->
                 <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
                     <div class="mb-4">
-                        <span class="block text-sm font-medium text-gray-700">Which type of posts do you make on your Facebook page? Select all that apply *</span>
+                        <span class="block text-sm font-medium text-gray-700">Which type of posts do you make on your Facebook profile? Select all that apply *</span>
                         <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
                             <div class="flex items-center">
                                 <input type="checkbox" id="post_type_skits" name="post_types[]" value="Skits" class="mr-2" onchange="toggleDivs()">
@@ -265,37 +281,37 @@
                         <!-- How much do you charge per Facebook post Per Post -->
                         <div class="mb-4">
                             <label for="cost_per_post" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook post per post? *</label>
-                            <input type="number" id="cost_per_post" name="cost_per_post" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <input type="number" id="cost_per_post" name="cost_per_post" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
                         <!-- How much do you charge per Facebook post Per Hour -->
                         <div class="mb-4">
                             <label for="cost_per_hour" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook post per hour? *</label>
-                            <input type="number" id="cost_per_hour" name="cost_per_hour" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <input type="number" id="cost_per_hour" name="cost_per_hour" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
                         <!-- How much do you charge per Facebook post Per Day -->
                         <div class="mb-4">
                             <label for="cost_per_day" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook post per day? *</label>
-                            <input type="number" id="cost_per_day" name="cost_per_day" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <input type="number" id="cost_per_day" name="cost_per_day" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
                         <!-- How much do you charge per Facebook post Per Week -->
                         <div class="mb-4">
                             <label for="cost_per_week" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook post weekly? *</label>
-                            <input type="number" id="cost_per_week" name="cost_per_week" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <input type="number" id="cost_per_week" name="cost_per_week" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
                         <!-- How much do you charge per Facebook post Per Month -->
                         <div class="mb-4">
                             <label for="cost_per_month" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook post monthly? *</label>
-                            <input type="number" id="cost_per_month" name="cost_per_month" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <input type="number" id="cost_per_month" name="cost_per_month" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
                         <!-- CPM Rate Posts -->
                         <div class="mb-4">
-                            <label for="cpm_rate_posts" class="block text-sm font-medium text-gray-700">What is the CPM Rate for Facebook Posts on your page? *</label>
-                            <input type="number" id="cpm_rate_posts" name="cpm_rate_posts" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <label for="cpm_rate_posts" class="block text-sm font-medium text-gray-700">What is the CPM Rate for Facebook Posts on your profile? *</label>
+                            <input type="number" id="cpm_rate_posts" name="cpm_rate_posts" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
 
@@ -322,37 +338,37 @@
                         <!-- How much do you charge per Facebook post Per Post -->
                         <div class="mb-4">
                             <label for="cost_per_reel" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook reel?*</label>
-                            <input type="number" id="cost_per_reel" name="cost_per_reel" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <input type="number" id="cost_per_reel" name="cost_per_reel" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
                         <!-- How much do you charge per Facebook post Per Hour -->
                         <div class="mb-4">
                             <label for="cost_per_reel_hour" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook reel per hour? *</label>
-                            <input type="number" id="cost_per_reel_hour" name="cost_per_reel_hour" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <input type="number" id="cost_per_reel_hour" name="cost_per_reel_hour" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
                         <!-- How much do you charge per Facebook post Per Day -->
                         <div class="mb-4">
                             <label for="cost_per_reel_day" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook reel per day? *</label>
-                            <input type="number" id="cost_per_reel_day" name="cost_per_reel_day" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <input type="number" id="cost_per_reel_day" name="cost_per_reel_day" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
                         <!-- How much do you charge per Facebook post Per Week -->
                         <div class="mb-4">
                             <label for="cost_per_reel_week" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook rel weekly? *</label>
-                            <input type="number" id="cost_per_reel_week" name="cost_per_reel_week" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <input type="number" id="cost_per_reel_week" name="cost_per_reel_week" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
                         <!-- How much do you charge per Facebook post Per Month -->
                         <div class="mb-4">
                             <label for="cost_per_reel_month" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook post monthly? *</label>
-                            <input type="number" id="cost_per_reel_month" name="cost_per_reel_month" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <input type="number" id="cost_per_reel_month" name="cost_per_reel_month" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
                         <!-- CPM Rate Posts -->
                         <div class="mb-4">
-                            <label for="cpm_rate_reels" class="block text-sm font-medium text-gray-700">What is the CPM Rate for Facebook reels on your page? *</label>
-                            <input type="number" id="cpm_rate_reels" name="cpm_rate_reels" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                            <label for="cpm_rate_reels" class="block text-sm font-medium text-gray-700">What is the CPM Rate for Facebook reels on your profile? *</label>
+                            <input type="number" id="cpm_rate_reels" name="cpm_rate_reels" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                         </div>
 
 
@@ -376,37 +392,37 @@
                             <!-- How much do you charge per Facebook post Per Post -->
                             <div class="mb-4">
                                 <label for="cost_per_skit" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook post per Skit? *</label>
-                                <input type="number" id="cost_per_skit" name="cost_per_skit" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cost_per_skit" name="cost_per_skit" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                             <!-- How much do you charge per Facebook post Per Hour -->
                             <div class="mb-4">
                                 <label for="cost_per_skit_hour" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook skit per hour? *</label>
-                                <input type="number" id="cost_per_skit_hour" name="cost_per_skit_hour" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cost_per_skit_hour" name="cost_per_skit_hour" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                             <!-- How much do you charge per Facebook post Per Day -->
                             <div class="mb-4">
                                 <label for="cost_per_skit_day" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook skit per day? *</label>
-                                <input type="number" id="cost_per_skit_day" name="cost_per_skit_day" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cost_per_skit_day" name="cost_per_skit_day" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                             <!-- How much do you charge per Facebook post Per Week -->
                             <div class="mb-4">
                                 <label for="cost_per_skit_week" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook skit weekly? *</label>
-                                <input type="number" id="cost_per_skit_week" name="cost_per_skit_week" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cost_per_skit_week" name="cost_per_skit_week" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                             <!-- How much do you charge per Facebook post Per Month -->
                             <div class="mb-4">
                                 <label for="cost_per_skit_month" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook skit monthly? *</label>
-                                <input type="number" id="cost_per_skit_month" name="cost_per_skit_month" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cost_per_skit_month" name="cost_per_skit_month" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                             <!-- CPM Rate Posts -->
                             <div class="mb-4">
-                                <label for="cpm_rate_skits" class="block text-sm font-medium text-gray-700">What is the CPM Rate for Facebook skits on your page? *</label>
-                                <input type="number" id="cpm_rate_skits" name="cpm_rate_skits" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <label for="cpm_rate_skits" class="block text-sm font-medium text-gray-700">What is the CPM Rate for Facebook skits on your profile? *</label>
+                                <input type="number" id="cpm_rate_skits" name="cpm_rate_skits" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                         </div>
@@ -430,37 +446,37 @@
                             <!-- How much do you charge per Facebook post Per Post -->
                             <div class="mb-4">
                                 <label for="cost_per_video_ad" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook post per video ad? *</label>
-                                <input type="number" id="cost_per_video_ad" name="cost_per_video_ad" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cost_per_video_ad" name="cost_per_video_ad" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                             <!-- How much do you charge per Facebook post Per Hour -->
                             <div class="mb-4">
                                 <label for="cost_per_video_ad_hour" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook video ad per hour? *</label>
-                                <input type="number" id="cost_per_video_ad_hour" name="cost_per_video_ad_hour" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cost_per_video_ad_hour" name="cost_per_video_ad_hour" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                             <!-- How much do you charge per Facebook post Per Day -->
                             <div class="mb-4">
                                 <label for="cost_per_video_ad_day" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook video ad per day? *</label>
-                                <input type="number" id="cost_per_video_ad_day" name="cost_per_video_ad_day" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cost_per_video_ad_day" name="cost_per_video_ad_day" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                             <!-- How much do you charge per Facebook post Per Week -->
                             <div class="mb-4">
                                 <label for="cost_per_video_ad_week" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook video ad weekly? *</label>
-                                <input type="number" id="cost_per_video_ad_week" name="cost_per_video_ad_week" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cost_per_video_ad_week" name="cost_per_video_ad_week" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                             <!-- How much do you charge per Facebook post Per Month -->
                             <div class="mb-4">
                                 <label for="cost_per_video_ad_month" class="block text-sm font-medium text-gray-700">How much do you charge per Facebook video ad monthly? *</label>
-                                <input type="number" id="cost_per_video_ad_month" name="cost_per_video_ad_month" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cost_per_video_ad_month" name="cost_per_video_ad_month" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                             <!-- CPM Rate Posts -->
                             <div class="mb-4">
-                                <label for="cpm_rate_video_ads" class="block text-sm font-medium text-gray-700">What is the CPM Rate for Facebook video ads on your page? *</label>
-                                <input type="number" id="cpm_rate_video_ads" name="cpm_rate_viedo_ads" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <label for="cpm_rate_video_ads" class="block text-sm font-medium text-gray-700">What is the CPM Rate for Facebook video ads on your profile? *</label>
+                                <input type="number" id="cpm_rate_video_ads" name="cpm_rate_viedo_ads" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" >
                             </div>
 
                         </div>
@@ -476,33 +492,20 @@
 
 </html>
 
-<!-- Popper JS -->
-<script src="{{ asset('backend/assets/libs/@popperjs/core/umd/popper.min.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add event listener to form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            // Optionally, you can perform additional checks here
+            console.log('Form is about to be submitted.');
 
-<!-- Color Picker JS -->
-<script src="{{ asset('backend/assets/libs/@simonwep/pickr/pickr.es5.min.js') }}"></script>
+            // Uncomment the line below if you need to prevent form submission
+            // e.preventDefault();
+        });
+    });
+</script>
 
-<!-- Sidebar JS -->
-<script src="{{ asset('backend/assets/js/defaultmenu.js') }}"></script>
-
-<!-- Sticky JS -->
-<script src="{{ asset('backend/assets/js/sticky.js') }}"></script>
-
-<!-- Switch JS -->
-<script src="{{ asset('backend/assets/js/switch.js') }}"></script>
-
-<!-- Preline JS -->
-<script src="{{ asset('backend/assets/libs/preline/preline.js') }}"></script>
-
-<!-- Simplebar JS -->
-<script src="{{ asset('backend/assets/libs/simplebar/simplebar.min.js') }}"></script>
-
-<!-- Custom JS -->
-<script src="{{ asset('backend/assets/js/custom.js') }}"></script>
-
-<!-- Custom-Switcher JS -->
-<script src="{{ asset('backend/assets/js/custom-switcher.js') }}"></script>
-
+{{--
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const messageElement = document.getElementById('success-message');
@@ -515,7 +518,7 @@
             }, 5000); // 5 seconds
         }
     });
-</script>
+</script> --}}
 
 <script>
 
@@ -536,7 +539,6 @@
             document.getElementById('post_types_skits').onchange = toggleSections;
             document.getElementById('post_types_video_ads').onchange = toggleSections;
         }
-
 
 
     </script>

@@ -22,7 +22,6 @@ use App\Http\Controllers\SocialPublisherPanel\ScPublisherInstagramController;
 use App\Http\Controllers\SocialPublisherPanel\ScPublisherTwitterController;
 use App\Http\Controllers\SocialPublisherPanel\ScPublisherYoutubeController;
 use App\Http\Controllers\SocialPublisherPanel\ScPublisherWhatsappController;
-use App\Http\Controllers\SocialPublisherPanel\ScPublisherController;
 use App\Http\Controllers\UserPanel\UserController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
@@ -166,25 +165,25 @@ Route::middleware('auth','user_role:socialpublisher')->group(function () {
     Route::put('socialpublisher/{id}}', [PublisherController::class, 'update'])->name('socialpublisher.update');
     //Store Social Publisher Details
     Route::delete('socialpublisher/{id}}', [PublisherController::class, 'destroy'])->name('socialpublisher.destroy');
-    /*
-    |--------------------------------------------------------------------------
-                            Social Publisher Facebook routes
-    |--------------------------------------------------------------------------
-    |
-    |
-    */
-    Route::get('socialpublisher/facebook/create', [ScPublisherFacebookController::class, 'create'])->name('scp_facebook.create');
-    Route::post('socialpublisher/facebook/store', [ScPublisherFacebookController::class, 'store'])->name('scp_facebook.store');
+            /*
+            |--------------------------------------------------------------------------
+                                    Social Publisher Facebook routes
+            |--------------------------------------------------------------------------
+            |
+            |
+            */
+    Route::get('/socialpublisher/facebook/create', [ScPublisherFacebookController::class, 'create'])->name('facebook.create');
+    Route::post('/socialpublisher/facebook/add', [ScPublisherFacebookController::class, 'store'])->name('facebook.store');
 
 
                                      // Social Publisher Facebook Page Routes
-    Route::get('socialpublisher/facebookpage/create', [FacebookPageController::class, 'create'])->name('scp_facebookpage.create');
-    Route::post('socialpublisher/facebookpage/store', [FacebookPageController::class, 'store'])->name('scp_facebookpage.store');
+    Route::get('socialpublisher/facebookpage/create', [FacebookPageController::class, 'create'])->name('facebookpage.create');
+    Route::post('socialpublisher/facebookpage/store', [FacebookPageController::class, 'store'])->name('facebookpage.store');
 
 
                                      // Social Publisher Facebook Group Routes
-    Route::get('socialpublisher/facebookgroup/create', [FacebookGroupController::class, 'create'])->name('scp_facebookgroup.create');
-    Route::post('socialpublisher/facebookgroup/store', [FacebookGroupController::class, 'store'])->name('scp_facebookgroup.store');
+    Route::get('socialpublisher/facebookgroup/create', [FacebookGroupController::class, 'create'])->name('facebookgroup.create');
+    Route::post('socialpublisher/facebookgroup/store', [FacebookGroupController::class, 'store'])->name('facebookgroup.store');
 
 
       /*
@@ -194,15 +193,15 @@ Route::middleware('auth','user_role:socialpublisher')->group(function () {
     |
     |
     */
-    Route::get('socialpublisher/x/create', [ScPublisherTwitterController::class, 'create'])->name('scp_x.create');
-    Route::post('socialpublisher/x/store', [ScPublisherTwitterController::class, 'store'])->name('scp_x.store');
+    Route::get('socialpublisher/x/create', [ScPublisherTwitterController::class, 'create'])->name('x.create');
+    Route::post('socialpublisher/x/store', [ScPublisherTwitterController::class, 'store'])->name('x.store');
 
 
 
 
                             // Social Publisher Facebook Group Routes
-    Route::get('socialpublisher/x/community/create', [XCommunityController::class, 'create'])->name('scp_xcommunity.create');
-    Route::post('socialpublisher/x/community/store', [XCommunityController::class, 'store'])->name('scp_xcommunity.store');
+    Route::get('socialpublisher/x/community/create', [XCommunityController::class, 'create'])->name('xcommunity.create');
+    Route::post('socialpublisher/x/community/store', [XCommunityController::class, 'store'])->name('xcommunity.store');
 
 
 
@@ -215,14 +214,14 @@ Route::middleware('auth','user_role:socialpublisher')->group(function () {
     |
     */
 
-    Route::get('socialpublisher/instagram/create', [ScPublisherInstagramController::class, 'create'])->name('scp_instagram.create');
-    Route::post('socialpublisher/instagram/store', [ScPublisherInstagramController::class, 'store'])->name('scp_instagram.store');
+    Route::get('socialpublisher/instagram/create', [ScPublisherInstagramController::class, 'create'])->name('instagram.create');
+    Route::post('socialpublisher/instagram/store', [ScPublisherInstagramController::class, 'store'])->name('instagram.store');
 
 
 
                            // Social Publisher Facebook Group Routes
-     Route::get('socialpublisher/instagramgroup/create', [InstagramGroupController::class, 'create'])->name('scp_instagramgroup.create');
-     Route::post('socialpublisher/instagramgroup/store', [InstagramGroupController::class, 'store'])->name('scp_instagramgroup.store');
+     Route::get('socialpublisher/instagramgroup/create', [InstagramGroupController::class, 'create'])->name('instagramgroup.create');
+     Route::post('socialpublisher/instagramgroup/store', [InstagramGroupController::class, 'store'])->name('instagramgroup.store');
 
 
 
@@ -237,13 +236,13 @@ Route::middleware('auth','user_role:socialpublisher')->group(function () {
     |
     */
 
-    Route::get('socialpublisher/telegram/create', [ScPublisherTelegramController::class, 'create'])->name('scp_telegram.create');
-    Route::post('socialpublisher/telegram/store', [ScPublisherTelegramController::class, 'store'])->name('scp_telegram.store');
+    Route::get('socialpublisher/telegram/create', [ScPublisherTelegramController::class, 'create'])->name('telegram.create');
+    Route::post('socialpublisher/telegram/store', [ScPublisherTelegramController::class, 'store'])->name('telegram.store');
 
 
                             // Social Publisher Facebook Group Routes
-     Route::get('socialpublisher/telegramgroup/create', [TelegramGroupController::class, 'create'])->name('scp_telegramgroup.create');
-     Route::post('socialpublisher/telegramgroup/store', [TelegramGroupController::class, 'store'])->name('scp_telegramgroup.store');
+     Route::get('socialpublisher/telegramgroup/create', [TelegramGroupController::class, 'create'])->name('telegramgroup.create');
+     Route::post('socialpublisher/telegramgroup/store', [TelegramGroupController::class, 'store'])->name('telegramgroup.store');
 
 
 
@@ -257,21 +256,21 @@ Route::middleware('auth','user_role:socialpublisher')->group(function () {
     */
 
                                     // Social Publisher Whatsapp Group Routes
-    Route::get('socialpublisher/whatsapp/create', [ScPublisherWhatsappController::class, 'create'])->name('scp_whatsapp.create');
-    Route::post('socialpublisher/whatsapp/store', [ScPublisherWhatsappController::class, 'store'])->name('scp_whatsapp.store');
+    Route::get('socialpublisher/whatsapp/create', [ScPublisherWhatsappController::class, 'create'])->name('whatsapp.create');
+    Route::post('socialpublisher/whatsapp/store', [ScPublisherWhatsappController::class, 'store'])->name('whatsapp.store');
 
 
 
 
 
                                   // Social Publisher Whatsapp Channel Routes
-    Route::get('socialpublisher/whatsappchannel/create', [WhatsappChannelController::class, 'create'])->name('scp_whatsappchannel.create');
-    Route::post('socialpublisher/whatsappchannel/store', [WhatsappChannelController::class, 'store'])->name('scp_whatsappchannel.store');
+    Route::get('socialpublisher/whatsappchannel/create', [WhatsappChannelController::class, 'create'])->name('whatsappchannel.create');
+    Route::post('socialpublisher/whatsappchannel/store', [WhatsappChannelController::class, 'store'])->name('whatsappchannel.store');
 
 
                                       // Social Publisher Whatsapp Community Routes
-    Route::get('socialpublisher/whatsappcommunity/create', [WhatsappCommunityController::class, 'create'])->name('scp_whatsappcommunity.create');
-    Route::post('socialpublisher/whatsappcommunity/store', [WhatsappCommunityController::class, 'store'])->name('scp_whatsappcommunity.store');
+    Route::get('socialpublisher/whatsappcommunity/create', [WhatsappCommunityController::class, 'create'])->name('whatsappcommunity.create');
+    Route::post('socialpublisher/whatsappcommunity/store', [WhatsappCommunityController::class, 'store'])->name('whatsappcommunity.store');
     /*
     |--------------------------------------------------------------------------
                         Social Publisher Tiktok routes
@@ -281,14 +280,14 @@ Route::middleware('auth','user_role:socialpublisher')->group(function () {
     */
 
 
-    Route::get('socialpublisher/tiktok/create', [ScPublisherTiktokController::class, 'create'])->name('scp_tiktok.create');
-    Route::post('socialpublisher/tiktok/store', [ScPublisherTiktokController::class, 'store'])->name('scp_tiktok.store');
+    Route::get('socialpublisher/tiktok/create', [ScPublisherTiktokController::class, 'create'])->name('tiktok.create');
+    Route::post('socialpublisher/tiktok/store', [ScPublisherTiktokController::class, 'store'])->name('tiktok.store');
 
 
 
                      // Social Publisher Whatsapp Community Routes
- Route::get('socialpublisher/tiktokgroup/create', [TiktokGroupController::class, 'create'])->name('scp_tiktokgroup.create');
-Route::post('socialpublisher/tiktokgroup/store', [TiktokGroupController::class, 'store'])->name('scp_tiktokgroup.store');
+ Route::get('socialpublisher/tiktokgroup/create', [TiktokGroupController::class, 'create'])->name('tiktokgroup.create');
+Route::post('socialpublisher/tiktokgroup/store', [TiktokGroupController::class, 'store'])->name('tiktokgroup.store');
 
 
 
@@ -302,8 +301,8 @@ Route::post('socialpublisher/tiktokgroup/store', [TiktokGroupController::class, 
     */
 
 
-    Route::get('socialpublisher/youtube/create', [ScPublisherYoutubeController::class, 'create'])->name('scp_youtube.create');
-    Route::post('socialpublisher/youtube/store', [ScPublisherYoutubeController::class, 'store'])->name('scp_youtube.store');
+    Route::get('socialpublisher/youtube/create', [ScPublisherYoutubeController::class, 'create'])->name('youtube.create');
+    Route::post('socialpublisher/youtube/store', [ScPublisherYoutubeController::class, 'store'])->name('youtube.store');
 });
 
 
