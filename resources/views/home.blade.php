@@ -223,8 +223,9 @@
 
       <!-- Start::main-content -->
       <div class="main-content landing-main !p-0">
-            <div class="relative bg-cover bg-center h-screen" style="background-image: url('path-to-your-background-image.jpg');">
-                <div class="absolute inset-0 bg-black opacity-50"></div>
+                <div class="relative bg-cover bg-center h-screen" style="background-image: url('{{ asset('backend/assets/Home Leaderboard.jpg') }}');">
+                <!-- Gray overlay -->
+                <div class="absolute inset-0 bg-gray-900 opacity-50"></div>                <div class="absolute inset-0 bg-black opacity-50"></div>
                 <div class="container mx-auto h-full flex flex-col justify-center items-center px-6 py-12 relative z-10">
                     <h1 class="text-5xl font-bold text-white text-center mb-12">We Connect Advertisers to Content Creators</h1>
                     <div class="flex flex-col md:flex-row gap-6 w-full">
@@ -257,22 +258,22 @@
             </div>
         <!-- New Section with Counters -->
         <div class="container mx-auto py-12 text-center">
-            <h2 class="text-4xl font-bold mb-8">Our Achievements</h2>
+            <h2 class="text-3xl font-bold mb-8">Our Achievements</h2>
             <div class="flex flex-col md:flex-row justify-around items-center gap-8">
                 <div class="flex-1">
-                    <h3 class="text-5xl font-bold text-blue-500">10k+</h3>
+                    <h3 class="text-3xl font-bold text-blue-500">10k+</h3>
                     <p class="text-xl text-gray-700">Registered Websites</p>
                 </div>
                 <div class="flex-1">
-                    <h3 class="text-5xl font-bold text-blue-500">850k+</h3>
+                    <h3 class="text-3xl font-bold text-blue-500">850k+</h3>
                     <p class="text-xl text-gray-700">Content Creators</p>
                 </div>
                 <div class="flex-1">
-                    <h3 class="text-5xl font-bold text-blue-500">10k+</h3>
+                    <h3 class="text-3xl font-bold text-blue-500">10k+</h3>
                     <p class="text-xl text-gray-700">Registered Advertisers</p>
                 </div>
                 <div class="flex-1">
-                    <h3 class="text-5xl font-bold text-blue-500">10k+</h3>
+                    <h3 class="text-3xl font-bold text-blue-500">10k+</h3>
                     <p class="text-xl text-gray-700">Tasks Completed</p>
                 </div>
             </div>
@@ -289,7 +290,7 @@
                 </p>
                 <div class="grid lg:grid-cols-2 gap-6 items-center">
                     <div class="flex justify-center">
-                        <img src="../assets/img/advertiser.png" class="rounded-lg shadow-lg object-cover" alt="Advertiser meeting">
+                        <img src="{{ asset('backend/assets/advertisers.jpg') }}" class="shadow-lg object-cover h-60 w-360" alt="Advertiser meeting">
                     </div>
                     <div class="text-left space-y-4">
                         <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
@@ -335,11 +336,11 @@
                 </p>
                 <div class="grid lg:grid-cols-2 gap-6 items-center">
                     <!-- Image on the Left -->
-                    <div class="flex justify-center lg:order-1">
-                        <img src="../assets/img/advertiser.png" class="rounded-lg shadow-lg object-cover" alt="Advertiser meeting">
+                    <div class="flex justify-center lg:order-2">
+                        <img src="{{ asset('backend/assets/Contact-banner.jpg') }}" class="shadow-lg object-cover h-60 w-360" alt="Advertiser meeting">
                     </div>
                     <!-- Text on the Right -->
-                    <div class="text-left space-y-4 lg:order-2">
+                    <div class="text-left space-y-4 lg:order-1">
                         <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
                             <svg class="w-6 h-6 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
@@ -387,7 +388,7 @@
                 </p>
                 <div class="grid lg:grid-cols-2 gap-6 items-center">
                     <div class="flex justify-center">
-                        <img src="../assets/img/advertiser.png" class="rounded-lg shadow-lg object-cover" alt="Advertiser meeting">
+                        <img src="{{ asset('backend/assets/advertisers.jpg') }}" class="shadow-lg object-cover h-60 w-360" alt="Advertiser meeting">
                     </div>
                     <div class="text-left space-y-4">
                         <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
@@ -735,6 +736,7 @@
         </div>
         </div> --}}
 
+        <img src="{{ asset('backend/assets/Contact-banner.jpg') }}" class="shadow-lg object-cover h-60 w-360" alt="Advertiser meeting">
 
         <!-- Advertiser Section -->
         <div class="bg-[#667788] dark:bg-bgdark py-10 mt-8" id="advertiser">
