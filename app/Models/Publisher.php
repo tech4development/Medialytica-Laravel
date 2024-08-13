@@ -37,7 +37,7 @@ class Publisher extends Model
          'crypto_forex_post_cost',
          'cbd_post_cost',
          'banner_cost',
-         'link_insertion_cost',
+         'price',
          'youtube_ad_cost',
          'paypal_email',
          'social_media_pages',
@@ -48,5 +48,23 @@ class Publisher extends Model
         'link_type' => 'array',
         'social_media_pages' => 'array',
     ];
+
+      /**
+     * Get the highest price among all cost attributes.
+     *
+     * @return float
+     */
+    public function getHighestPriceAttribute()
+    {
+        $prices = [
+            $this->normal_post_cost,
+            $this->betting_casino_post_cost,
+            $this->crypto_forex_post_cost,
+            $this->cbd_post_cost,
+            $this->banner_cost
+        ];
+
+        return max($prices);
+    }
 }
 

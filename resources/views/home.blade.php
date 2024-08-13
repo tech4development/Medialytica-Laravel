@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medialytica</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -256,33 +257,38 @@
                     </div>
                 </div>
             </div>
+      </div>
         <!-- New Section with Counters -->
-        <div class="container mx-auto py-12 text-center">
+        <div class="relative bg-custom-dark">
+        <div class="container mx-auto py-12 text-center bg-custom-dark">
             <h2 class="text-3xl font-bold mb-8">Our Achievements</h2>
-            <div class="flex flex-col md:flex-row justify-around items-center gap-8">
+            <div class="flex flex-col md:flex-row justify-around items-center gap-8 bg-custom-blue">
                 <div class="flex-1">
-                    <h3 class="text-3xl font-bold text-blue-500">10k+</h3>
-                    <p class="text-xl text-gray-700">Registered Websites</p>
+                    <h3 class="text-3xl font-bold">10k+</h3>
+                    <p class="text-xl">Registered Websites</p>
                 </div>
                 <div class="flex-1">
-                    <h3 class="text-3xl font-bold text-blue-500">850k+</h3>
-                    <p class="text-xl text-gray-700">Content Creators</p>
+                    <h3 class="text-3xl font-bold">850k+</h3>
+                    <p class="text-xl">Content Creators</p>
                 </div>
                 <div class="flex-1">
-                    <h3 class="text-3xl font-bold text-blue-500">10k+</h3>
-                    <p class="text-xl text-gray-700">Registered Advertisers</p>
+                    <h3 class="text-3xl font-bold">10k+</h3>
+                    <p class="text-xl">Registered Advertisers</p>
                 </div>
                 <div class="flex-1">
-                    <h3 class="text-3xl font-bold text-blue-500">10k+</h3>
-                    <p class="text-xl text-gray-700">Tasks Completed</p>
+                    <h3 class="text-3xl font-bold">10k+</h3>
+                    <p class="text-xl">Tasks Completed</p>
                 </div>
             </div>
         </div>
+    </div>
+      </div>
+    </div>
 
-
-
-        <!-- Advertiser Section -->
-        <div class="bg-white dark:bg-bgdark py-10" id="advertiser">
+      <!-- End::main-content -->
+    <div class="">
+         <!-- Advertiser Section -->
+         <div class="bg-white dark:bg-bgdark py-10" id="advertiser">
             <div class="container mx-auto text-center">
                 <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Are you an Advertiser or a Media Buyer?</h2>
                 <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
@@ -375,10 +381,6 @@
         </div>
         <!-- End::Advertiser Section -->
 
-
-
-
-
         <!-- Social Publisher Section -->
         <div class="bg-white dark:bg-bgdark py-10" id="advertiser">
             <div class="container mx-auto text-center">
@@ -425,13 +427,63 @@
         </div>
         <!-- End::Social Publisher Section -->
 
-      </div>
-    </div>
+        <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-12">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="mb-4">
+                        <h5 class="text-lg font-bold text-[#004466] text-center">Browse our database of 10K+ Publishers</h5>
+                    </div>
+                    <div class="space-y-3"></div>
+                    <div class="overflow-x-auto border border-gray-300 rounded-md mt-4">
+                        <table class="min-w-full table-auto border-collapse">
+                            <thead class="bg-[#004466]">
+                                <tr>
+                                    <th scope="col" class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-gray uppercase tracking-wider">Publishers</th>
+                                    <th scope="col" class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-gray uppercase tracking-wider">Niches</th>
+                                    <th scope="col" class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-gray uppercase tracking-wider">DA</th>
+                                    <th scope="col" class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-gray uppercase tracking-wider">DR</th>
+                                    <th scope="col" class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-gray uppercase tracking-wider">Traffic</th>
+                                    <th scope="col" class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-gray uppercase tracking-wider">Country</th>
+                                    <th scope="col" class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-gray uppercase tracking-wider">Price</th>
+                                    <th scope="col" class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-gray uppercase tracking-wider">Order Now</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach($publishers as $publisher)
+                                    <tr>
+                                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap">
+                                            <a href="#" class="text-[#004466] hover:underline">{{ $publisher->website_url }}</a>
+                                            <br>
+                                            {{-- <a href="#" class="text-blue-600 hover:underline">unhide URL</a> --}}
+                                        </td>
+                                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->niches }}</td>
+                                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->moz_da }}</td>
+                                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->ahref_dr }}</td>
+                                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->traffic }}</td>
+                                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->country }}</td>
+                                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->price }}</td>
+                                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap">
+                                            <div class="flex justify-center">
+                                                <button
+                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                                    onclick="placeOrder('{{ $publisher->id }}')"
+                                                >
+                                                    Order Now
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      <!-- End::main-content -->
-    <div class="">
+
           <!-- Start::Services Content -->
-          <div id="services" class="container mx-auto py-12" style="background-color: #F5F7FA; 100">
+          <div id="services" class="container mx-auto py-16" style="background-color: #F5F7FA; 100">
             <div class="text-center max-w-2xl mx-auto mb-12">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">What We Do</h2>
             </div>
@@ -520,7 +572,7 @@
 
         <!-- Niche Markets Section -->
         <div class="relative bg-white">
-        <div class="container mx-auto py-12 bg-white">
+        <div class="container mx-auto py-16 bg-white">
             <div class="text-center max-w-2xl mx-auto mb-12 pt-12">
                 <h2 class="text-3xl font-bold text-gray-800 mt-8">Our Niche Markets</h2>
                 <p class="text-gray-600">We have diverse niches to accommodate a broad audience and all your content needs.</p>
@@ -699,7 +751,7 @@
             </div>
 
         </div>
-        <div class="text-center">
+        <div class="text-center py-8">
             <a href="#"
                class=" w-full max-w-xs py-3 px-6 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300 text-center">
                 CLICK HERE TO VIEW OUR NICHE MARKETS
@@ -736,7 +788,6 @@
         </div>
         </div> --}}
 
-        <img src="{{ asset('backend/assets/Contact-banner.jpg') }}" class="shadow-lg object-cover h-60 w-360" alt="Advertiser meeting">
 
         <!-- Advertiser Section -->
         <div class="bg-[#667788] dark:bg-bgdark py-10 mt-8" id="advertiser">
@@ -747,7 +798,7 @@
                 </p>
                 <div class="grid lg:grid-cols-2 gap-6 items-center">
                     <div class="flex justify-center">
-                        <img src="../assets/img/advertiser.png" class="rounded-lg shadow-lg object-cover" alt="Advertiser meeting">
+                        <img src="{{ asset('backend/assets/Contact-banner.jpg') }}" class="shadow-lg object-cover h-80 w-360" alt="Advertiser meeting">
                     </div>
                     <div class="text-left space-y-4">
                         <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
@@ -784,6 +835,64 @@
             </div>
         </div>
         <!-- End::Advertiser Section -->
+
+        <!-- Brand Growth Section -->
+        <div class="py-16 bg-white">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-bold text-blue-900 mb-12">
+                    We Are Here to Grow Your Brand Exponentially
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-8 ">
+                    <!-- Service Card Template Start -->
+                    <div class="bg-custom-dark hover:bg-custom-dark p-6 rounded-lg shadow-lg text-center transition-colors duration-300">
+                        <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
+                                <line x1="8" y1="6" x2="16" y2="6"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                                <line x1="8" y1="18" x2="16" y2="18"></line>
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-xl font-semibold mb-2 text-white">Sponsored Posts</h3>
+                        <p class="text-gray-300">Elevate your brand's presence with content that resonates. Reach the right audience, drive engagement and impact.</p>
+                    </div>
+                    <!-- Service Card Template End -->
+
+                    <!-- Repeat the Service Card Template for other services -->
+                    <div class="bg-custom-dark hover:bg-custom-dark p-6 rounded-lg shadow-lg text-center transition-colors duration-300">
+                        <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zM2 22c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2v1H2v-1z"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-xl font-semibold mb-2 text-white">Link Insertion & Exchanges</h3>
+                        <p class="text-gray-300">We are focused on contextual relevance, quality assurance, SEO benefits, customized strategies and search engine visibility.</p>
+                    </div>
+
+                    <div class="bg-custom-dark hover:bg-custom-dark p-6 rounded-lg shadow-lg text-center transition-colors duration-300">
+                        <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm8 4h3v6h-2v-3h-1v3H8v-3H7v3H5v-3H4v6H3v-8h6V9H4v2H3V5h14v6H13z"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-xl font-semibold mb-2 text-white">Banner Advertising</h3>
+                        <p class="text-gray-300">Elevate your online presence through banner advertising, focusing on targeted placement, measurable results, adaptability, and customization.</p>
+                    </div>
+
+                    <div class="bg-custom-dark hover:bg-custom-dark p-6 rounded-lg shadow-lg text-center transition-colors duration-300">
+                        <div class="icon-container p-4 rounded-full mb-4 inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 20h14v-2H5v2zm14-9h-4v-2c0-2.22-1.78-4-4-4s-4 1.78-4 4v2H5c-1.1 0-2 .9-2 2v5h18v-5c0-1.1-.9-2-2-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-xl font-semibold mb-2 text-white">CPM Campaigns</h3>
+                        <p class="text-gray-300">Drive conversions, we are focused on precision targeting, strategic ad placement, budget efficiency, transparent reporting, and customization.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
 
@@ -912,6 +1021,31 @@
 
        <!-- Choices JS -->
        <script src="{{asset('backend/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
+
+       <script>
+        function placeOrder(publisherId) {
+            fetch('{{ route('placeOrder') }}', {  // Use named route for the URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+                body: JSON.stringify({ publisher_id: publisherId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Order placed successfully!');
+                } else {
+                    alert('There was an error placing the order.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error placing the order.');
+            });
+        }
+    </script>
 
 
 </html>

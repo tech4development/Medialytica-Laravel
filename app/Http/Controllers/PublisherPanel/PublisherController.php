@@ -122,20 +122,20 @@ class PublisherController extends Controller
     }
 
     //Show the form
-    public function show(Publisher $publisher,$id)
+    // public function show()
+    // {
+    //     $publishers = Publisher::all(); // Fetch all publishers or use a specific query as needed
+
+    //     return view('publisher.index', compact('publishers'));
+
+    // }
+    public function viewAll()
     {
-        // Find the publisher by ID or fail with 404 error if not found
-        // $publisher = Publisher::findOrFail($id);
+        $publishers = Publisher::all(); // Fetch all publishers
 
-        // Convert comma-separated strings back to arrays (if needed)
-        // $publisher->niches = explode(',', $publisher->niches);
-        // $publisher->geos = explode(',', $publisher->geos);
-        // $publisher->social_media_pages = explode(',', $publisher->social_media_pages);
-
-        // Return the view with the publisher data
-        return view('publisher.edit', compact($publisher));
-
+        return view('publisher.index', compact('publishers'));
     }
+
 
 
 
@@ -174,7 +174,7 @@ class PublisherController extends Controller
             'link_type.*' => 'string',
             'do_follow_links' => 'required|integer',
             'mark_paid_articles_as_sponsored' => 'required|boolean',
-             'link_insertion' => 'required|string',
+            'link_insertion' => 'required|string',
             'link_insertion_amount' => 'nullable|numeric',
             'publishing_time' => 'required|in:24Hrs,48Hrs,72Hrs',
             'normal_post_cost' => 'required|numeric',
@@ -182,7 +182,6 @@ class PublisherController extends Controller
             'crypto_forex_post_cost' => 'required|numeric',
             'cbd_post_cost' => 'required|numeric',
             'banner_cost' => 'required|numeric',
-            'link_insertion_cost' => 'required|numeric',
             'youtube_ad_cost' => 'required|numeric',
             'paypal_email' => 'required|email',
             'social_media_pages' => 'nullable|array',
@@ -215,7 +214,6 @@ class PublisherController extends Controller
         $publisher->crypto_forex_post_cost = $request->input('crypto_forex_post_cost');
         $publisher->cbd_post_cost = $request->input('cbd_post_cost');
         $publisher->banner_cost = $request->input('banner_cost');
-        $publisher->link_insertion_cost = $request->input('link_insertion_cost');
         $publisher->youtube_ad_cost = $request->input('youtube_ad_cost');
         $publisher->paypal_email = $request->input('paypal_email');
         $publisher->social_media_pages = $request->input('social_media_pages');

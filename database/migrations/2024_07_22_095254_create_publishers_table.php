@@ -37,9 +37,9 @@ return new class extends Migration
                 $table->decimal('normal_post_cost', 10, 2);
                 $table->decimal('betting_casino_post_cost', 10, 2);
                 $table->decimal('crypto_forex_post_cost', 10, 2);
+                $table->decimal('price', 10, 2)->nullable(); // Adjust the column position if needed
                 $table->decimal('cbd_post_cost', 10, 2);
                 $table->decimal('banner_cost', 10, 2);
-                $table->decimal('link_insertion_cost', 10, 2);
                 $table->decimal('youtube_ad_cost', 10, 2);
                 $table->string('paypal_email');
                 $table->json('social_media_pages')->nullable();

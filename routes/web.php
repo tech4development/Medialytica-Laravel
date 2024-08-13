@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminPanel\AdminController;
+use App\Http\Controllers\Advertisers\AdvertiserAuthController;
 use App\Http\Controllers\EditorPanel\EditorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublisherPanel\PublisherController;
@@ -23,6 +24,11 @@ use App\Http\Controllers\SocialPublisherPanel\ScPublisherTwitterController;
 use App\Http\Controllers\SocialPublisherPanel\ScPublisherYoutubeController;
 use App\Http\Controllers\SocialPublisherPanel\ScPublisherWhatsappController;
 use App\Http\Controllers\UserPanel\UserController;
+use App\Http\Controllers\Orders\OrderController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Orders\CheckoutController;
+use App\Http\Controllers\Orders\CartController;
+
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -42,6 +48,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+// Route::get('/', [PublisherController::class, 'viewAll']);
+
 Route::get('/dashboard', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -51,7 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -93,17 +104,16 @@ Route::middleware('auth', 'superadmin',  'user_role:super admin')->group(functio
 |
 |
 */
-Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function () {
-    Route::get('/dashboard', [SuperAdminController::class, 'index'])->name('superadmin.dashboard');
-
-    Route::post('/roles/user', [RoleController::class, 'storeUser'])->name('roles.storeUser');
-    Route::post('/permissions', [RoleController::class, 'storePermission'])->name('permissions.store');
-    Route::get('/permissions', [RoleController::class, 'showPermissions'])->name('permissions.show');
-    Route::post('/roles/{roleId}/assign-permissions', [RoleController::class, 'assignPermission'])->name('roles.assignPermissions');
-    Route::post('/roles/{roleId}/revoke-permissions', [RoleController::class, 'revokePermission'])->name('roles.revokePermissions');
-    Route::get('/roles/{role}/assign-permissions', [RoleController::class, 'assignPermissionsForm'])->name('roles.assignPermissionsForm');
-    Route::get('/roles', [RoleController::class, 'show'])->name('roles.show');
-});
+// Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function () {
+//     Route::get('/dashboard', [SuperAdminController::class, 'index'])->name('superadmin.dashboard');
+//     Route::post('/roles/user', [RoleController::class, 'storeUser'])->name('roles.storeUser');
+//     Route::post('/permissions', [RoleController::class, 'storePermission'])->name('permissions.store');
+//     Route::get('/permissions', [RoleController::class, 'showPermissions'])->name('permissions.show');
+//     Route::post('/roles/{roleId}/assign-permissions', [RoleController::class, 'assignPermission'])->name('roles.assignPermissions');
+//     Route::post('/roles/{roleId}/revoke-permissions', [RoleController::class, 'revokePermission'])->name('roles.revokePermissions');
+//     Route::get('/roles/{role}/assign-permissions', [RoleController::class, 'assignPermissionsForm'])->name('roles.assignPermissionsForm');
+//     Route::get('/roles', [RoleController::class, 'show'])->name('roles.show');
+// });
 
 /*
 |--------------------------------------------------------------------------
@@ -125,19 +135,17 @@ Route::middleware('auth', 'user_role:admin')->group(function () {
 |
 */
 Route::middleware('auth','user_role:publisher')->group(function () {
+    // Get All the Publishers
+    Route::get('publisher/view', [PublisherController::class, 'viewAll']);
     Route::get('publisher/dashboard', [PublisherController::class, 'index'])->name('publisher.dashboard');
     //Add Publisher Details
     Route::get('publisher/create-publisher', [PublisherController::class, 'create'])->name('publisher.create');
     //Store Publishe Details
     Route::post('publisher/add-publisher', [PublisherController::class, 'store'])->name('publisher.store');
-    //Show Publishe Details
-    // Route::get('/publisher/edit/id', [PublisherController::class, 'edit'])->name('publisher.edit');
-    // Route to edit publisher details
+
     Route::get('publisher/edit/{id}', [PublisherController::class, 'edit'])->name('publisher.edit');
-    //Edit Publishe Details
-   // Route::get('publisher/{id}/edit', [PublisherController::class, 'edit'])->name('publisher.edit');
     //Store Publisher Updated Details
-    Route::put('publisher/edit/{id}', [PublisherController::class, 'update'])->name('publisher.edit');
+    Route::put('publisher/edit/{id}', [PublisherController::class, 'update'])->name('publisher.update');
     //Store Publishe Details
     Route::delete('/publisher/{id}', [PublisherController::class, 'destroy'])->name('publisher.destroy');
 
@@ -317,6 +325,19 @@ Route::middleware('auth','user_role:editor')->group(function () {
     Route::get('editor/dashboard', [EditorController::class, 'index'])->name('editor.dashboard');
     });
 
+
+/*
+|--------------------------------------------------------------------------
+                           Order Contoller
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+    Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('placeOrder');
+
+
+
 /*
 |--------------------------------------------------------------------------
                     User routes, middlewares
@@ -327,6 +348,69 @@ Route::middleware('auth','user_role:editor')->group(function () {
 Route::middleware('auth','user_role:user')->group(function () {
      Route::get('user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
         });
+
+
+
+/*
+|--------------------------------------------------------------------------
+                   Advertiser Routes and Middleware
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::middleware(['advertiser.auth'])->group(function () {
+        // Routes that require this custom authentication logic
+});
+
+// Route::prefix('advertiser')->name('advertiser.')->group(function () {
+//     // Registration Routes
+//     Route::get('/register', [AdvertiserAuthController::class, 'showRegisterForm'])->name('advertiserregister');
+//     Route::post('/register', [AdvertiserAuthController::class, 'register'])->name('register.submit');
+
+//     // Login Routes
+//     Route::get('/login', [AdvertiserAuthController::class, 'showLoginForm'])->name('advertiserlogin');
+//     Route::post('/login', [AdvertiserAuthController::class, 'login'])->name('login.submit');
+
+//     // Logout Route
+//     Route::post('/logout', [AdvertiserAuthController::class, 'logout'])->name('logout');
+// });
+
+Route::get('/guest', [AdvertiserAuthController::class, 'showGuestPage'])->name('guest.page');
+
+
+/*
+|--------------------------------------------------------------------------
+                  Cart, Order and Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+Route::get('cart/add/{publisher}', [CartController::class, 'add'])->name('cart.add');
+Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+
+Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('checkout/place', [CheckoutController::class, 'placeOrder'])->name('checkout.place');
+
+Route::get('order/summary', function() {
+    return view('order.summary');
+})->name('order.summary');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
@@ -346,3 +430,7 @@ Route::get('/404', function () {
 Route::get('/500', function () {
     return response()->view('errors.500', [], 500);
 });
+
+
+
+require __DIR__.'/auth.php';

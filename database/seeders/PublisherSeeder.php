@@ -13,6 +13,23 @@ class PublisherSeeder extends Seeder
      */
     public function run(): void
     {
+        function calculateMaxPrice($publisher) {
+            // Define the price fields
+            $priceFields = [
+                'normal_post_cost',
+                'betting_casino_post_cost',
+                'crypto_forex_post_cost',
+                'cbd_post_cost',
+                'banner_cost'
+            ];
+
+            // Extract the prices and calculate the maximum
+            $prices = array_map(function($field) use ($publisher) {
+                return $publisher[$field];
+            }, $priceFields);
+
+            return max($prices);
+        }
         $publishers = [
             [
                 'website_name' => 'Tech Buzz',
@@ -32,13 +49,21 @@ class PublisherSeeder extends Seeder
                 'link_type' => implode(',', ['Do-Follow', 'No-Follow']),
                 'do_follow_links' => 1,
                 'mark_paid_articles_as_sponsored' => true,
+                'link_insertion' => 'yes',
+                'link_insertion_amount' => 100.00,
                 'publishing_time' => '24Hrs',
                 'normal_post_cost' => 150.00,
                 'betting_casino_post_cost' => 200.00,
                 'crypto_forex_post_cost' => 250.00,
                 'cbd_post_cost' => 300.00,
                 'banner_cost' => 100.00,
-                'link_insertion_cost' => 50.00,
+                'price' => calculateMaxPrice([
+                    'normal_post_cost' => 150.00,
+                    'betting_casino_post_cost' => 200.00,
+                    'crypto_forex_post_cost' => 250.00,
+                    'cbd_post_cost' => 300.00,
+                    'banner_cost' => 100.00,
+                ]),
                 'youtube_ad_cost' => 500.00,
                 'paypal_email' => 'payments@techbuzz.com',
                 'social_media_pages' => json_encode([
