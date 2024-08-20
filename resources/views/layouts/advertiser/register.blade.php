@@ -81,14 +81,6 @@
                                         <div class="grid gap-y-4">
 
 
-                                            <div>
-                                                <label for="role" class="block text-sm mb-2 dark:text-white">Select Role</label>
-                                                <select name="role" id="role" required
-                                                    class="py-2 px-3 block w-full border-gray-200 rounded-sm text-sm focus:border-primary focus:ring-primary dark:bg-bgdark dark:border-white/10 dark:text-white/70">
-                                                    <option value="advertiser">Advertiser</option>
-                                                </select>
-                                            </div>
-
                                             <!-- Form Group -->
                                             <div>
                                                 <label for="name" class="block text-sm mb-2 dark:text-white">Name</label>

@@ -50,7 +50,7 @@
                                 <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Log In</h1>
                                 <p class="mt-3 text-sm text-gray-600 dark:text-white/70">
                                     Don't have an account yet?
-                                    <a class="text-primary decoration-2 hover:underline font-medium" href="{{ route('advertiseregister') }}">
+                                    <a class="text-primary decoration-2 hover:underline font-medium" href="{{ route('advertiserregister') }}">
                                         Register here
                                     </a>
                                 </p>

@@ -10,55 +10,117 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderPlacedToAdmin;
 use App\Mail\OrderPlacedToPublisher;
+use App\Models\Cart;
+use Illuminate\Support\Facades\Session;
+
+
+
 
 class OrderController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth'); // Ensure only authenticated users can access this controller
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:advertiser');
+    }
 
+    // Show checkout page with session-based cart items
+    public function index()
+    {
+        // Retrieve cart items from session
+        $cart = Session::get('cart', []);
+
+        // Calculate subtotal
+        $subtotal = array_sum(array_column($cart, 'price'));
+
+        // Total is equal to subtotal
+        $total = $subtotal;
+
+        return view('advertisers.checkout.index', compact('cart', 'subtotal', 'total'));
+    }
+
+    // Show checkout page with database-based cart items
+    public function showCheckout()
+    {
+        // Fetch cart items from database
+        $cartItems = Cart::with('publisher')->where('advertiser_id', auth()->id())->get();
+
+        // Calculate subtotal and total
+        $subtotal = $cartItems->sum(function($item) {
+            return $item->price * $item->quantity;
+        });
+
+        // Total is equal to subtotal
+        $total = $subtotal;
+
+        return view('advertisers.checkout.index', compact('cartItems', 'subtotal', 'total'));
+    }
+
+    // Handle order placement from session-based cart
     public function placeOrder(Request $request)
     {
-        $request->validate([
-            'publisher_id' => 'required|exists:publishers,id',
-        ]);
+        // Retrieve cart items from session
+        $cart = Session::get('cart', []);
 
-        $user = Auth::user();
-        $publisher = Publisher::find($request->publisher_id);
+        // Calculate subtotal and total
+        $subtotal = array_sum(array_column($cart, 'price'));
+        $total = $subtotal;
 
-        // Calculate the highest price among the available price fields
-        $price = max([
-            $publisher->normal_post_cost,
-            $publisher->betting_casino_post_cost,
-            $publisher->crypto_forex_post_cost,
-            $publisher->cbd_post_cost,
-            $publisher->banner_cost,
-        ]);
+        // Create a new order
+        $order = new Order();
+        $order->order_number = $this->generateOrderNumber(); // Generates a unique order number
+        $order->user_name = $request->input('user_name');
+        $order->user_email = $request->input('user_email');
+        $order->publisher_website_name = $cart[0]['publisher_name']; // Assuming consistent publisher details in cart
+        $order->publisher_website_url = $cart[0]['publisher_url'];
+        $order->price = $total; // Set total price equal to subtotal
+        $order->save();
 
-        // Generate a unique order number
-        $orderNumber = 'ORD-' . strtoupper(uniqid());
+        // Fetch the publisher's email
+        $publisher = Publisher::where('website_url', $order->publisher_website_url)->first();
 
-        // Prepare order data
-        $orderData = [
-            'order_number' => $orderNumber,
-            'user_name' => $user->name,
-            'user_email' => $user->email,
-            'publisher_website_name' => $publisher->website_name,
-            'publisher_website_url' => $publisher->website_url,
-            'price' => $price,
-        ];
+        if ($publisher) {
+            // Send emails to publisher and admin
+            Mail::to($publisher->email)->send(new OrderPlacedToPublisher($order));
+            Mail::to('info@techfordevelopment.com')->send(new OrderPlacedToAdmin($order)); // Replace with actual admin email
+        }
 
-        // Create the order
-        $order = Order::create($orderData);
+        // Clear cart session
+        Session::forget('cart');
 
+        return redirect()->route('order.summary');
+    }
 
-        // Send email to admin
-        Mail::to('info@techfordevelopment.com')->send(new OrderPlacedToAdmin($order));
+    // Handle order placement from database-based cart
+    public function placeOrderFromDB(Request $request)
+    {
+        $cartItems = Cart::where('advertiser_id', auth()->id())->get();
 
-        // Send email to publisher
-        Mail::to($publisher->email)->send(new OrderPlacedToPublisher($order));
+        foreach ($cartItems as $item) {
+            $order = Order::create([
+                'user_id' => auth()->id(),
+                'publisher_id' => $item->publisher_id,
+                'price' => $item->price,
+                'quantity' => $item->quantity,
+                'total' => $item->price * $item->quantity,
+            ]);
 
-        return response()->json(['success' => true]);
+            // Fetch publisher and send emails
+            $publisher = Publisher::find($item->publisher_id);
+            if ($publisher) {
+                Mail::to($publisher->email)->send(new OrderPlacedToPublisher($order));
+                Mail::to('info@techfordevelopment.com')->send(new OrderPlacedToAdmin($order));
+            }
+        }
+
+        // Clear the cart after placing the order
+        Cart::where('advertiser_id', auth()->id())->delete();
+
+        return redirect()->route('order.summary')->with('success', 'Order placed successfully!');
+    }
+
+    // Generate a unique order number
+    private function generateOrderNumber()
+    {
+        return 'ORD-' . strtoupper(uniqid());
     }
 }

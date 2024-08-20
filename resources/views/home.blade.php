@@ -233,9 +233,12 @@
                         <!-- Card 1 -->
                         <div class="flex-1 bg-white rounded-lg shadow-lg p-6 text-center">
                             <h2 class="text-xl font-bold mb-4">Advertiser or Brand</h2>
-                            <p class="text-gray-600 mb-4">I am an SEO or media buying professional interested in paid content partnerships such as sponsored posts, link insertion, and banner advertising..</p>
-                            <button class="bg-blue-500 text-white px-4 py-2 rounded">Get Started</button>
+                            <p class="text-gray-600 mb-4">I am an SEO or media buying professional interested in paid content partnerships such as sponsored posts, link insertion, and banner advertising.</p>
+                            <a href="{{ route('guest.page') }}">
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded">Get Started</button>
+                            </a>
                         </div>
+
                         <!-- Card 2 -->
                         <div class="flex-1 bg-white rounded-lg shadow-lg p-6 text-center">
                             <h2 class="text-xl font-bold mb-4">Media or Blog</h2>
@@ -426,7 +429,6 @@
             </div>
         </div>
         <!-- End::Social Publisher Section -->
-
         <div class="grid grid-cols-12 gap-6">
             <div class="col-span-12">
                 <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -453,8 +455,6 @@
                                     <tr>
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap">
                                             <a href="#" class="text-[#004466] hover:underline">{{ $publisher->website_url }}</a>
-                                            <br>
-                                            {{-- <a href="#" class="text-blue-600 hover:underline">unhide URL</a> --}}
                                         </td>
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->niches }}</td>
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->moz_da }}</td>
@@ -464,12 +464,18 @@
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->price }}</td>
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap">
                                             <div class="flex justify-center">
-                                                <button
-                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                                    onclick="placeOrder('{{ $publisher->id }}')"
-                                                >
-                                                    Order Now
-                                                </button>
+                                                <form action="{{ route('cart.add', ['publisher' => $publisher->id]) }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="publisher_id" value="{{ $publisher->id }}">
+                                                    <input type="hidden" name="website_url" value="{{ $publisher->website_url }}">
+                                                    <input type="hidden" name="price" value="{{ $publisher->price }}">
+                                                    <button
+                                                        type="submit"
+                                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                                    >
+                                                        Order Now
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
@@ -480,6 +486,7 @@
                 </div>
             </div>
         </div>
+
 
 
           <!-- Start::Services Content -->
@@ -1024,7 +1031,7 @@
 
        <script>
         function placeOrder(publisherId) {
-            fetch('{{ route('placeOrder') }}', {  // Use named route for the URL
+            fetch('{{ route('place.order') }}', {  // Use named route for the URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -53,7 +53,8 @@ Route::middleware('guest')->group(function () {
     Route::post('advertiser/login', [AdvertiserAuthController::class, 'login'])->name('login.submit');
 
     // Logout Route
-    Route::post('advertiser/logout', [AdvertiserAuthController::class, 'logout'])->name('logout');
+    Route::post('advertiser/logout', [AdvertiserAuthController::class, 'logout'])->name('advertiserlogout');
+    // Route::get('/guest', [AdvertiserAuthController::class, 'showGuestPage'])->name('guest.page');
 });
 
 Route::middleware('auth')->group(function () {

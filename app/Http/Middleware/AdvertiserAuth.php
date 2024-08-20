@@ -20,7 +20,7 @@ class AdvertiserAuth
     {
         if (Auth::check()) {
             // If the user is authenticated, redirect to the list of publishers
-            return redirect()->route('guest.page');
+            return redirect()->route('cart.index');
         } else {
             // If the user is not authenticated, redirect to the guest page
             return redirect()->route('guest.page');

@@ -28,7 +28,9 @@ use App\Http\Controllers\Orders\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Orders\CheckoutController;
 use App\Http\Controllers\Orders\CartController;
-
+use App\Http\Controllers\Orders\PayPalController;
+use App\Http\Controllers\Advertisers\RedirectController;
+use App\Http\Controllers\Orders\InvoiceController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -376,6 +378,7 @@ Route::middleware(['advertiser.auth'])->group(function () {
 // });
 
 Route::get('/guest', [AdvertiserAuthController::class, 'showGuestPage'])->name('guest.page');
+Route::get('/redirect-to-register', [AdvertiserAuthController::class, 'redirectToRegister'])->name('redirect.to.register');
 
 
 /*
@@ -385,34 +388,97 @@ Route::get('/guest', [AdvertiserAuthController::class, 'showGuestPage'])->name('
 |
 |
 */
+// routes/web.php
 
-Route::get('cart/add/{publisher}', [CartController::class, 'add'])->name('cart.add');
-Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+// Route::middleware('auth:advertiser')->group(function () {
+//     Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+//     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
-Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout');
-Route::post('checkout/place', [CheckoutController::class, 'placeOrder'])->name('checkout.place');
+// });
+
+// Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+// Route::get('cart/add/{publisher}', [CartController::class, 'add'])->name('cart.put');
+// Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+// Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+
+// Route::middleware('auth:advertiser')->group(function () {
+
+// });
+
+Route::post('cart/add/{publisher}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+// Route::get('/checkout', [OrderController::class, 'showCheckoutPage'])->name('checkout');
+// Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
+
+// Session-based checkout
+Route::get('/checkout', [OrderController::class, 'index'])->name('checkout');
+
+// Database-based checkout
+Route::get('/checkout-db', [OrderController::class, 'showCheckout'])->name('checkout.db');
+
+// Place order from session-based cart
+Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
+
+// Place order from database-based cart
+Route::post('/place-order-db', [OrderController::class, 'placeOrderFromDB'])->name('place.order.db');
+
+// Order summary
+Route::get('/order-summary', [OrderController::class, 'orderSummary'])->name('order.summary');
+
+/*
+|--------------------------------------------------------------------------
+                  Order and Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+// Route::get('/checkout', [OrderController::class, 'showCheckoutPage'])->name('checkout');
+// Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
+
 
 Route::get('order/summary', function() {
     return view('order.summary');
 })->name('order.summary');
 
 
+/*
+|--------------------------------------------------------------------------
+                  Paypal Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+Route::post('paypal', [PayPalController::class, 'paypal'])->name('paypal');
+Route::get('success', [PayPalController::class, 'sucess'])->name('success');
+Route::get('cancel', [PayPalController::class, 'cancel'])->name('cancel');
 
 
 
 
 
+/*
+|--------------------------------------------------------------------------
+                  Invoice Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
 
+// Route::get('/invoice/{order_id}', [InvoiceController::class, 'create'])->name('invoice.create');
+Route::prefix('invoice')->group(function () {
+    // Route to create an invoice and display it
+    Route::get('/create/{orderId}', [InvoiceController::class, 'create'])->name('invoice.create');
 
+    // Route to display a specific invoice
+    Route::get('/{invoiceId}', [InvoiceController::class, 'show'])->name('invoice.show');
 
-
-
-
-
-
-
-
-
+    // Route to mark payment as received
+    Route::post('/mark-payment-received/{invoiceId}', [InvoiceController::class, 'markPaymentReceived'])
+        ->name('invoice.markPaymentReceived');
+});
 /*
 |--------------------------------------------------------------------------
                 400, 404 Error and 500 Error pages routes

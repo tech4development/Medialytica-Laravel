@@ -13,7 +13,7 @@ return new class extends Migration
     {
         if (!Schema::hasTable('publishers')) {
             Schema::create('publishers', function (Blueprint $table) {
-                $table->increments('id');
+                $table->unsignedBigInteger('id', true);
                 $table->string('website_name');
                 $table->string('website_url');
                 $table->json('niches');

@@ -66,5 +66,10 @@ class Publisher extends Model
 
         return max($prices);
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }
 
