@@ -15,22 +15,7 @@ class Cart extends Model
         'publisher_id',
         'website_url',
         'price',
-        'quantity',
         'website_name',
-         'niches',
-         'moz_da',
-         'ahref_dr',
-         'traffic',
-         'geos',
-         'language',
-         'country',
-         'link_type',
-         'do_follow_links',
-         'mark_paid_articles_as_sponsored',
-         'link_insertion_yes',
-         'publishing_time',
-         'price',
-
     ];
 
     public function advertiser()
@@ -42,4 +27,9 @@ class Cart extends Model
     {
         return $this->belongsTo(Publisher::class);
     }
+
+    // public function getTotalPriceAttribute()
+    // {
+    //     return $this->publisher->price;
+    // }
 }

@@ -98,6 +98,7 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($publishers as $publisher)
                                 <tr>
+                                    <!-- Publisher details columns -->
                                     <td class="px-4 py-2 border border-gray-300">
                                         <div id="publisher-url-{{ $publisher->id }}" class="relative">
                                             @auth
@@ -121,6 +122,7 @@
                                             @endauth
                                         </div>
                                     </td>
+                                    <!-- Other details columns -->
                                     <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->niches }}</td>
                                     <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->moz_da }}</td>
                                     <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->ahref_dr }}</td>
@@ -130,13 +132,21 @@
                                     <td class="px-4 py-2 border border-gray-300">
                                         @auth
                                             <div class="flex justify-center">
-                                                <a href="{{ route('cart.add', ['publisher' => $publisher->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
-                                                    Order Now
-                                                </a>
+                                                <!-- Order Now button -->
+                                                <form action="{{ route('cart.add') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="publisher_id" value="{{ $publisher->id }}">
+                                                    <input type="hidden" name="website_url" value="{{ $publisher->website_url }}">
+                                                    <input type="hidden" name="price" value="{{ $publisher->price }}">
+                                                    <input type="hidden" name="website_name" value="{{ $publisher->website_name }}">
+                                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                                                        Order Now
+                                                    </button>
+                                                </form>
                                             </div>
                                         @else
                                             <div class="flex justify-center">
-                                                <a href="#" onclick="handleOrderNow('{{ $publisher->id }}')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                                                <a href="{{ route('redirect.to.register') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
                                                     Order Now
                                                 </a>
                                             </div>
@@ -145,22 +155,13 @@
                                 </tr>
                             @endforeach
                         </tbody>
+
                     </table>
                 </div>
             </div>
         </div>
 
-        <script>
-        function unhideUrl(publisherId) {
-            document.getElementById('redacted-url-' + publisherId).classList.add('hidden');
-            document.getElementById('unhide-link-' + publisherId).classList.add('hidden');
-            document.getElementById('full-url-' + publisherId).classList.remove('hidden');
-        }
-        function handleOrderNow(publisherId) {
-            // Handle the order now logic for non-authenticated users
-            window.location.href = "{{ route('redirect.to.register') }}?publisher_id=" + publisherId;
-        }
-        </script>
+
 
 
 
@@ -168,6 +169,47 @@
 </div>
 
 </body>
+
+<script>
+function unhideUrl(publisherId) {
+    document.getElementById('redacted-url-' + publisherId).classList.add('hidden');
+    document.getElementById('unhide-link-' + publisherId).classList.add('hidden');
+    document.getElementById('full-url-' + publisherId).classList.remove('hidden');
+}
+function handleOrderNow(publisherId) {
+    // Handle the order now logic for non-authenticated users
+    window.location.href = "{{ route('redirect.to.register') }}?publisher_id=" + publisherId;
+}
+</script>
+
+
+<script>
+    function handleOrderNow(publisherId) {
+        fetch('{{ route('cart.add', ['publisherId' => ':id']) }}'.replace(':id', publisherId), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify({ publisher_id: publisherId }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Item added to cart successfully!');
+                // Optionally, you might want to refresh the page or update the cart display
+                location.reload();
+            } else {
+                alert('There was an error adding the item to the cart.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error adding the item to the cart.');
+        });
+    }
+</script>
+
 <script>
     function showUnhiddenUrl(publisherId) {
         document.getElementById('website-url-' + publisherId).classList.add('hidden');

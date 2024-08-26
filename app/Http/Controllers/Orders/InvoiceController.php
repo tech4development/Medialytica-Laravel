@@ -7,18 +7,34 @@ use App\Mail\InvoiceNotificationToAdmin;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 use App\Models\Order;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InvoiceSent;
 use App\Mail\InvoiceSentToAdvertiser;
 
+
+
 class InvoiceController extends Controller
 {
+    public function show($invoiceId)
+    {
+        // Retrieve the invoice
+        $invoice = Invoice::findOrFail($invoiceId);
+
+        // Show the invoice view with the invoice data
+        return view('advertisers.invoice.index', compact('invoice'));
+    }
+
+    // Method to create an invoice
     public function create($orderId)
     {
         $order = Order::findOrFail($orderId);
 
-        $invoice = Invoice::create([
-            'order_id' => $order->id,
+        // Create or update the invoice
+        $invoice = Invoice::updateOrCreate([
+            'order_id' => $order->id
+        ], [
             'amount' => $order->price,
             'order_number' => $order->order_number,
             'user_name' => $order->user_name,
@@ -29,16 +45,8 @@ class InvoiceController extends Controller
             'isSent' => false,
         ]);
 
-        // Send the invoice via email to the advertiser
-        Mail::to($order->user_email)->send(new InvoiceSentToAdvertiser($invoice));
-
-        // Notify the admin that an invoice has been sent
-        Mail::to('info@techfordevelopment.com')->send(new InvoiceNotificationToAdmin($invoice)); // Replace with actual admin email
-
-        // Update the invoice status
-        $invoice->update(['isSent' => true]);
-
-        return view('invoices.show', compact('invoice'));
+        // Redirect to the invoice view
+        return redirect()->route('invoice.show', $invoice->id);
     }
 
     public function markPaymentReceived($invoiceId)
@@ -48,6 +56,26 @@ class InvoiceController extends Controller
         // Mark the payment as received
         $invoice->update(['isPaymentReceived' => true]);
 
-        return redirect()->route('invoice.show', $invoice->id)->with('status', 'Payment received and invoice updated.');
+        return redirect()->route('invoice.show', ['invoiceId' => $invoice->id])->with('status', 'Payment received and invoice updated.');
+    }
+
+    public function downloadInvoicePdf($invoiceId)
+    {
+        $invoice = Invoice::findOrFail($invoiceId);
+
+        // Initialize Dompdf
+        $pdf = new Dompdf();
+
+        // Load the HTML content
+        $pdf->loadHtml(view('invoices.show', compact('invoice'))->render());
+
+        // Set paper size and orientation
+        $pdf->setPaper('A4', 'portrait');
+
+        // Render the PDF
+        $pdf->render();
+
+        // Stream the PDF to the browser
+        $pdf->stream('invoice_' . $invoice->order_number . '.pdf');
     }
 }

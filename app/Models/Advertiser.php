@@ -26,6 +26,18 @@ class Advertiser extends Authenticatable
         'phone',
         'user_role'
     ];
+
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -60,9 +72,5 @@ class Advertiser extends Authenticatable
         });
     }
 
-    public function carts()
-    {
-        return $this->hasMany(Cart::class);
-    }
 
 }

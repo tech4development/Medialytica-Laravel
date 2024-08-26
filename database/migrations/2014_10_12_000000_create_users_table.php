@@ -18,7 +18,8 @@ return new class extends Migration
             $table->enum('user_role', ['super admin', 'admin', 'publisher',  'advertiser', 'socialpublisher','editor','user'])->default('publisher');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
+            $table->string('google_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

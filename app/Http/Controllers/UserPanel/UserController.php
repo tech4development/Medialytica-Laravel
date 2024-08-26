@@ -20,8 +20,11 @@ class UserController extends Controller
             return redirect()->route('socialpublisher.dashboard');
         }elseif(Auth::user()->user_role === 'editor') {
             return redirect()->route('editor.dashboard');
+        }elseif(Auth::user()->user_role === 'user') {
+            return redirect()->route('user.dashboard');
         }
 
-        return view('user.dashboard');
+        return view('pages.advertisers.guest');
+
     }
 }

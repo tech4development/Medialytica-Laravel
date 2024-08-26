@@ -31,6 +31,7 @@ use App\Http\Controllers\Orders\CartController;
 use App\Http\Controllers\Orders\PayPalController;
 use App\Http\Controllers\Advertisers\RedirectController;
 use App\Http\Controllers\Orders\InvoiceController;
+use App\Http\Controllers\SocialLogin\GoogleAuthController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -51,6 +52,19 @@ Route::get('/', function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+/*
+|--------------------------------------------------------------------------
+| Google Routes,Auth and Middlewares
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+Route::get('/auth/google',[ GoogleAuthController::class, 'redirect'])->name('google-auth');
+
+Route::get('/auth/google/call-back',[ GoogleAuthController::class, 'callbackGoogle'])->name('google-callback');
 
 
 // Route::get('/', [PublisherController::class, 'viewAll']);
@@ -387,44 +401,16 @@ Route::get('/redirect-to-register', [AdvertiserAuthController::class, 'redirectT
 |--------------------------------------------------------------------------
 |
 |
+
 */
-// routes/web.php
-
-// Route::middleware('auth:advertiser')->group(function () {
-//     Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-//     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-
-// });
-
-// Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-// Route::get('cart/add/{publisher}', [CartController::class, 'add'])->name('cart.put');
-// Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-// Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-
-// Route::middleware('auth:advertiser')->group(function () {
-
-// });
-
-Route::post('cart/add/{publisher}', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-// Route::get('/checkout', [OrderController::class, 'showCheckoutPage'])->name('checkout');
-// Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
-
-// Session-based checkout
-Route::get('/checkout', [OrderController::class, 'index'])->name('checkout');
-
-// Database-based checkout
-Route::get('/checkout-db', [OrderController::class, 'showCheckout'])->name('checkout.db');
-
-// Place order from session-based cart
-Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
-
-// Place order from database-based cart
-Route::post('/place-order-db', [OrderController::class, 'placeOrderFromDB'])->name('place.order.db');
-
-// Order summary
-Route::get('/order-summary', [OrderController::class, 'orderSummary'])->name('order.summary');
+Route::middleware(['check.advertiser'])->group(function () {
+Route::post('cart/add/{publisherId}', [CartController::class, 'add'])->name('cart.add');
+Route::delete('/cart/remove/{cartId}', [CartController::class, 'remove'])->name('cart.remove');
+Route::put('/cart/update/{cartId}', [CartController::class, 'update'])->name('cart.update');
+Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
+Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.index');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -434,13 +420,9 @@ Route::get('/order-summary', [OrderController::class, 'orderSummary'])->name('or
 |
 */
 
-// Route::get('/checkout', [OrderController::class, 'showCheckoutPage'])->name('checkout');
-// Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
 
 
-Route::get('order/summary', function() {
-    return view('order.summary');
-})->name('order.summary');
+
 
 
 /*

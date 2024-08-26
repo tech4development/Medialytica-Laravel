@@ -21,4 +21,15 @@ class Order extends Model
         'price',
     ];
 
+
+    public function advertiser()
+    {
+        return $this->belongsTo(Advertiser::class, 'user_email', 'email');
+    }
+
+    public function publisher()
+    {
+        return $this->belongsTo(Publisher::class, 'publisher_website_url', 'website_url');
+    }
+
 }

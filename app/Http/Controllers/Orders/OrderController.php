@@ -3,124 +3,101 @@
 namespace App\Http\Controllers\Orders;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Publisher;
+use App\Models\Advertiser;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\OrderPlacedToAdmin;
-use App\Mail\OrderPlacedToPublisher;
-use App\Models\Cart;
-use Illuminate\Support\Facades\Session;
-
-
-
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:advertiser');
-    }
-
-    // Show checkout page with session-based cart items
-    public function index()
-    {
-        // Retrieve cart items from session
-        $cart = Session::get('cart', []);
-
-        // Calculate subtotal
-        $subtotal = array_sum(array_column($cart, 'price'));
-
-        // Total is equal to subtotal
-        $total = $subtotal;
-
-        return view('advertisers.checkout.index', compact('cart', 'subtotal', 'total'));
-    }
-
-    // Show checkout page with database-based cart items
-    public function showCheckout()
-    {
-        // Fetch cart items from database
-        $cartItems = Cart::with('publisher')->where('advertiser_id', auth()->id())->get();
-
-        // Calculate subtotal and total
-        $subtotal = $cartItems->sum(function($item) {
-            return $item->price * $item->quantity;
-        });
-
-        // Total is equal to subtotal
-        $total = $subtotal;
-
-        return view('advertisers.checkout.index', compact('cartItems', 'subtotal', 'total'));
-    }
-
-    // Handle order placement from session-based cart
-    public function placeOrder(Request $request)
-    {
-        // Retrieve cart items from session
-        $cart = Session::get('cart', []);
-
-        // Calculate subtotal and total
-        $subtotal = array_sum(array_column($cart, 'price'));
-        $total = $subtotal;
-
-        // Create a new order
-        $order = new Order();
-        $order->order_number = $this->generateOrderNumber(); // Generates a unique order number
-        $order->user_name = $request->input('user_name');
-        $order->user_email = $request->input('user_email');
-        $order->publisher_website_name = $cart[0]['publisher_name']; // Assuming consistent publisher details in cart
-        $order->publisher_website_url = $cart[0]['publisher_url'];
-        $order->price = $total; // Set total price equal to subtotal
-        $order->save();
-
-        // Fetch the publisher's email
-        $publisher = Publisher::where('website_url', $order->publisher_website_url)->first();
-
-        if ($publisher) {
-            // Send emails to publisher and admin
-            Mail::to($publisher->email)->send(new OrderPlacedToPublisher($order));
-            Mail::to('info@techfordevelopment.com')->send(new OrderPlacedToAdmin($order)); // Replace with actual admin email
-        }
-
-        // Clear cart session
-        Session::forget('cart');
-
-        return redirect()->route('order.summary');
-    }
-
-    // Handle order placement from database-based cart
-    public function placeOrderFromDB(Request $request)
-    {
-        $cartItems = Cart::where('advertiser_id', auth()->id())->get();
-
-        foreach ($cartItems as $item) {
-            $order = Order::create([
-                'user_id' => auth()->id(),
-                'publisher_id' => $item->publisher_id,
-                'price' => $item->price,
-                'quantity' => $item->quantity,
-                'total' => $item->price * $item->quantity,
-            ]);
-
-            // Fetch publisher and send emails
-            $publisher = Publisher::find($item->publisher_id);
-            if ($publisher) {
-                Mail::to($publisher->email)->send(new OrderPlacedToPublisher($order));
-                Mail::to('info@techfordevelopment.com')->send(new OrderPlacedToAdmin($order));
-            }
-        }
-
-        // Clear the cart after placing the order
-        Cart::where('advertiser_id', auth()->id())->delete();
-
-        return redirect()->route('order.summary')->with('success', 'Order placed successfully!');
-    }
-
-    // Generate a unique order number
+    /**
+     * Generate a unique order number.
+     *
+     * @return string
+     */
     private function generateOrderNumber()
     {
-        return 'ORD-' . strtoupper(uniqid());
+        // Generate a unique random string
+        $randomString = strtoupper(Str::random(5)); // Generate a 5-character random string
+        return 'ORD-' . $randomString;
+    }
+
+    /**
+     * Show the checkout page with cart items and totals.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function checkout()
+    {
+        // Get the current advertiser's cart items
+        $advertiserId = Auth::guard('advertiser')->id();
+
+        // Fetch cart items for the advertiser
+        $cartItems = Cart::where('advertiser_id', $advertiserId)->get();
+
+        // Fetch all publishers if needed elsewhere
+        $publishers = Publisher::all();
+
+        // Calculate subtotal and total based on cart items
+        $subtotal = $cartItems->sum('price');
+        $total = $subtotal; // Add any additional calculations if needed
+
+        return view('advertisers.checkout.index', compact('cartItems', 'publishers', 'subtotal', 'total'));
+    }
+
+    /**
+     * Place an order based on cart items.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function placeOrder(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'price' => 'required|numeric',
+        ]);
+
+        // Get the current advertiser's ID
+        $advertiserId = Auth::guard('advertiser')->id();
+        $advertiser = Advertiser::findOrFail($advertiserId);
+
+        // Retrieve cart items for the advertiser
+        $cartItems = Cart::where('advertiser_id', $advertiserId)->get();
+
+        // Initialize an array to hold orders
+        $orders = [];
+
+        foreach ($cartItems as $item) {
+            $publisher = Publisher::findOrFail($item->publisher_id);
+
+            // Generate a unique order number
+            $orderNumber = $this->generateOrderNumber();
+
+            // Create the order
+            $order = Order::create([
+                'order_number' => $orderNumber,
+                'user_name' => $advertiser->name, // Assuming 'name' field exists in Advertiser model
+                'user_email' => $advertiser->email, // Assuming 'email' field exists in Advertiser model
+                'publisher_website_name' => $publisher->website_name, // Assuming 'website_name' field exists in Publisher model
+                'publisher_website_url' => $publisher->website_url, // Assuming 'website_url' field exists in Publisher model
+                'price' => $item->price,
+            ]);
+
+            $orders[] = $order;
+        }
+
+        // Clear the cart items after placing the order
+        Cart::where('advertiser_id', $advertiserId)->delete();
+
+        // Optionally: Send notification, log activity, etc.
+
+        return response()->json([
+            'message' => 'Order(s) placed successfully',
+            'orders' => $orders
+        ], 201);
     }
 }

@@ -18,14 +18,13 @@ class AdvertiserAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
-            // If the user is authenticated, redirect to the list of publishers
-            return redirect()->route('cart.index');
-        } else {
-            // If the user is not authenticated, redirect to the guest page
-            return redirect()->route('guest.page');
+        // Check if the user is authenticated
+        if (Auth::guard('advertiser')->check()) {
+            // If the user is authenticated, redirect to the cart page
+            return redirect()->route('cart.show');
         }
 
-        return $next($request);
+        // If the user is not authenticated, redirect to the guest page
+        return redirect()->route('guest.page');
     }
 }

@@ -464,7 +464,7 @@
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->price }}</td>
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap">
                                             <div class="flex justify-center">
-                                                <form action="{{ route('cart.add', ['publisher' => $publisher->id]) }}" method="POST">
+                                                <form action="{{ route('cart.add', ['publisherId' => $publisher->id]) }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="publisher_id" value="{{ $publisher->id }}">
                                                     <input type="hidden" name="website_url" value="{{ $publisher->website_url }}">
@@ -476,6 +476,7 @@
                                                         Order Now
                                                     </button>
                                                 </form>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -1031,7 +1032,7 @@
 
        <script>
         function placeOrder(publisherId) {
-            fetch('{{ route('place.order') }}', {  // Use named route for the URL
+            fetch('{{ route('order.place') }}', {  // Use named route for the URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

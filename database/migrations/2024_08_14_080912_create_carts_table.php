@@ -13,22 +13,15 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('advertiser_id'); // Ensure correct type
-            $table->unsignedBigInteger('publisher_id');  // Ensure correct type
+            $table->unsignedBigInteger('advertiser_id');
+            $table->unsignedBigInteger('publisher_id');
             $table->string('website_url');
             $table->decimal('price', 8, 2);
-            $table->integer('quantity')->default(1);
+            $table->string('website_name');
             $table->timestamps();
 
-
-             // Adding foreign key constraints
-             $table->foreign('advertiser_id')
-             ->references('id')->on('advertisers')
-             ->onDelete('cascade');
-
-            $table->foreign('publisher_id')
-             ->references('id')->on('publishers')
-             ->onDelete('cascade');
+            $table->foreign('advertiser_id')->references('id')->on('advertisers')->onDelete('cascade');
+            $table->foreign('publisher_id')->references('id')->on('publishers')->onDelete('cascade');
         });
     }
 
