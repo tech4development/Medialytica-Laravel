@@ -34,8 +34,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Copy .env.example to .env if .env does not exist
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.example .env
+          fi
 
       - name: Install PHP and Node.js Dependencies
         run: |
@@ -68,8 +71,7 @@ jobs:
         env:
           MYSQL_PWD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         run: |
-          mysql -u root -h 127.0.0.1 -e "CREATE USER 'hpqjihel_user'@'%' IDENTIFIED BY '${{ secrets.MYSQL_ROOT_PASSWORD }}';"
-          mysql -u root -h 127.0.0.1 -e "GRANT ALL PRIVILEGES ON ${{ secrets.MYSQL_ROOT_DATABASE }}.* TO '${{ secrets.MYSQL_ROOT_USER }}'@'%';"
+          mysql -u root -h 127.0.0.1 -e "CREATE USER '${{ secrets.MYSQL_ROOT_USER }}'@'%' IDENTIFIED BY '${{ secrets.MYSQL_ROOT_PASSWORD }}';"
           mysql -u root -h 127.0.0.1 -e "GRANT ALL PRIVILEGES ON ${{ secrets.MYSQL_ROOT_DATABASE }}.* TO '${{ secrets.MYSQL_ROOT_USER }}'@'%';"
           mysql -u root -h 127.0.0.1 -e "FLUSH PRIVILEGES;"
 
@@ -80,15 +82,16 @@ jobs:
           DB_PORT: 3306
           DB_DATABASE: ${{ secrets.MYSQL_ROOT_DATABASE }}
           DB_USERNAME: ${{ secrets.MYSQL_ROOT_USER }}
-          DB_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD}}
+          DB_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         run: php artisan migrate --force --no-interaction
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          server:  ${{ secrets.FTP_SERVER }}
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: ${{ secrets.FTP_PORT }}
           server-dir: '/public_html/'
+          exclude: .env

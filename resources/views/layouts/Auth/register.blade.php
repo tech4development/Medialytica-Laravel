@@ -29,12 +29,12 @@
     <div class="grid grid-cols-12 gap-6 w-full">
         <div class="lg:col-span-6 col-span-12 hidden lg:block relative">
             <div class="cover relative w-full h-full z-[1] p-10">
-                <a href="index.html" class="header- logo">
+                {{-- <a href="index.html" class="header- logo">
                     <img src="../assets/img/brand-logos/desktop-light.png" alt="logo" class="ltr:ml-auto rtl:mr-auto block">
-                </a>
-                <div class="authentication-page justify-center w-full max-w-7xl mx-auto p-0">
+                </a> --}}
+                {{-- <div class="authentication-page justify-center w-full max-w-7xl mx-auto p-0">
                     <img src="{{asset('backend/assets/img/authentication/2.png')}}" alt="logo" class="mx-auto h-[500px]">
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="lg:col-span-6 col-span-12">
@@ -59,10 +59,13 @@
                                 </div>
 
                                 <div class="mt-5">
-                                    <button type="button"
-                                        class="w-full py-2 px-3 inline-flex justify-center items-center gap-2 rounded-sm border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-primary transition-all text-sm dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10">
-                                        <img src="{{asset('backend/assets/img/authentication/social/1.png')}}" class="w-4 h-4" alt="google-img">Sign in with Google
-                                    </button>
+                                    <a href="{{ route('google-auth') }}">
+                                        <button type="button"
+                                            class="w-full py-2 px-3 inline-flex justify-center items-center gap-2 rounded-sm border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-primary transition-all text-sm dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10">
+                                            <img src="{{ asset('backend/assets/google.png') }}" class="w-4 h-4" alt="google-img">Sign in with Google
+                                        </button>
+                                    </a>
+
 
                                     <div
                                         class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 ltr:before:mr-6 rtl:before:ml-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 ltr:after:ml-6 rtl:after:mr-6 dark:text-white/70 dark:before:border-white/10 dark:after:border-white/10">

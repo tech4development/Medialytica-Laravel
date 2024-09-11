@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminPanel\AdminController;
+use App\Http\Controllers\Advertisers\AdvertiserAuthController;
 use App\Http\Controllers\EditorPanel\EditorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublisherPanel\PublisherController;
@@ -23,6 +24,14 @@ use App\Http\Controllers\SocialPublisherPanel\ScPublisherTwitterController;
 use App\Http\Controllers\SocialPublisherPanel\ScPublisherYoutubeController;
 use App\Http\Controllers\SocialPublisherPanel\ScPublisherWhatsappController;
 use App\Http\Controllers\UserPanel\UserController;
+use App\Http\Controllers\Orders\OrderController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Orders\CheckoutController;
+use App\Http\Controllers\Orders\CartController;
+use App\Http\Controllers\Orders\PayPalController;
+use App\Http\Controllers\Advertisers\RedirectController;
+use App\Http\Controllers\Orders\InvoiceController;
+use App\Http\Controllers\SocialLogin\GoogleAuthController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -42,6 +51,24 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+/*
+|--------------------------------------------------------------------------
+| Google Routes,Auth and Middlewares
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+Route::get('/auth/google',[ GoogleAuthController::class, 'redirect'])->name('google-auth');
+
+Route::get('/auth/google/call-back',[ GoogleAuthController::class, 'callbackGoogle'])->name('google-callback');
+
+
+// Route::get('/', [PublisherController::class, 'viewAll']);
+
 Route::get('/dashboard', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -51,7 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -93,17 +120,16 @@ Route::middleware('auth', 'superadmin',  'user_role:super admin')->group(functio
 |
 |
 */
-Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function () {
-    Route::get('/dashboard', [SuperAdminController::class, 'index'])->name('superadmin.dashboard');
-
-    Route::post('/roles/user', [RoleController::class, 'storeUser'])->name('roles.storeUser');
-    Route::post('/permissions', [RoleController::class, 'storePermission'])->name('permissions.store');
-    Route::get('/permissions', [RoleController::class, 'showPermissions'])->name('permissions.show');
-    Route::post('/roles/{roleId}/assign-permissions', [RoleController::class, 'assignPermission'])->name('roles.assignPermissions');
-    Route::post('/roles/{roleId}/revoke-permissions', [RoleController::class, 'revokePermission'])->name('roles.revokePermissions');
-    Route::get('/roles/{role}/assign-permissions', [RoleController::class, 'assignPermissionsForm'])->name('roles.assignPermissionsForm');
-    Route::get('/roles', [RoleController::class, 'show'])->name('roles.show');
-});
+// Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function () {
+//     Route::get('/dashboard', [SuperAdminController::class, 'index'])->name('superadmin.dashboard');
+//     Route::post('/roles/user', [RoleController::class, 'storeUser'])->name('roles.storeUser');
+//     Route::post('/permissions', [RoleController::class, 'storePermission'])->name('permissions.store');
+//     Route::get('/permissions', [RoleController::class, 'showPermissions'])->name('permissions.show');
+//     Route::post('/roles/{roleId}/assign-permissions', [RoleController::class, 'assignPermission'])->name('roles.assignPermissions');
+//     Route::post('/roles/{roleId}/revoke-permissions', [RoleController::class, 'revokePermission'])->name('roles.revokePermissions');
+//     Route::get('/roles/{role}/assign-permissions', [RoleController::class, 'assignPermissionsForm'])->name('roles.assignPermissionsForm');
+//     Route::get('/roles', [RoleController::class, 'show'])->name('roles.show');
+// });
 
 /*
 |--------------------------------------------------------------------------
@@ -125,19 +151,17 @@ Route::middleware('auth', 'user_role:admin')->group(function () {
 |
 */
 Route::middleware('auth','user_role:publisher')->group(function () {
+    // Get All the Publishers
+    Route::get('publisher/view', [PublisherController::class, 'viewAll']);
     Route::get('publisher/dashboard', [PublisherController::class, 'index'])->name('publisher.dashboard');
     //Add Publisher Details
     Route::get('publisher/create-publisher', [PublisherController::class, 'create'])->name('publisher.create');
     //Store Publishe Details
     Route::post('publisher/add-publisher', [PublisherController::class, 'store'])->name('publisher.store');
-    //Show Publishe Details
-    // Route::get('/publisher/edit/id', [PublisherController::class, 'edit'])->name('publisher.edit');
-    // Route to edit publisher details
+
     Route::get('publisher/edit/{id}', [PublisherController::class, 'edit'])->name('publisher.edit');
-    //Edit Publishe Details
-   // Route::get('publisher/{id}/edit', [PublisherController::class, 'edit'])->name('publisher.edit');
     //Store Publisher Updated Details
-    Route::put('publisher/edit/{id}', [PublisherController::class, 'update'])->name('publisher.edit');
+    Route::put('publisher/edit/{id}', [PublisherController::class, 'update'])->name('publisher.update');
     //Store Publishe Details
     Route::delete('/publisher/{id}', [PublisherController::class, 'destroy'])->name('publisher.destroy');
 
@@ -317,6 +341,19 @@ Route::middleware('auth','user_role:editor')->group(function () {
     Route::get('editor/dashboard', [EditorController::class, 'index'])->name('editor.dashboard');
     });
 
+
+/*
+|--------------------------------------------------------------------------
+                           Order Contoller
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+    Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('placeOrder');
+
+
+
 /*
 |--------------------------------------------------------------------------
                     User routes, middlewares
@@ -329,6 +366,101 @@ Route::middleware('auth','user_role:user')->group(function () {
         });
 
 
+
+/*
+|--------------------------------------------------------------------------
+                   Advertiser Routes and Middleware
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::middleware(['advertiser.auth'])->group(function () {
+        // Routes that require this custom authentication logic
+});
+
+// Route::prefix('advertiser')->name('advertiser.')->group(function () {
+//     // Registration Routes
+//     Route::get('/register', [AdvertiserAuthController::class, 'showRegisterForm'])->name('advertiserregister');
+//     Route::post('/register', [AdvertiserAuthController::class, 'register'])->name('register.submit');
+
+//     // Login Routes
+//     Route::get('/login', [AdvertiserAuthController::class, 'showLoginForm'])->name('advertiserlogin');
+//     Route::post('/login', [AdvertiserAuthController::class, 'login'])->name('login.submit');
+
+//     // Logout Route
+//     Route::post('/logout', [AdvertiserAuthController::class, 'logout'])->name('logout');
+// });
+
+Route::get('/guest', [AdvertiserAuthController::class, 'showGuestPage'])->name('guest.page');
+Route::get('/redirect-to-register', [AdvertiserAuthController::class, 'redirectToRegister'])->name('redirect.to.register');
+
+
+/*
+|--------------------------------------------------------------------------
+                  Cart, Order and Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+
+*/
+Route::middleware(['check.advertiser'])->group(function () {
+Route::post('cart/add/{publisherId}', [CartController::class, 'add'])->name('cart.add');
+Route::delete('/cart/remove/{cartId}', [CartController::class, 'remove'])->name('cart.remove');
+Route::put('/cart/update/{cartId}', [CartController::class, 'update'])->name('cart.update');
+Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
+Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.index');
+});
+
+/*
+|--------------------------------------------------------------------------
+                  Order and Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+                  Paypal Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+Route::post('paypal', [PayPalController::class, 'paypal'])->name('paypal');
+Route::get('success', [PayPalController::class, 'sucess'])->name('success');
+Route::get('cancel', [PayPalController::class, 'cancel'])->name('cancel');
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+                  Invoice Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+// Route::get('/invoice/{order_id}', [InvoiceController::class, 'create'])->name('invoice.create');
+Route::prefix('invoice')->group(function () {
+    // Route to create an invoice and display it
+    Route::get('/create/{orderId}', [InvoiceController::class, 'create'])->name('invoice.create');
+
+    // Route to display a specific invoice
+    Route::get('/{invoiceId}', [InvoiceController::class, 'show'])->name('invoice.show');
+
+    // Route to mark payment as received
+    Route::post('/mark-payment-received/{invoiceId}', [InvoiceController::class, 'markPaymentReceived'])
+        ->name('invoice.markPaymentReceived');
+});
 /*
 |--------------------------------------------------------------------------
                 400, 404 Error and 500 Error pages routes
@@ -346,3 +478,7 @@ Route::get('/404', function () {
 Route::get('/500', function () {
     return response()->view('errors.500', [], 500);
 });
+
+
+
+require __DIR__.'/auth.php';
