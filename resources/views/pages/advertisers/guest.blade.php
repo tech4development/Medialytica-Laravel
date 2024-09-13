@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/libs/swiper/swiper-bundle.min.css') }}">
 </head>
 <body class="bg-white">
+    @if(session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ session('success') }}</span>
+    </div>
+@endif
 
 <div class="container mx-auto p-6">
     <div class="flex flex-col md:flex-row">
@@ -123,8 +129,9 @@
                                         </div>
                                     </td>
                                     <!-- Other details columns -->
-                                    <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->niches }}</td>
-                                    <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->moz_da }}</td>
+                                    <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">
+                                        {{ is_array($publisher->niches) ? implode(', ', $publisher->niches) : $publisher->niches }}
+                                       </td>                                    <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->moz_da }}</td>
                                     <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->ahref_dr }}</td>
                                     <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->traffic }}</td>
                                     <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->country }}</td>
@@ -143,6 +150,7 @@
                                                         Order Now
                                                     </button>
                                                 </form>
+
                                             </div>
                                         @else
                                             <div class="flex justify-center">

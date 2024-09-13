@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('publisher_website_name'); // name of the publisher's website
             $table->string('publisher_website_url'); // URL of the publisher's website
             $table->decimal('price', 10, 2); // price of the order
+            $table->longtext('status', ['placed', 'pending_approval', 'approved', 'published', 'draft', 'live'])->default('placed');
+            $table->string('payment_method')->default('offline');
             $table->timestamps();
         });
     }

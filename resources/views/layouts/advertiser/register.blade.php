@@ -36,12 +36,12 @@
     <div class="grid grid-cols-12 gap-6 w-full">
         <div class="lg:col-span-6 col-span-12 hidden lg:block relative">
             <div class="cover relative w-full h-full z-[1] p-10">
-                <a href="index.html" class="header- logo">
+                {{-- <a href="index.html" class="header- logo">
                     <img src="{{asset(backend/assets/img/brand-logos/desktop-light.png)}}" alt="logo" class="ltr:ml-auto rtl:mr-auto block">
-                </a>
-                <div class="authentication-page justify-center w-full max-w-7xl mx-auto p-0">
+                </a> --}}
+                {{-- <div class="authentication-page justify-center w-full max-w-7xl mx-auto p-0">
                     <img src="{{asset('backend/assets/img/authentication/2.png')}}" alt="logo" class="mx-auto h-[500px]">
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="lg:col-span-6 col-span-12">

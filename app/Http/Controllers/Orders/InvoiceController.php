@@ -26,7 +26,6 @@ class InvoiceController extends Controller
         return view('advertisers.invoice.index', compact('invoice'));
     }
 
-    // Method to create an invoice
     public function create($orderId)
     {
         $order = Order::findOrFail($orderId);
@@ -43,6 +42,7 @@ class InvoiceController extends Controller
             'publisher_website_url' => $order->publisher_website_url,
             'price' => $order->price,
             'isSent' => false,
+            'payment'
         ]);
 
         // Redirect to the invoice view

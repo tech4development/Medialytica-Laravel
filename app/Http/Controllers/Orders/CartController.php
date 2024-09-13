@@ -11,32 +11,32 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware(['auth:advertiser', 'check.advertiser']);
     }
 
-
-     /**
+    /**
      * Show the items in the cart.
      *
      * @return \Illuminate\Http\Response
      */
     public function show()
     {
-        // Get the current advertiser's cart items
-        $advertiserId = Auth::guard('advertiser')->id();
+        // Get the current advertiser's cart items from the session
+        $cartItems = session()->get('cart', []);
 
-        // Fetch all publishers or relevant cart items
-        $cartItems = Cart::where('advertiser_id', $advertiserId)->get();
-        $publishers = Publisher::all(); // Fetch all publishers if needed elsewhere
+        // dd($cartItems);
 
         // Calculate subtotal and total based on cart items
-        $subtotal = $cartItems->sum('price');
+        $subtotal = collect($cartItems)->sum('price');
         $total = $subtotal; // Add any additional calculations if needed
 
-        return view('advertisers.cart.index', compact('cartItems', 'publishers', 'subtotal', 'total'));
+        // Fetch all publishers (or filter as needed)
+        $publisherIds = collect($cartItems)->pluck('publisher_id'); // Extract publisher IDs from cart items
+        $publishers = Publisher::whereIn('id', $publisherIds)->get(); // Fetch publishers from DB
+
+        return view('advertisers.cart.index', compact('cartItems', 'subtotal', 'total', 'publishers'));
     }
 
     /**
@@ -45,58 +45,86 @@ class CartController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-
-
-
-
     public function add(Request $request)
     {
-        // Validate the request
-        $request->validate([
+        // Validate incoming data
+        $validated = $request->validate([
             'publisher_id' => 'required|exists:publishers,id',
-            'website_url' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'website_name' => 'required|string|max:255',
+            'website_url' => 'required|string',
+            'price' => 'required|numeric',
+            'website_name' => 'required|string',
         ]);
 
-        // Get the current advertiser ID
-        $advertiserId = Auth::guard('advertiser')->id();
+        // Dump and die to inspect the validated data
+        dd($validated);
 
-        // Ensure the advertiser ID is valid
-        if (!$advertiserId) {
-            return redirect()->back()->withErrors(['error' => 'Advertiser not authenticated.']);
-        }
+        // Retrieve cart from session or create a new one if it doesn't exist
+        $cart = session()->get('cart', []);
 
-        // Check if the item is already in the cart
-        $cartItem = Cart::where([
-            ['advertiser_id', '=', $advertiserId],
-            ['publisher_id', '=', $request->publisher_id],
-        ])->first();
+        // Check if the publisher is already in the cart
+        $publisherExists = collect($cart)->firstWhere('publisher_id', $request->publisher_id);
 
-        if ($cartItem) {
-            // Update the existing cart item
-            $cartItem->update([
-                'website_url' => $request->website_url,
-                'price' => $request->price,
-                'website_name' => $request->website_name,
-            ]);
-        } else {
-            // Create a new cart item
-            Cart::create([
-                'advertiser_id' => $advertiserId,
+        if (!$publisherExists) {
+            // Add publisher details to the cart
+            $cart[] = [
                 'publisher_id' => $request->publisher_id,
                 'website_url' => $request->website_url,
                 'price' => $request->price,
                 'website_name' => $request->website_name,
-            ]);
+            ];
+
+            // Update session cart
+            session()->put('cart', $cart);
+
+            // Optionally, you can dump and die here too
+            dd($cart);
+
+            // Return success message
+            return redirect()->back()->with('success', 'Item added to cart successfully.');
         }
 
-        // Redirect with success message
-        return redirect()->route('cart.show')->with('success', 'Website URL added to cart.');
+        // If the item is already in the cart, notify the user
+        return redirect()->back()->with('error', 'Item already in the cart.');
     }
 
 
 
 
+    /**
+     * Remove an item from the cart.
+     *
+     * @param int $publisher_id
+     * @return \Illuminate\Http\Response
+     */
+    // public function remove($publisher_id)
+    // {
+    //     // Get current cart items from the session
+    //     $cartItems = session()->get('cart', []);
 
+    //     // Filter out the item with the given publisher_id
+    //     $cartItems = array_filter($cartItems, function ($item) use ($publisher_id) {
+    //         return $item['publisher_id'] != $publisher_id;
+    //     });
+
+    //     // Update the session with the modified cart
+    //     session()->put('cart', $cartItems);
+
+    //     // Redirect with success message
+    //     return redirect()->route('cart.show')->with('success', 'Item removed from cart.');
+    // }
+
+    /**
+     * Clear the cart.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    // public function clear()
+    // {
+    //     // Clear the cart session
+    //     session()->forget('cart');
+
+    //     // Redirect with success message
+    //     return redirect()->route('cart.show')->with('success', 'Cart cleared.');
+    // }
 }
+

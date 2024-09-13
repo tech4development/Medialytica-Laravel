@@ -178,6 +178,32 @@
                             </ul>
                         </li>
 
+
+                                                <!-- Start::slide__category -->
+                        <li class="slide__category"><span class="category-name">Orders</span></li>
+                        <!-- End::slide__category -->
+
+                            <!-- Start::slide -->
+                            <li class="slide has-sub">
+                                <a href="javascript:void(0);" class="side-menu__item" id="orders-menu">
+                                    <i class="ri-shopping-cart-line side-menu__icon"></i>
+                                    <span class="side-menu__label">Orders</span>
+                                    <svg class="w-4 h-4 ml-auto transform transition-transform duration-200" id="orders-toggle-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6 15L10 11L14 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                                <!-- Collapsible Menu Items -->
+                                <ul id="orders-menu-items" class="hidden mt-2 space-y-1">
+                                    <li>
+                                        <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">View All Orders</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('orders.create') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">Edit Order</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- End::slide -->
+
                         <!-- Start::slide -->
                         <li class="slide has-sub">
                             <!-- Main Menu Item for Editor -->

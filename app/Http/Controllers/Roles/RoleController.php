@@ -155,5 +155,30 @@ class RoleController extends Controller
 
         return redirect()->route('roles.show')->with('success', 'Role deleted successfully.');
     }
+
+
+
+    public function index()
+    {
+        $orders = Order::all();
+        return view('orders.index', compact('orders'));
+    }
+
+    public function edit(Order $order)
+    {
+        return view('orders.edit', compact('order'));
+    }
+
+    public function update(Request $request, Order $order)
+    {
+        $request->validate([
+            'status' => 'required|string|max:255',
+        ]);
+
+        $order->status = $request->status;
+        $order->save();
+
+        return redirect()->route('orders.index')->with('success', 'Order status updated successfully.');
+    }
 }
 

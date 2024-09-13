@@ -111,6 +111,9 @@ Route::middleware('auth', 'superadmin',  'user_role:super admin')->group(functio
     Route::post('/roles/{roleId}/revoke-permissions', [RoleController::class, 'revokePermission'])->name('roles.revokePermissions');
     Route::get('roles/{role}/assign-permissions', [RoleController::class, 'assignPermissionsForm'])->name('roles.assignPermissionsForm');
     Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::get('superadmin/orders', [OrderController::class, 'index'])->name('index');
+    Route::get('superadmin/{order}/edit', [OrderController::class, 'edit'])->name('edit');
+    Route::put('superadmin/{order}', [OrderController::class, 'update'])->name('update');
 });
 
 /*
@@ -423,7 +426,9 @@ Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.in
 
 
 
-
+Route::get('/order/track', [OrderController::class, 'track']);
+Route::post('/order/track', [OrderController::class, 'trackOrder']);
+Route::post('/order/{id}/update-status', [OrderController::class, 'updateStatus'])->middleware('auth');
 
 /*
 |--------------------------------------------------------------------------
@@ -434,7 +439,7 @@ Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.in
 */
 
 Route::post('paypal', [PayPalController::class, 'paypal'])->name('paypal');
-Route::get('success', [PayPalController::class, 'sucess'])->name('success');
+Route::get('success', [PayPalController::class, 'success'])->name('success');
 Route::get('cancel', [PayPalController::class, 'cancel'])->name('cancel');
 
 
@@ -450,17 +455,17 @@ Route::get('cancel', [PayPalController::class, 'cancel'])->name('cancel');
 */
 
 // Route::get('/invoice/{order_id}', [InvoiceController::class, 'create'])->name('invoice.create');
-Route::prefix('invoice')->group(function () {
-    // Route to create an invoice and display it
-    Route::get('/create/{orderId}', [InvoiceController::class, 'create'])->name('invoice.create');
+// Route::prefix('invoice')->group(function () {
+//     // Route to create an invoice and display it
+//     Route::get('/create/{orderId}', [InvoiceController::class, 'create'])->name('invoice.create');
 
-    // Route to display a specific invoice
-    Route::get('/{invoiceId}', [InvoiceController::class, 'show'])->name('invoice.show');
+//     // Route to display a specific invoice
+//     Route::get('/{invoiceId}', [InvoiceController::class, 'show'])->name('invoice.show');
 
-    // Route to mark payment as received
-    Route::post('/mark-payment-received/{invoiceId}', [InvoiceController::class, 'markPaymentReceived'])
-        ->name('invoice.markPaymentReceived');
-});
+//     // Route to mark payment as received
+//     Route::post('/mark-payment-received/{invoiceId}', [InvoiceController::class, 'markPaymentReceived'])
+//         ->name('invoice.markPaymentReceived');
+// });
 /*
 |--------------------------------------------------------------------------
                 400, 404 Error and 500 Error pages routes

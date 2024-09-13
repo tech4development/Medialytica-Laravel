@@ -4,21 +4,8 @@ namespace App\Http\Controllers\Orders;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use PayPal\Api\Payer;
-use PayPal\Api\Item;
-use PayPal\Api\ItemList;
-use PayPal\Api\Amount;
-use PayPal\Api\Transaction;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Payment;
-use PayPal\Api\PaymentExecution;
-use PayPal\Rest\ApiContext;
-use PayPal\Auth\OAuthTokenCredential;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
-use PSpell\Config;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
-
+use App\Models\Order; // Add your Payment model
 
 
 class PayPalController extends Controller
@@ -68,29 +55,36 @@ class PayPalController extends Controller
     {
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
-        $paypalToken = $provider->getAccessToken();
-        $response = $provider->capturePaymentOrder($request->token);
+
+        // The token is expected to be in the request parameters
+        $orderId = $request->input('token');
+
+        // Check if orderId is provided
+        if (!$orderId) {
+            return redirect()->route('cancel')->with('error', 'Order ID is missing.');
+        }
+
+        // Capture the payment order
+        $response = $provider->capturePaymentOrder($orderId);
 
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-            // Insert data into database
-            $payment = new Payment;
-            $payment->payment_id = $response['id'];
-            $payment->product_name = session()->get('product_name');
-            $payment->quantity = session()->get('quantity');
-            $payment->amount = $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
-            $payment->currency = $response['purchase_units'][0]['payments']['captures'][0]['amount']['currency_code'];
-            $payment->payer_name = $response['payer']['name']['given_name'];
-            $payment->payer_email = $response['payer']['email_address'];
-            $payment->payment_status = $response['status'];
-            $payment->payment_method = "PayPal";
-            $payment->save();
+            // Insert payment data into database
+            $payment = new Order;
+            $payment->order_number = uniqid('ORD-'); // Generate a unique order number
+            $payment->user_name = session()->get('user_name'); // Replace with actual user name from session or request
+            $payment->user_email = session()->get('user_email'); // Replace with actual user email from session or request
+            $payment->publisher_website_name = session()->get('publisher_website_name'); // Replace with actual data
+            $payment->publisher_website_url = session()->get('publisher_website_url'); // Replace with actual data
+            $payment->price = $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
+            $payment->payment_method = "PayPal"; // Set the payment method as "PayPal"
+            $payment->save(); // Save to database
 
-            // Clear session
-            session()->forget(['product_name', 'quantity']);
+            // Clear session data
+            session()->forget(['product_name', 'quantity', 'user_name', 'user_email', 'publisher_website_name', 'publisher_website_url']);
 
-            return "Payment is successful";
+            return "Payment is successful and recorded.";
         } else {
-            return redirect()->route('cancel');
+            return redirect()->route('cancel')->with('error', 'Payment capture failed.');
         }
     }
 

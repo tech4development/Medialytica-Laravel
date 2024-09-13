@@ -8,6 +8,8 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="description" content="">
   <meta name="keywords" content="">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="{{asset('backend/assets/img/brand-logos/favicon.ico')}}">
@@ -456,7 +458,9 @@
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap">
                                             <a href="#" class="text-[#004466] hover:underline">{{ $publisher->website_url }}</a>
                                         </td>
-                                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->niches }}</td>
+                                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">
+                                         {{ is_array($publisher->niches) ? implode(', ', $publisher->niches) : $publisher->niches }}
+                                        </td>
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->moz_da }}</td>
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->ahref_dr }}</td>
                                         <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">{{ $publisher->traffic }}</td>
@@ -487,6 +491,160 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="bg-custom-blue-150">
+            <div class="mb-4">
+                <h5 class="text-lg font-bold text-[#004466] text-center">Browse our database of 10K+ Social Publishers</h5>
+            </div>
+            <div class="container mx-auto p-4">
+                <!-- Horizontal Menu -->
+                <div class="flex justify-center mb-4 space-x-4">
+                    <button onclick="switchTable('telegram')" class="px-4 py-2 bg-blue-500 text-white rounded-lg" id="telegram-btn">
+                        <i class="fab fa-telegram-plane"></i> Telegram
+                    </button>
+                    <button onclick="switchTable('facebook')" class="px-4 py-2 bg-blue-500 text-white rounded-lg" id="facebook-btn">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </button>
+                    <button onclick="switchTable('instagram')" class="px-4 py-2 bg-blue-500 text-white rounded-lg" id="instagram-btn">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </button>
+                    <button onclick="switchTable('twitter')" class="px-4 py-2 bg-blue-500 text-white rounded-lg" id="twitter-btn">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </button>
+                    <button onclick="switchTable('whatsapp')" class="px-4 py-2 bg-blue-500 text-white rounded-lg" id="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> Whatsapp
+                    </button>
+                    <button onclick="switchTable('tiktok')" class="px-4 py-2 bg-blue-500 text-white rounded-lg" id="tiktok-btn">
+                        <i class="fab fa-tiktok"></i> Tiktok
+                    </button>
+                    <button onclick="switchTable('youtube')" class="px-4 py-2 bg-blue-500 text-white rounded-lg" id="tiktok-btn">
+                        <i class="fab fa-tiktok"></i> Youtube
+                    </button>
+                </div>
+
+                <!-- Main Section with Vertical Toggle Menu -->
+                <div class="flex">
+                    <!-- Vertical Drawer Menu -->
+                    <div class="flex flex-col items-start p-4 bg-gray-100 rounded-lg space-y-4">
+                        <button onclick="switchTable('telegram')" class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group">
+                            <i class="fab fa-telegram-plane"></i>
+                            <span class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Telegram
+                            </span>
+                        </button>
+
+                        <button onclick="switchTable('facebook')" class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group">
+                            <i class="fab fa-facebook-f"></i>
+                            <span class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Facebook
+                            </span>
+                        </button>
+
+                        <button onclick="switchTable('instagram')" class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group">
+                            <i class="fab fa-instagram"></i>
+                            <span class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Instagram
+                            </span>
+                        </button>
+
+                        <button onclick="switchTable('twitter')" class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group">
+                            <i class="fab fa-twitter"></i>
+                            <span class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Twitter
+                            </span>
+                        </button>
+
+                        <button onclick="switchTable('whatsapp')" class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group">
+                            <i class="fab fa-whatsapp"></i>
+                            <span class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Whatsapp
+                            </span>
+                        </button>
+
+                        <button onclick="switchTable('tiktok')" class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group">
+                            <i class="fab fa-tiktok"></i>
+                            <span class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Tiktok
+                            </span>
+                        </button>
+                        <button onclick="switchTable('youtube')" class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group">
+                            <i class="fab fa-youtube"></i>
+                            <span class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Youtube
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- Tables Section -->
+                    <div class="flex-grow p-4">
+                        <!-- Telegram Table -->
+                        <table class="min-w-full bg-white border border-gray-300" id="telegram-table">
+                            <thead>
+                                <tr class="bg-gray-200">
+                                    <th class="px-4 py-2 border">Channel</th>
+                                    <th class="px-4 py-2 border">Channel URL</th>
+                                    <th class="px-4 py-2 border">Niches</th>
+                                    <th class="px-4 py-2 border">Members</th>
+                                    <th class="px-4 py-2 border">Category</th>
+                                    <th class="px-4 py-2 border">Target Audience</th>
+                                    <th class="px-4 py-2 border">Post Types</th>
+                                    <th class="px-4 py-2 border">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($telegramspublishers as $telegramspublisher)
+                                <tr>
+                                    <td class="px-4 py-2 border">{{ $telegramspublisher->telegram_channel_name }}</td>
+                                    <td class="px-4 py-2 border">{{ $telegramspublisher->telegram_channel_url }}</td>
+                                    <td class="px-4 py-2 border">{{ $telegramspublisher->niches_themes }}</td>
+                                    <td class="px-4 py-2 border">{{ $telegramspublisher->telegram_channel_members }}</td>
+                                    <td class="px-4 py-2 border">{{ $telegramspublisher->influencer_category }}</td>
+                                    <td class="px-4 py-2 border">{{ $telegramspublisher->target_audience }}</td>
+                                    <td class="px-4 py-2 border">{{ $telegramspublisher->post_types }}</td>
+                                    <td class="px-4 py-2 border">{{ $telegramspublisher->price }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <!-- Facebook Table -->
+                        <table class="min-w-full bg-white border border-gray-300 hidden" id="facebook-table">
+                            <thead>
+                                <tr class="bg-gray-200">
+                                    <th class="px-4 py-2 border">Page Name</th>
+                                    <th class="px-4 py-2 border">Page URL</th>
+                                    <th class="px-4 py-2 border">Niches</th>
+                                    <th class="px-4 py-2 border">Followers</th>
+                                    <th class="px-4 py-2 border">Category</th>
+                                    <th class="px-4 py-2 border">Target Audience</th>
+                                    <th class="px-4 py-2 border">Post Types</th>
+                                    <th class="px-4 py-2 border">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($facebookspublishers as $facebookspublisher)
+                                <tr>
+                                    <td class="px-4 py-2 border">{{ $facebookspublisher->facebook_page_name }}</td>
+                                    <td class="px-4 py-2 border">{{ $facebookspublisher->facebook_page_url }}</td>
+                                    <td class="px-4 py-2 border">{{ $facebookspublisher->niches_themes }}</td>
+                                    <td class="px-4 py-2 border">{{ $facebookspublisher->number_of_followers }}</td>
+                                    <td class="px-4 py-2 border">{{ $facebookspublisher->influencer_category }}</td>
+                                    <td class="px-4 py-2 border">{{ $facebookspublisher->target_audience }}</td>
+                                    <td class="px-4 py-2 border">{{ $facebookspublisher->post_types }}</td>
+                                    <td class="px-4 py-2 border">{{ $facebookspublisher->price }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <!-- Add other tables similarly -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
 
 
@@ -1029,6 +1187,45 @@
 
        <!-- Choices JS -->
        <script src="{{asset('backend/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
+
+
+       <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tables = ['telegram', 'facebook', 'instagram', 'twitter', 'whatsapp', 'tiktok', 'youtube'];
+            let activeTable = 'telegram'; // Default table
+
+            // Function to switch tables
+            function switchTable(table) {
+                if (tables.includes(table)) {
+                    activeTable = table;
+                    renderTables();
+                }
+            }
+
+            // Function to render tables based on activeTable
+            function renderTables() {
+                tables.forEach(t => {
+                    const tableElement = document.getElementById(`${t}-table`);
+                    if (tableElement) {
+                        tableElement.style.display = (t === activeTable) ? 'table' : 'none';
+                    }
+                });
+            }
+
+            // Add event listeners to buttons
+            document.querySelectorAll('.table-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const tableName = button.getAttribute('data-table');
+                    switchTable(tableName);
+                });
+            });
+
+            // Initial rendering
+            renderTables();
+        });
+    </script>
+
+
 
        <script>
         function placeOrder(publisherId) {
