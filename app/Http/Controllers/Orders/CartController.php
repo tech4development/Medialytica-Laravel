@@ -7,124 +7,93 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Publisher;
+use App\Models\RelatedWebsite; // Assuming you have this model
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:advertiser', 'check.advertiser']);
-    }
-
-    /**
-     * Show the items in the cart.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-        // Get the current advertiser's cart items from the session
-        $cartItems = session()->get('cart', []);
-
-        // dd($cartItems);
-
-        // Calculate subtotal and total based on cart items
-        $subtotal = collect($cartItems)->sum('price');
-        $total = $subtotal; // Add any additional calculations if needed
-
-        // Fetch all publishers (or filter as needed)
-        $publisherIds = collect($cartItems)->pluck('publisher_id'); // Extract publisher IDs from cart items
-        $publishers = Publisher::whereIn('id', $publisherIds)->get(); // Fetch publishers from DB
-
-        return view('advertisers.cart.index', compact('cartItems', 'subtotal', 'total', 'publishers'));
-    }
-
-    /**
-     * Add an item to the cart.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function add(Request $request)
     {
-        // Validate incoming data
-        $validated = $request->validate([
-            'publisher_id' => 'required|exists:publishers,id',
-            'website_url' => 'required|string',
-            'price' => 'required|numeric',
-            'website_name' => 'required|string',
+        // Validate the input
+        $request->validate([
+            'publisher_id' => 'required|integer|exists:publishers,id',
         ]);
 
-        // Dump and die to inspect the validated data
-        dd($validated);
+        $publisherId = $request->input('publisher_id');
 
-        // Retrieve cart from session or create a new one if it doesn't exist
+        // Get the current cart from the session
         $cart = session()->get('cart', []);
 
-        // Check if the publisher is already in the cart
-        $publisherExists = collect($cart)->firstWhere('publisher_id', $request->publisher_id);
-
-        if (!$publisherExists) {
-            // Add publisher details to the cart
-            $cart[] = [
-                'publisher_id' => $request->publisher_id,
-                'website_url' => $request->website_url,
-                'price' => $request->price,
-                'website_name' => $request->website_name,
-            ];
-
-            // Update session cart
-            session()->put('cart', $cart);
-
-            // Optionally, you can dump and die here too
-            dd($cart);
-
-            // Return success message
-            return redirect()->back()->with('success', 'Item added to cart successfully.');
+        // Ensure cart is an array
+        if (!is_array($cart)) {
+            $cart = [];
         }
 
-        // If the item is already in the cart, notify the user
-        return redirect()->back()->with('error', 'Item already in the cart.');
+        // Add publisher to cart if not already present
+        if (!array_key_exists($publisherId, $cart)) {
+            // Fetch publisher details
+            $publisher = Publisher::find($publisherId);
+
+            if (!$publisher) {
+                return redirect()->route('cart.index')->with('error', 'Publisher not found!');
+            }
+
+            // Add new publisher to cart
+            $cart[$publisherId] = [
+                'name' => $publisher->website_name, // Adjust as needed
+                'price' => $publisher->price,
+            ];
+
+            session()->put('cart', $cart);
+
+            return redirect()->route('cart.index')->with('success', 'Publisher added to cart successfully!');
+        }
+
+        return redirect()->route('cart.index')->with('info', 'Publisher is already in the cart.');
     }
 
+    public function index()
+    {
+        $cart = session()->get('cart', []);
 
+        // Ensure $cart is an array
+        if (!is_array($cart)) {
+            $cart = [];
+        }
 
+        // Fetch publisher details based on the cart item IDs
+        $cartItemIds = array_keys($cart);
+        $cartItems = Publisher::whereIn('id', $cartItemIds)->get();
 
-    /**
-     * Remove an item from the cart.
-     *
-     * @param int $publisher_id
-     * @return \Illuminate\Http\Response
-     */
-    // public function remove($publisher_id)
-    // {
-    //     // Get current cart items from the session
-    //     $cartItems = session()->get('cart', []);
+        // Fetch related websites (assuming a function or a model for this purpose)
+        $relatedWebsites = $this->getRelatedWebsites($cartItems);
 
-    //     // Filter out the item with the given publisher_id
-    //     $cartItems = array_filter($cartItems, function ($item) use ($publisher_id) {
-    //         return $item['publisher_id'] != $publisher_id;
-    //     });
+        if ($cartItems->isEmpty()) {
+            // Redirect to checkout page if cart is empty
+            return redirect()->route('checkout.index');
+        }
 
-    //     // Update the session with the modified cart
-    //     session()->put('cart', $cartItems);
+        return view('advertisers.cart.index', compact('cartItems', 'relatedWebsites', 'cart'));
+    }
 
-    //     // Redirect with success message
-    //     return redirect()->route('cart.show')->with('success', 'Item removed from cart.');
-    // }
+    private function getRelatedWebsites($cartItems)
+    {
+        // Initialize an empty collection for related websites
+        $relatedWebsites = collect();
 
-    /**
-     * Clear the cart.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function clear()
-    // {
-    //     // Clear the cart session
-    //     session()->forget('cart');
+        foreach ($cartItems as $item) {
+            // Ensure $item->niches is an array
+            if (is_array($item->niches)) {
+                foreach ($item->niches as $niche) {
+                    // Find related websites by matching any niche in the JSON field
+                    $relatedWebsites = $relatedWebsites->merge(
+                        RelatedWebsite::whereJsonContains('niches', $niche)->get()
+                    );
+                }
+            }
+        }
 
-    //     // Redirect with success message
-    //     return redirect()->route('cart.show')->with('success', 'Cart cleared.');
-    // }
+        // Remove any duplicate websites by their ID
+        return $relatedWebsites->unique('id');
+    }
 }
-

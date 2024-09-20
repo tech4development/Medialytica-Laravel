@@ -407,13 +407,29 @@ Route::get('/redirect-to-register', [AdvertiserAuthController::class, 'redirectT
 
 */
 Route::middleware(['check.advertiser'])->group(function () {
-Route::post('cart/add/{publisherId}', [CartController::class, 'add'])->name('cart.add');
+// Route::post('cart/add/{publisherId}', [CartController::class, 'add'])->name('cart.add');
+});
+
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::delete('/cart/remove/{cartId}', [CartController::class, 'remove'])->name('cart.remove');
 Route::put('/cart/update/{cartId}', [CartController::class, 'update'])->name('cart.update');
-Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+// Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
 Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.index');
-});
+
+Route::post('/checkout/verify', function () {
+    if (!auth()->guard('advertiser')->check()) {
+        // Store the intended URL to redirect after login
+        session()->put('url.intended', route('checkout.index'));
+        return redirect()->route('advertiserregister')->with('error', 'You must be logged in to proceed to checkout.');
+    }
+
+    return redirect()->route('checkout.index');  // Redirect to checkout if authenticated
+})->name('checkout.verify');
+
+Route::get('/thank-you/{orderId}', [OrderController::class, 'thankYou'])->name('thank_you');
 
 /*
 |--------------------------------------------------------------------------
@@ -443,6 +459,10 @@ Route::get('success', [PayPalController::class, 'success'])->name('success');
 Route::get('cancel', [PayPalController::class, 'cancel'])->name('cancel');
 
 
+Route::get('/check-auth', function () {
+    return response()->json(['isAuthenticated' => Auth::check()]);
+})->name('check.auth');
+
 
 
 
@@ -454,18 +474,20 @@ Route::get('cancel', [PayPalController::class, 'cancel'])->name('cancel');
 |
 */
 
-// Route::get('/invoice/{order_id}', [InvoiceController::class, 'create'])->name('invoice.create');
-// Route::prefix('invoice')->group(function () {
-//     // Route to create an invoice and display it
-//     Route::get('/create/{orderId}', [InvoiceController::class, 'create'])->name('invoice.create');
+Route::prefix('invoice')->group(function () {
+    // Route to create an invoice and display it
+    Route::get('/create/{orderId}', [InvoiceController::class, 'create'])->name('invoice.create');
 
-//     // Route to display a specific invoice
-//     Route::get('/{invoiceId}', [InvoiceController::class, 'show'])->name('invoice.show');
+    // Route to display a specific invoice
+    Route::get('/{invoiceId}', [InvoiceController::class, 'show'])->name('invoice.show');
 
-//     // Route to mark payment as received
-//     Route::post('/mark-payment-received/{invoiceId}', [InvoiceController::class, 'markPaymentReceived'])
-//         ->name('invoice.markPaymentReceived');
-// });
+    // Route to mark payment as received
+    Route::post('/mark-payment-received/{invoiceId}', [InvoiceController::class, 'markPaymentReceived'])
+        ->name('invoice.markPaymentReceived');
+
+Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])->name('invoice.download');
+Route::get('/invoice/email/{id}', [InvoiceController::class, 'email'])->name('invoice.email');
+});
 /*
 |--------------------------------------------------------------------------
                 400, 404 Error and 500 Error pages routes
@@ -476,6 +498,7 @@ Route::get('cancel', [PayPalController::class, 'cancel'])->name('cancel');
 
 // Optionally, define a route for 404 errors if you need specific handling
 Route::get('/404', function () {
+    
     return response()->view('errors.404', [], 404);
 });
 

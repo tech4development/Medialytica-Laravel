@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('advertisers', function (Blueprint $table) {
-            $table->unsignedBigInteger('id', true);
-             $table->string('name');
+            $table->id();
+            $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
             $table->string('country');
@@ -21,6 +21,8 @@ return new class extends Migration
             $table->enum('user_role', ['super admin', 'admin', 'publisher', 'advertiser', 'socialpublisher','editor','user'])->default('advertiser');
             $table->timestamps();
         });
+
+      
     }
 
     /**

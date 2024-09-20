@@ -11,6 +11,7 @@ use App\Models\ScPublisherTwitter;
 use App\Models\WhatsappChannels;
 use App\Models\ScPublisherYoutube;
 use App\Models\ScPublisherTiktok;
+use App\Models\Country;
 
 
 class HomeController extends Controller
@@ -28,7 +29,7 @@ class HomeController extends Controller
         $countries = Country::all();
 
 
-        return view('home', compact('countires','publishers', 'facebookspublishers', 'instagramspublishers', 'xspublishers', 'tiktokspublishers', 'telegramspublishers', 'whatsappspublishers', 'youtubespublishers'));
+        return view('home', compact('countries','publishers', 'facebookspublishers', 'instagramspublishers', 'xspublishers', 'tiktokspublishers', 'telegramspublishers', 'whatsappspublishers', 'youtubespublishers'));
     }
 
 
@@ -113,7 +114,7 @@ class HomeController extends Controller
         ],
     ];
 
-    return view('countries.index', compact('countries'));
+    return view('advertisers.countries.index', compact('countries'));
 }
 
 }

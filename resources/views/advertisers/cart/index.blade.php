@@ -5,141 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ asset('backend/assets/img/brand-logos/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
-    <link id="style" href="{{ asset('backend/assets/libs/simplebar/simplebar.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('backend/assets/libs/@simonwep/pickr/themes/nano.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/libs/swiper/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 </head>
-
 <body class="bg-gray-100">
-    <!-- Error Messages -->
-    @if($errors->any())
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Oh Snap!</strong>
-        <span class="block sm:inline">Please fix the below errors:</span>
-        <ul class="mt-2 list-disc pl-5">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
 
-    <div class="container mx-auto mt-10">
-        <div class="flex shadow-md my-10">
-            <!-- Sidebar for Publisher Details -->
-            <div class="w-1/4 bg-gray-50 px-8 py-10">
-                <h2 class="font-semibold text-2xl border-b pb-8">Publisher Details</h2>
-                @foreach($publishers as $publisher)
-                <div class="mt-8">
-                    <h3 class="font-semibold text-lg">{{ $publisher->website_name }}</h3>
-                    <p class="text-sm text-gray-600 truncate">URL: {{ $publisher->website_url }}</p>
-                    <p class="text-sm text-gray-600 truncate">Niches: {{ is_array($publisher->niches) ? implode(', ', $publisher->niches) : $publisher->niches }}</p>
-                    <p class="text-sm text-gray-600 truncate">Moz DA: {{ $publisher->moz_da }}</p>
-                    <p class="text-sm text-gray-600 truncate">Ahrefs DR: {{ $publisher->ahref_dr }}</p>
-                    <p class="text-sm text-gray-600 truncate">Traffic: {{ $publisher->traffic }}</p>
-                    <p class="text-sm text-gray-600 truncate">Geos: {{ $publisher->geos }}</p>
-                    <p class="text-sm text-gray-600 truncate">Language: {{ $publisher->language }}</p>
-                    <p class="text-sm text-gray-600 truncate">Country: {{ $publisher->country }}</p>
-                    <p class="text-sm text-gray-600 truncate">Link Type: {{ is_array($publisher->link_type) ? implode(', ', $publisher->link_type) : $publisher->link_type }}</p>
-                    <p class="text-sm text-gray-600 truncate">Do Follow Links: {{ $publisher->do_follow_links ? 'Yes' : 'No' }}</p>
-                    <p class="text-sm text-gray-600 truncate">Mark Paid Articles as Sponsored: {{ $publisher->mark_paid_articles_as_sponsored ? 'Yes' : 'No' }}</p>
-                    <p class="text-sm text-gray-600 truncate">Link Insertion: {{ $publisher->link_insertion }}</p>
-                    <p class="text-sm text-gray-600 truncate">Publishing Time: {{ $publisher->publishing_time }}</p>
-                </div>
-                @endforeach
-            </div>
-
-            <!-- Main Cart Section -->
-            <div class="w-2/4 bg-white px-10 py-10 flex flex-col justify-between min-h-30">
-                <div>
-                    <div class="flex justify-between border-b pb-8">
-                        <h1 class="font-semibold text-2xl">Cart</h1>
-                        <h2 class="font-semibold text-2xl">{{ count($cartItems) }} Items</h2>
-                    </div>
-                    <table class="min-w-full leading-normal">
-                        <thead class="bg-[#004466] text-gray">
-                            <tr>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website URL</th>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Price</th>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Total Price</th>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cart-items" class="bg-white divide-y divide-gray-200">
-                            @forelse($cartItems as $item)
-
-
-                                <tr class="cart-box border-b" data-id="{{ $item['publisher_id'] }}" data-price="{{ number_format($item['price'], 2) }}">
-                                    <td class="px-4 py-2 border border-gray-300">
-                                        <div class="flex flex-col">
-                                            <span class="text-[#004466]">{{ $item['website_url'] }}</span>
-                                        </div>
-                                    </td>
-                                    <td class="text-center px-4 py-2 border border-gray-300">
-                                        <span class="block text-sm font-semibold text-gray-800">${{ number_format($item['price'], 2) }}</span>
-                                    </td>
-                                    <td class="text-center px-4 py-2 border border-gray-300">
-                                        <span class="block text-sm font-semibold text-gray-800">${{ number_format($item['price'], 2) }}</span>
-                                    </td>
-                                    <td class="text-end px-4 py-2 border border-gray-300 font-medium">
-                                        <a href="#" class="cart-remove-btn w-10 h-10 rounded-full p-0 text-gray-800 transition-none" data-id="{{ $item['publisher_id'] }}" onclick="removeItem({{ $item['publisher_id'] }})">
-                                            <i class="ti ti-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @empty
+        @if($cartItems->isEmpty())
+            <!-- Cart is empty, no further cart details to show -->
+            <p class="text-gray-600">Your cart is empty. <a href="{{ route('guest.page') }}" class="text-blue-500 hover:underline">Back to Publishers Database</a></p>
+        @else
+            <!-- Cart Layout -->
+            <div class="grid grid-cols-3 md:grid-cols-4 gap-6">
+                <!-- Cart Item Details -->
+                <section class="bg-white shadow-md rounded-lg p-4">
+                    <h2 class="text-xl font-semibold mb-2">Cart Item Details</h2>
+                    <div class="overflow-x-auto border border-gray-300 rounded-md">
+                        <table class="min-w-full table-auto border-collapse">
+                            <thead class="bg-blue-600 text-white">
                                 <tr>
-                                    <td colspan="4" class="text-center px-4 py-2 border border-gray-300">No items in cart.</td>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website Name</th>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website URL</th>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Price</th>
                                 </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-
-                </div>
-
-                <!-- Buttons and Totals Section -->
-                <div class="flex justify-end mt-10 space-x-4">
-                    <div class="flex flex-col text-right">
-                        <span class="font-semibold text-lg" id="subtotal">Subtotal: ${{ number_format($subtotal, 2) }}</span>
-                        <span class="font-semibold text-lg" id="total">Total: ${{ number_format($total, 2) }}</span>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach($cartItems as $item)
+                                    <tr>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $item->website_name }}</td>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">
+                                            <a href="{{ $item->website_url }}" class="text-blue-500 hover:underline" target="_blank">{{ $item->website_url }}</a>
+                                        </td>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">${{ $item->price }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="flex space-x-4">
-                        <a href="{{ route('guest.page') }}" class="flex font-semibold bg-indigo-600 text-white py-2 px-4 rounded">
-                            Back to Publishers Database
-                        </a>
-                        <a href="{{ route('checkout.index') }}" class="flex font-semibold bg-green-600 text-white py-2 px-4 rounded">
-                            Proceed to Checkout
-                        </a>
+                </section>
+
+                <!-- Cart Table -->
+                <section class="bg-white shadow-md rounded-lg p-4 col-span-2">
+                    <h2 class="text-xl font-semibold mb-2">Cart Table</h2>
+                    <div class="overflow-x-auto border border-gray-300 rounded-md">
+                        <table class="min-w-full table-auto border-collapse">
+                            <thead class="bg-blue-600 text-white">
+                                <tr>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website Name</th>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website URL</th>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Price</th>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach($cartItems as $item)
+                                    <tr>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $item->website_name }}</td>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">
+                                            <a href="{{ $item->website_url }}" class="text-blue-500 hover:underline" target="_blank">{{ $item->website_url }}</a>
+                                        </td>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">${{ $item->price }}</td>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">
+                                            <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-800">Remove</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                </section>
+
+                <!-- Total Price and Buttons -->
+                <section class="bg-white shadow-md rounded-lg p-4">
+                    <h2 class="text-xl font-semibold mb-4">Cart Total</h2>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-lg font-semibold">Total Price:</span>
+                        <span class="text-lg font-semibold text-blue-600">${{ $cartItems->sum('price') }}</span>
+                    </div>
+                    <div class="flex flex-col space-y-4">
+                        <a href="{{ route('checkout.index') }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg text-center hover:bg-blue-700">Proceed to Checkout</a>
+                        <a href="{{ route('guest.page') }}" class="inline-block px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg text-center hover:bg-gray-700">Back to Publishers Database</a>
+                    </div>
+                </section>
             </div>
 
-            <!-- Order Summary Section -->
-            <div class="w-1/4 px-8 py-10 bg-gray-50">
-                <h2 class="font-semibold text-2xl border-b pb-8">Order Summary</h2>
-                <div class="flex justify-between mt-10 mb-5">
-                    <span class="font-semibold text-sm uppercase">Subtotal</span>
-                    <span class="font-semibold text-sm" id="order-subtotal">${{ number_format($subtotal, 2) }}</span>
-                </div>
-                <div class="border-t mt-8">
-                    <div class="flex font-semibold justify-between py-6 text-sm uppercase">
-                        <span>Total cost</span>
-                        <span id="order-total">${{ number_format($total, 2) }}</span>
+            <!-- Related Websites Carousel -->
+            <section class="mt-8">
+                <h2 class="text-2xl font-bold mb-4">You Might Be Interested In</h2>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        @foreach($relatedWebsites as $website)
+                            <div class="swiper-slide bg-white p-4 shadow-md rounded-lg relative">
+                                <!-- Price tag on the top right -->
+                                <div class="absolute top-2 right-2 bg-blue-600 text-white rounded-full px-2 py-1 text-sm">
+                                    ${{ $website->price }}
+                                </div>
+                                <!-- Website Name -->
+                                <h3 class="text-lg font-semibold mb-2">{{ $website->website_name }}</h3>
+                                <!-- Website URL -->
+                                <a href="{{ $website->website_url }}" class="text-blue-500 hover:underline" target="_blank">
+                                    {{ $website->website_url }}
+                                </a>
+                                <!-- Order Now Button -->
+                                <form action="{{ route('cart.add') }}" method="POST" class="mt-4">
+                                    @csrf
+                                    <input type="hidden" name="publisher_id" value="{{ $website->id }}">
+                                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                        Order Now
+                                    </button>
+                                </form>
+                            </div>
+                        @endforeach
                     </div>
-                    <a href="{{ route('checkout.index') }}" class="flex font-semibold bg-green-600 text-white py-2 px-4 rounded mt-10">
-                        Proceed to Checkout
-                    </a>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
                 </div>
-            </div>
-        </div>
+            </section>
+        @endif
     </div>
 
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script>
-        function removeItem(publisherId) {
-            // Handle item removal logic (e.g., via AJAX or form submission)
-        }
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                },
+                768: {
+                    slidesPerView: 3,
+                },
+                1024: {
+                    slidesPerView: 4,
+                },
+            },
+        });
     </script>
 </body>
 </html>

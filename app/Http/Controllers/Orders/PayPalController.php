@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Orders;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
-use App\Models\Order; // Add your Payment model
-
+use App\Models\Order;
 
 class PayPalController extends Controller
 {
@@ -24,14 +23,14 @@ class PayPalController extends Controller
         $response = $provider->createOrder([
             "intent" => "CAPTURE",
             "application_context" => [
-                "return_url" => route('success'),
-                "cancel_url" => route('cancel')
+                "return_url" => route('paypal.success'),
+                "cancel_url" => route('paypal.cancel')
             ],
             "purchase_units" => [
                 [
                     "amount" => [
                         "currency_code" => "USD",
-                        "value" => $totalPrice, // Use the total price from the request
+                        "value" => $totalPrice,
                     ]
                 ]
             ]
@@ -41,13 +40,20 @@ class PayPalController extends Controller
         if (isset($response['id']) && $response['id'] != null) {
             foreach ($response['links'] as $link) {
                 if ($link['rel'] === 'approve') {
-                    session()->put('product_name', $request->product_name);
-                    session()->put('quantity', $request->quantity);
+                    // Store order details in session
+                    session()->put('order_details', [
+                        'total_price' => $totalPrice,
+                        'user_name' => $request->input('user_name'),
+                        'user_email' => $request->input('user_email'),
+                        'publisher_website_name' => $request->input('publisher_website_name'),
+                        'publisher_website_url' => $request->input('publisher_website_url'),
+                    ]);
+
                     return redirect()->away($link['href']);
                 }
             }
         } else {
-            return redirect()->route('cancel');
+            return redirect()->route('paypal.cancel')->with('error', 'Failed to create PayPal order.');
         }
     }
 
@@ -61,35 +67,38 @@ class PayPalController extends Controller
 
         // Check if orderId is provided
         if (!$orderId) {
-            return redirect()->route('cancel')->with('error', 'Order ID is missing.');
+            return redirect()->route('paypal.cancel')->with('error', 'Order ID is missing.');
         }
 
         // Capture the payment order
         $response = $provider->capturePaymentOrder($orderId);
 
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+            // Retrieve order details from session
+            $orderDetails = session()->get('order_details');
+
             // Insert payment data into database
-            $payment = new Order;
-            $payment->order_number = uniqid('ORD-'); // Generate a unique order number
-            $payment->user_name = session()->get('user_name'); // Replace with actual user name from session or request
-            $payment->user_email = session()->get('user_email'); // Replace with actual user email from session or request
-            $payment->publisher_website_name = session()->get('publisher_website_name'); // Replace with actual data
-            $payment->publisher_website_url = session()->get('publisher_website_url'); // Replace with actual data
-            $payment->price = $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
-            $payment->payment_method = "PayPal"; // Set the payment method as "PayPal"
-            $payment->save(); // Save to database
+            $order = new Order;
+            $order->user_name = $orderDetails['user_name'];
+            $order->user_email = $orderDetails['user_email'];
+            $order->publisher_website_name = $orderDetails['publisher_website_name'];
+            $order->publisher_website_url = $orderDetails['publisher_website_url'];
+            $order->price = $response['purchase_units'][0]['amount']['value'];
+            $order->payment_method = "paypal"; // Set the payment method as "PayPal"
+            $order->status = "completed"; // Set the order status to "Completed"
+            $order->save(); // Save to database
 
             // Clear session data
-            session()->forget(['product_name', 'quantity', 'user_name', 'user_email', 'publisher_website_name', 'publisher_website_url']);
+            session()->forget('order_details');
 
-            return "Payment is successful and recorded.";
+            return view('advertisers.payment.success'); // Redirect to a success view or similar
         } else {
-            return redirect()->route('cancel')->with('error', 'Payment capture failed.');
+            return redirect()->route('paypal.cancel')->with('error', 'Payment capture failed.');
         }
     }
 
     public function cancel(Request $request)
     {
-        return "Payment is cancelled.";
+        return view('advertisers.payment.cancel');
     }
 }

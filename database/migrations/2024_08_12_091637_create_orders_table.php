@@ -13,17 +13,19 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('order_number')->unique(); // unique order number
-            $table->string('user_name'); // name of the user who placed the order
-            $table->string('user_email'); // email of the user who placed the order
-            $table->string('publisher_website_name'); // name of the publisher's website
-            $table->string('publisher_website_url'); // URL of the publisher's website
-            $table->decimal('price', 10, 2); // price of the order
-            $table->longtext('status', ['placed', 'pending_approval', 'approved', 'published', 'draft', 'live'])->default('placed');
+            $table->unsignedBigInteger('advertiser_id'); // Ensure this matches the type of `id` in `advertisers`
+            $table->string('publisher_website_name');
+            $table->string('publisher_website_url');
+            $table->decimal('price', 10, 2);
+            $table->longText('status')->default('placed');
             $table->string('payment_method')->default('offline');
             $table->timestamps();
+
+            // Set up foreign key constraint
+           // $table->foreign('advertiser_id')->references('id')->on('advertisers')->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.

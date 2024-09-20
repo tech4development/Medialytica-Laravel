@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->decimal('price', 10, 2);
             $table->boolean('isPaymentReceived')->default(false);
-            // Copying fields from orders table
             $table->string('order_number');
             $table->string('user_name');
             $table->string('user_email');

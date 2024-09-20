@@ -78,104 +78,84 @@
 
 
 
-        <!-- Publishers Table -->
-        <div class="md:w-3/4 w-500 md:ml-auto">
-            <button id="toggle-filter" class="md:hidden bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mb-4">
-                Toggle Filters
-            </button>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <div class="mb-4">
-                    <h5 class="text-lg font-bold text-[#004466] text-center">Browse our database of 10K+ Publishers</h5>
-                </div>
-                <div class="overflow-x-auto border border-gray-300 rounded-md mt-4">
-                    <table class="min-w-full table-auto border-collapse">
-                        <thead class="bg-[#004466] text-gray">
-                            <tr>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Publishers</th>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Niches</th>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">DA</th>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">DR</th>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Traffic</th>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Country</th>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Price</th>
-                                <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Order Now</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach($publishers as $publisher)
-                                <tr>
-                                    <!-- Publisher details columns -->
-                                    <td class="px-4 py-2 border border-gray-300">
-                                        <div id="publisher-url-{{ $publisher->id }}" class="relative">
-                                            @auth
-                                                <span class="text-[#004466]">
-                                                    {{ $publisher->website_url }}
-                                                </span>
-                                            @else
-                                                <span id="redacted-url-{{ $publisher->id }}" class="text-[#004466] hover:underline cursor-pointer">
-                                                    {{ substr($publisher->website_url, 0, -7) }}{{ str_repeat('*', 7) }}
-                                                </span>
-                                                <div id="unhide-link-{{ $publisher->id }}" class="mt-2 hidden">
-                                                    <a href="{{ route('redirect.to.register') }}" class="text-blue-500 hover:underline" onclick="unhideUrl('{{ $publisher->id }}')">
-                                                        Unhide
-                                                    </a>
+     <!-- Publishers Table -->
+                <div class="md:w-3/4 w-500 md:ml-auto">
+                    <button id="toggle-filter" class="md:hidden bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mb-4">
+                        Toggle Filters
+                    </button>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <div class="mb-4">
+                            <h5 class="text-lg font-bold text-[#004466] text-center">Browse our database of 10K+ Publishers</h5>
+                        </div>
+                        <div class="overflow-x-auto border border-gray-300 rounded-md mt-4">
+                            <table class="min-w-full table-auto border-collapse">
+                                <thead class="bg-[#004466] text-gray">
+                                    <tr>
+                                        <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Publishers</th>
+                                        <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Niches</th>
+                                        <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">DA</th>
+                                        <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">DR</th>
+                                        <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Traffic</th>
+                                        <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Country</th>
+                                        <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Price</th>
+                                        <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Order Now</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach($publishers as $publisher)
+                                        <tr>
+                                            <!-- Publisher details columns -->
+                                            <td class="px-4 py-2 border border-gray-300">
+                                                <div id="publisher-url-{{ $publisher->id }}" class="relative">
+                                                    @auth
+                                                        <span class="text-[#004466]">
+                                                            {{ $publisher->website_url }}
+                                                        </span>
+                                                    @else
+                                                        <span id="redacted-url-{{ $publisher->id }}" class="text-[#004466] hover:underline cursor-pointer">
+                                                            {{ substr($publisher->website_url, 0, -7) }}{{ str_repeat('*', 7) }}
+                                                        </span>
+                                                        <div id="unhide-link-{{ $publisher->id }}" class="mt-2 hidden">
+                                                            <a href="#" class="text-blue-500 hover:underline" onclick="event.preventDefault(); showUnhiddenUrl({{ $publisher->id }});">
+                                                                Unhide
+                                                            </a>
+                                                        </div>
+                                                        <div id="full-url-{{ $publisher->id }}" class="hidden mt-2">
+                                                            <span class="text-[#004466]">
+                                                                {{ $publisher->website_url }}
+                                                            </span>
+                                                        </div>
+                                                    @endauth
                                                 </div>
-                                                <div id="full-url-{{ $publisher->id }}" class="hidden mt-2">
-                                                    <span class="text-[#004466]">
-                                                        {{ $publisher->website_url }}
-                                                    </span>
-                                                </div>
-                                            @endauth
-                                        </div>
-                                    </td>
-                                    <!-- Other details columns -->
-                                    <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">
-                                        {{ is_array($publisher->niches) ? implode(', ', $publisher->niches) : $publisher->niches }}
-                                       </td>                                    <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->moz_da }}</td>
-                                    <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->ahref_dr }}</td>
-                                    <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->traffic }}</td>
-                                    <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->country }}</td>
-                                    <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->price }}</td>
-                                    <td class="px-4 py-2 border border-gray-300">
-                                        @auth
-                                            <div class="flex justify-center">
-                                                <!-- Order Now button -->
+                                            </td>
+                                            <!-- Other details columns -->
+                                            <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900">
+                                                {{ is_array($publisher->niches) ? implode(', ', $publisher->niches) : $publisher->niches }}
+                                            </td>
+                                            <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->moz_da }}</td>
+                                            <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->ahref_dr }}</td>
+                                            <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->traffic }}</td>
+                                            <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->country }}</td>
+                                            <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $publisher->price }}</td>
+                                            <td class="px-4 py-2 border border-gray-300">
                                                 <form action="{{ route('cart.add') }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="publisher_id" value="{{ $publisher->id }}">
-                                                    <input type="hidden" name="website_url" value="{{ $publisher->website_url }}">
-                                                    <input type="hidden" name="price" value="{{ $publisher->price }}">
-                                                    <input type="hidden" name="website_name" value="{{ $publisher->website_name }}">
                                                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
                                                         Order Now
                                                     </button>
                                                 </form>
-
-                                            </div>
-                                        @else
-                                            <div class="flex justify-center">
-                                                <a href="{{ route('redirect.to.register') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
-                                                    Order Now
-                                                </a>
-                                            </div>
-                                        @endauth
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-
-                    </table>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-
-
-
 
     </div>
 </div>
-
 </body>
 
 <script>
@@ -190,7 +170,7 @@ function handleOrderNow(publisherId) {
 }
 </script>
 
-
+{{--
 <script>
     function handleOrderNow(publisherId) {
         fetch('{{ route('cart.add', ['publisherId' => ':id']) }}'.replace(':id', publisherId), {
@@ -216,18 +196,25 @@ function handleOrderNow(publisherId) {
             alert('There was an error adding the item to the cart.');
         });
     }
-</script>
+</script> --}}
 
 <script>
     function showUnhiddenUrl(publisherId) {
-        document.getElementById('website-url-' + publisherId).classList.add('hidden');
+        document.getElementById('redacted-url-' + publisherId).classList.add('hidden');
         document.getElementById('unhide-link-' + publisherId).classList.add('hidden');
         document.getElementById('full-url-' + publisherId).classList.remove('hidden');
     }
 
-    function handleOrderNow(publisherId) {
-        // Store the publisherId and redirect to login or registration page
-        window.location.href = "{{ route('advertiserregister') }}?redirect=" + encodeURIComponent('{{ url()->current() }}' + '?publisher=' + publisherId);
-    }
-</script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('a[href*="redirect.to.register"]').forEach(anchor => {
+            anchor.addEventListener('click', (event) => {
+                event.preventDefault();
+                const publisherId = new URL(anchor.href).searchParams.get('publisher_id');
+                if (publisherId) {
+                    window.location.href = anchor.href;
+                }
+            });
+        });
+    });
+    </script>
 </html>

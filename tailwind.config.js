@@ -5,10 +5,19 @@ module.exports = {
       "./resources/**/*.js",
       "./resources/**/*.vue",
     ],
+    darkMode: 'class',
     theme: {
+        screens: {
+            xs: '320px',
+            sm: '480px',
+            md: '768px',
+            lg: '976px',
+            xl: '1440px',
+          },
       extend: {
         colors: {
           'custom-blue': '#0B1727',
+          'custom-dark': '#1A1D2B',
           primary: {
             "50": "#eff6ff",
             "100": "#dbeafe",

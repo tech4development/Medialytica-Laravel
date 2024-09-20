@@ -26,6 +26,11 @@ class Publisher extends Model
         'social_media_pages' => 'array',
     ];
 
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
@@ -49,9 +54,6 @@ class Publisher extends Model
         return max($prices);
     }
 
-    public function carts()
-    {
-        return $this->hasMany(Cart::class);
-    }
+
 }
 

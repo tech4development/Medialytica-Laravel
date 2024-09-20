@@ -10,6 +10,8 @@ use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Models\Order;
+
 
 class AdvertiserAuthController extends Controller
 {
@@ -46,54 +48,70 @@ class AdvertiserAuthController extends Controller
         return view('advertisers.auth.register', compact('countries'));
     }
 
-     // Handle registration
-     public function register(Request $request)
-     {
-         // Check if the email already exists
-         $existingAdvertiser = Advertiser::where('email', $request->email)->first();
+    public function register(Request $request)
+{
+    // Check if the email already exists
+    $existingAdvertiser = Advertiser::where('email', $request->email)->first();
 
-         if ($existingAdvertiser) {
-             return redirect()->back()->withErrors([
-                 'email' => 'This email is already registered. Please log in if you already have an account.',
-             ])->withInput($request->except('password'));
-         }
+    if ($existingAdvertiser) {
+        return redirect()->back()->withErrors([
+            'email' => 'This email is already registered. Please log in if you already have an account.',
+        ])->withInput($request->except('password'));
+    }
 
-         // Validate the request data
-         $request->validate([
-             'name' => 'required|string|max:255',
-             'email' => 'required|string|email|max:255|unique:advertisers',
-             'password' => 'required|string|min:8|confirmed',
-             'country' => 'required|string|max:255',
-             'phone' => 'required|string|max:20',
-         ]);
+    // Validate the request data
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:advertisers',
+        'password' => 'required|string|min:8|confirmed',
+        'country' => 'required|string|max:255',
+        'phone' => 'required|string|max:20',
+    ]);
 
-         // Create a new advertiser
-         $advertiser = Advertiser::create([
-             'name' => $request->name,
-             'email' => $request->email,
-             'password' => Hash::make($request->password),
-             'country' => $request->country,
-             'phone' => $request->phone,
-         ]);
+    // Create a new advertiser
+    $advertiser = Advertiser::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'country' => $request->country,
+        'phone' => $request->phone,
+    ]);
 
-         // Log the advertiser in
-         Auth::guard('advertiser')->login($advertiser);
+   // Log the advertiser in
+   Auth::guard('advertiser')->login($advertiser);
 
-         // Check for any items to add to the cart
-         if ($request->session()->has('publisher_id')) {
-             $publisherId = $request->session()->get('publisher_id');
-             $request->session()->forget('publisher_id');
+   // Get the cart items from the session
+   $cartItems = session()->get('cart', []);
 
-             $publisher = Publisher::find($publisherId);
+   // Check if the cart is an array and not empty
+   if (is_array($cartItems) && !empty($cartItems)) {
+       // Ensure all items in the cart are arrays and have the required keys
+       foreach ($cartItems as $item) {
+           if (!is_array($item) || !isset($item['website_name'], $item['website_url'], $item['price'])) {
+               return redirect()->route('cart.index')->with('error', 'Invalid cart data.');
+           }
+       }
 
-             if ($publisher) {
-                 return $this->addToCartAndRedirect($publisher);
-             }
-         }
+       // Create the order using the authenticated advertiser's details
+       $order = Order::create([
+           'advertiser_id' => $advertiser->id,
+           'publisher_website_name' => $cartItems[0]['website_name'], // Assuming cart items have the same publisher
+           'publisher_website_url' => $cartItems[0]['website_url'],
+           'price' => collect($cartItems)->sum('price'),
+           'payment_method' => 'offline', // Set a default payment method or get from request
+           'status' => 'placed',
+       ]);
 
-         // Redirect to the intended page or cart index
-         return redirect()->route('cart.show');
-     }
+       // Debug the cart items (you can remove this line in production)
+       // dd($cartItems);
+
+       // Redirect to the Thank You page
+       return redirect()->route('thank_you', ['order' => $order->id]);
+   }
+
+   // Redirect to the checkout page if no items in the cart
+   return redirect()->route('checkout.index')->with('message', 'Registration successful! Proceed to checkout.');
+}
 
      // Show the login form
      public function showLoginForm()
@@ -101,51 +119,64 @@ class AdvertiserAuthController extends Controller
          return view('advertisers.auth.login');
      }
 
-     // Handle login
-     public function login(Request $request)
-     {
-         // Validate the incoming request
-         $request->validate([
-             'email' => 'required|string|email',
-             'password' => 'required|string',
-         ]);
+        // Handle login
+        public function login(Request $request)
+        {
+            // Validate the incoming request
+            $request->validate([
+                'email' => 'required|string|email',
+                'password' => 'required|string',
+            ]);
 
-         // Attempt to authenticate the advertiser
-         if (Auth::guard('advertiser')->attempt($request->only('email', 'password'))) {
-             // Check if there was a previous request to unhide a website URL
-             if ($request->session()->has('publisher_id')) {
-                 $publisherId = $request->session()->get('publisher_id');
-                 $request->session()->forget('publisher_id');
+            // Attempt to authenticate the advertiser
+            if (Auth::guard('advertiser')->attempt($request->only('email', 'password'))) {
+                // Get the cart items from the session
+                $cartItems = session()->get('cart', []);
 
-                 $publisher = Publisher::find($publisherId);
+                // Ensure the cart items are an array
+                if (!is_array($cartItems)) {
+                    $cartItems = [];
+                }
 
-                 if ($publisher) {
-                     return $this->addToCartAndRedirect($publisher);
-                 }
-             }
+                // If there are items in the cart, proceed with placing the order
+                if (!empty($cartItems)) {
+                    // Redirect to the placeOrder route
+                    return redirect()->route('order.place')->with('toast_success', 'Login successful! Your order is being processed.');
+                }
 
-             // Redirect to the cart index if no unhide request
-             return redirect()->route('cart.show');
-         }
+                // Redirect to the checkout page if no items in the cart
+                return redirect()->route('checkout.index')->with('toast_success', 'Login successful! Please proceed to checkout.');
+            }
 
-         // If authentication fails
-         throw ValidationException::withMessages([
-             'email' => [trans('auth.failed')],
-         ]);
-     }
+            // If authentication fails
+            throw ValidationException::withMessages([
+                'email' => [trans('auth.failed')],
+            ]);
+        }
+
+
 
      // Handle adding the website details to the cart and redirecting
-     private function addToCartAndRedirect($publisher)
+     protected function addToCartAndRedirect(Publisher $publisher)
      {
-         $cart = new Cart();
-         $cart->advertiser_id = Auth::guard('advertiser')->id();
-         $cart->website_url = $publisher->website_url;
-         $cart->price = $publisher->price;
-         $cart->save();
+         // Retrieve the cart from the session, or create an empty one if it doesn't exist
+         $cart = session()->get('cart', []);
 
-         // Redirect to the cart page
-         return redirect()->route('cart.show');
+         // Add the publisher item to the cart
+         $cart[$publisher->id] = [
+             'id' => $publisher->id,
+             'website_name' => $publisher->website_name,
+             'website_url' => $publisher->website_url,
+             'price' => $publisher->price,
+         ];
+
+         // Save the cart back into the session
+         session()->put('cart', $cart);
+
+         // Redirect to the checkout page
+         return redirect()->route('checkout.index')->with('message', 'Add to Cart successful! Proceed to checkout.');
      }
+
 
      // Handle redirection to the registration page with a redirect URL
      public function redirectToRegister(Request $request)

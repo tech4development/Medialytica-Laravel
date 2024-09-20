@@ -8,16 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('advertiser_id')->constrained()->onDelete('cascade');
-            $table->foreignId('publisher_id')->constrained()->onDelete('cascade');
-            $table->string('website_url');
-            $table->decimal('price', 8, 2);
-            $table->string('website_name');
+            $table->string('name');
+            $table->string('flag'); // Store country flag as an emoji or URL
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('countries');
     }
 };

@@ -13,6 +13,14 @@ class Advertiser extends Authenticatable
 
     use Notifiable;
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,16 +35,18 @@ class Advertiser extends Authenticatable
         'user_role'
     ];
 
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
 
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    public function carts()
-    {
-        return $this->hasMany(Cart::class);
-    }
+
 
     /**
      * The attributes that should be hidden for serialization.

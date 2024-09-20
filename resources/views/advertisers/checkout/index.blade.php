@@ -5,168 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('backend/assets/img/brand-logos/favicon.ico') }}">
-    <!-- Style Css -->
-    <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
-    <!-- Simplebar Css -->
-    <link id="style" href="{{ asset('backend/assets/libs/simplebar/simplebar.min.css') }}" rel="stylesheet">
-    <!-- Color Picker Css -->
-    <link rel="stylesheet" href="{{ asset('backend/assets/libs/@simonwep/pickr/themes/nano.min.css') }}">
-    <!-- Swiper Css -->
-    <link rel="stylesheet" href="{{ asset('backend/assets/libs/swiper/swiper-bundle.min.css') }}">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- Add Toastify CSS -->
+     <!-- Add Toastify JS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </head>
 <body class="bg-gray-100">
-    @if($errors->any())
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Oh Snap!</strong>
-        <span class="block sm:inline">Please fix the below errors:</span>
-        <ul class="mt-2 list-disc pl-5">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl font-bold mb-4 text-center">Checkout</h1>
 
-    {{-- @if($errors->any())
-    @dd($errors->all()) <!-- Dumps all the error messages -->
-@endif --}}
+        @if($cartItems->isEmpty())
+            <p class="text-gray-600">Your checkout is empty. <a href="{{ route('guest.page') }}" class="text-blue-500 hover:underline">Back to Publishers Database</a></p>
+        @else
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <section class="bg-white shadow-md rounded-lg p-4 col-span-2">
+                    <h2 class="text-xl font-semibold mb-2 text-center">Checkout</h2>
+                    <div class="overflow-x-auto border border-gray-300 rounded-md">
+                        <table class="min-w-full table-auto border-collapse">
+                            <thead class="bg-blue-600 text-white">
+                                <tr>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website Name</th>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website URL</th>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Price</th>
+                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach($cartItems as $item)
+                                    <tr>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $item->website_name }}</td>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">
+                                            <a href="{{ $item->website_url }}" class="text-blue-500 hover:underline" target="_blank">{{ $item->website_url }}</a>
+                                        </td>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">${{ $item->price }}</td>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">
+                                            <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-800">Remove</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
+                <section class="bg-white shadow-md rounded-lg p-4">
+                    <h2 class="text-xl text-center font-semibold mb-4">Order Summary</h2>
+                    <div class="border border-gray-300 rounded-md p-4 mb-6">
+                        <h3 class="text-lg font-semibold mb-2">Order Summary</h3>
+                        <ul>
+                            @foreach($cartItems as $item)
+                                <li class="mb-2">
+                                    <p class="font-semibold">{{ $item->website_name }}</p>
+                                    <p class="text-gray-600">{{ $item->website_url }}</p>
+                                    <p class="text-gray-600">${{ $item->price }}</p>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-lg font-semibold">Total Price:</span>
+                            <span class="text-lg font-semibold text-blue-600">${{ $cartItems->sum('price') }}</span>
+                        </div>
+                    </div>
 
-    <div class="container mx-auto mt-10">
-        <div class="flex shadow-md my-10 bg-white rounded-lg">
-            <!-- Order Summary Sidebar -->
-            <div class="w-1/3 bg-gray-50 px-8 py-10 border-r border-gray-200 rounded-l-lg">
-                <h2 class="font-semibold text-2xl border-b pb-4">Order Summary</h2>
-                <ul class="mt-6">
-                    @foreach($publishers as $publisher)
-                        <li class="flex justify-between mt-4">
-                            <span class="font-semibold text-gray-700">{{ $publisher->website_name }}</span>
-                            <span>${{ number_format($publisher->price, 2) }}</span>
-                        </li>
-                    @endforeach
-                    <li class="flex justify-between mt-4">
-                        <span class="font-semibold text-gray-700">Total Items</span>
-                        <span>{{ $publishers->count() ?? 0 }}</span>
-                    </li>
-                    <li class="flex justify-between mt-4">
-                        <span class="font-semibold text-gray-700">Subtotal</span>
-                        <span>${{ number_format($publisher->price, 2) }}</span>
-                    </li>
-                    <li class="flex justify-between mt-4 font-semibold text-lg">
-                        <span class="text-gray-700">Total</span>
-                        <span>${{ number_format($publisher->price, 2) }}</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Checkout Details -->
-            <div class="w-2/3 px-10 py-8">
-                <h2 class="font-semibold text-2xl border-b pb-4">Checkout</h2>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full leading-normal text-sm border border-gray-200">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="text-left py-3 px-4">Publisher</th>
-                                <th class="text-left py-3 px-4">Website URL</th>
-                                <th class="text-center py-3 px-4">Price</th>
-                                <th class="text-center py-3 px-4">Total</th>
-                                <th class="text-center py-3 px-4">Remove</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($publishers as $publisher)
-
-
-                            <tr class="border-b">
-                                <td class="py-3 px-4">
-                                    <div class="flex">
-                                        <span class="text-gray-800">{{ $publisher->website_name }}</span>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4">{{ $publisher->website_url }}</td>
-                                <td class="text-center py-3 px-4">${{ number_format($publisher->price, 2) }}</td>
-                                <td class="text-center py-3 px-4">${{ number_format($publisher->price, 2) }}</td>
-                                <td class="text-center py-3 px-4">
-                                    <a href="{{ route('cart.remove', $publisher->id) }}" class="text-red-500 hover:underline">Remove</a>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="5" class="text-center py-3 px-4">No items in cart</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-
-             <!-- Payment Method Selection -->
-             <form id="payment-form" action="{{ route('order.place') }}" method="POST">
-                @csrf
-                <!-- Your payment method radio buttons -->
-                <div>
-                    <input type="radio" name="paymentMethod" value="paypal" id="paypal">
-                    <label for="paypal">PayPal</label><br>
-                    <input type="radio" name="paymentMethod" value="credit_card" id="credit_card">
-                    <label for="credit_card">Credit Card</label><br>
-                    <input type="radio" name="paymentMethod" value="offline" id="offline">
-                    <label for="offline">Offline</label><br>
-                </div>
-
-                <!-- Buttons -->
-                <div class="flex justify-between my-6">
-                    <!-- Back to Cart Button -->
-                    <a href="{{ route('cart.show') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Back to cart <i class="ri-arrow-left-line"></i>
-                    </a>
-
-                    <!-- Proceed to Payment Button -->
-                    <button id="proceed-to-payment" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Proceed to payment <i class="ri-arrow-right-line"></i>
-                    </button>
-                </div>
-            </form>
-                {{-- <!-- Buttons -->
-                <div class="flex justify-between my-6">
-                    <a href="{{ route('cart.show') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Back to cart <i class="ri-arrow-left-line"></i>
-                    </a>
-                    <form id="checkout-form" action="{{ route('order.place') }}" method="POST">
+                    <!-- Payment Method -->
+                    <form id="checkout-form" method="POST" action="{{ route('order.place') }}">
                         @csrf
-                        <button id="proceed-to-payment" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Proceed to payment <i class="ri-arrow-right-line"></i>
-                        </button>
+                        <h3 class="text-lg font-semibold mb-2">Payment Method</h3>
+                        <div class="flex flex-col space-y-4 mb-4">
+                            <div class="flex items-center">
+                                <input type="radio" id="paypal" name="payment_method" value="paypal" class="mr-2">
+                                <label for="paypal" class="text-gray-700">PayPal</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="offline" name="payment_method" value="offline" class="mr-2">
+                                <label for="offline" class="text-gray-700">Offline Payment</label>
+                            </div>
+                        </div>
 
+                        @auth('advertiser')
+                            <!-- Show Proceed to Checkout button if advertiser is logged in -->
+                            <button type="submit" id="checkout-button" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg text-center hover:bg-blue-700">
+                                Proceed to Checkout
+                            </button>
+                        @else
+                            <!-- Show Login to Checkout button if not logged in -->
+                            <a href="{{ route('advertiserlogin') }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg text-center hover:bg-blue-700">
+                                Login to Checkout
+                            </a>
+                        @endauth
+
+                        <a href="{{ route('guest.page') }}" class="inline-block px-6 py-3 bg-green-600 text-white font-semibold rounded-lg text-center hover:bg-green-700">Back to Cart</a>
                     </form>
-                </div> --}}
+                </section>
             </div>
-        </div>
+        @endif
     </div>
-</body>
 
-<script>
-    document.getElementById('payment-form').addEventListener('submit', function(event) {
-        const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-        if (!selectedPaymentMethod) {
-            event.preventDefault(); // Prevent the form from submitting
-            alert('Please select a payment method.');
-        } else {
-            const paymentMethodValue = selectedPaymentMethod.value;
-            alert('Selected payment method: ' + paymentMethodValue); // Show the selected payment method
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkoutButton = document.getElementById('checkout-button');
+            const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
+            const checkoutForm = document.getElementById('checkout-form');
+            let selectedMethod = null;
 
-            console.log('Payment method selected:', paymentMethodValue); // Log the selected value
-
-            // Check if the selected payment method is PayPal
-            if (paymentMethodValue === 'paypal') {
-                // Redirect to PayPal for payment
-                event.preventDefault(); // Prevent form submission
-                window.location.href = 'https://www.paypal.com/checkout'; // Replace with actual PayPal checkout URL or integration
+            function showToast(message, color) {
+                Toastify({
+                    text: message,
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: color,
+                    close: true
+                }).showToast();
             }
-            // For other payment methods, the form will be submitted normally
-        }
-    });
+
+            // Listen for changes to the payment method
+            paymentRadios.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    selectedMethod = document.querySelector('input[name="payment_method"]:checked').value;
+                    showToast(`${selectedMethod.charAt(0).toUpperCase() + selectedMethod.slice(1)} payment method is selected`, "#4CAF50");
+                });
+            });
+
+            // Handle checkout button click
+            checkoutButton?.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                if (!selectedMethod) {
+                    showToast("Please select a payment method", "#f56565");
+                    return;
+                }
+
+                // Set the form action based on the payment method
+                if (selectedMethod === 'paypal') {
+                    checkoutForm.action = "{{ route('paypal') }}";
+                } else if (selectedMethod === 'offline') {
+                    checkoutForm.action = "{{ route('order.place') }}";
+                }
+
+                // Submit the form
+                checkoutForm.submit();
+            });
+        });
     </script>
+</body>
 
 </html>

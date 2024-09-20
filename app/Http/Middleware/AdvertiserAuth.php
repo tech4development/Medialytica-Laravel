@@ -21,7 +21,7 @@ class AdvertiserAuth
         // Check if the user is authenticated
         if (Auth::guard('advertiser')->check()) {
             // If the user is authenticated, redirect to the cart page
-            return redirect()->route('cart.show');
+            return redirect()->route('checkout.index');
         }
 
         // If the user is not authenticated, redirect to the guest page
