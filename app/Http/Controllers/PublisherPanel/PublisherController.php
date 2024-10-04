@@ -9,6 +9,9 @@ namespace App\Http\Controllers\PublisherPanel;
 use App\Models\Publisher;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Imports\PublisherImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 
 class PublisherController extends Controller
@@ -110,6 +113,8 @@ class PublisherController extends Controller
     public function viewAll()
     {
         $publishers = Publisher::all(); // Fetch all publishers
+        // In your controller
+
         return view('publisher.index', compact('publishers'));
     }
 
@@ -185,7 +190,7 @@ class PublisherController extends Controller
             'crypto_forex_post_cost' => $request->input('crypto_forex_post_cost'),
             'cbd_post_cost' => $request->input('cbd_post_cost'),
             'banner_cost' => $request->input('banner_cost'),
-        
+
             'youtube_ad_cost' => $request->input('youtube_ad_cost'),
             'paypal_email' => $request->input('paypal_email'),
             'social_media_pages' => json_encode($request->input('social_media_pages', [])),
@@ -207,4 +212,68 @@ class PublisherController extends Controller
 
         return redirect()->route('publisher.dashboard');
     }
+
+      // Method to handle Excel data import
+   public function importExcelData(Request $request)
+{
+    // Validate the uploaded file
+    $request->validate([
+        'import_file' => [
+            'required',
+            'file'
+        ],
+    ]);
+
+    // Get the existing count of publishers
+    $existingCount = Publisher::count();
+
+    // Import data from Excel using the PublisherImport class
+    Excel::import(new PublisherImport, $request->file('import_file'));
+
+    // Get the updated count of publishers
+    $newCount = Publisher::count();
+
+    // Calculate the total number of publishers
+    $totalCount = $newCount; // This will already include the new entries
+
+    // Redirect back with a success message and counts
+    return redirect()->back()->with('message', 'Data imported successfully! Total Publishers: ' . $totalCount);
+}
+
+    public function showImportForm()
+    {
+         $publishers = Publisher::paginate(10); // Fetch all publishers
+        return view('publisher.import', compact('publishers'));
+    }
+
+    public function getFiltersData()
+{
+    $countries = Publisher::select('country')->distinct()->get();
+    $minPrice = Publisher::min('price');
+    $maxPrice = Publisher::max('price');
+
+    return response()->json([
+        'countries' => $countries,
+        'minPrice' => $minPrice,
+        'maxPrice' => $maxPrice,
+    ]);
+}
+
+public function filterPublishers(Request $request)
+{
+    $query = Publisher::query();
+
+    if ($request->country) {
+        $query->where('country', $request->country);
+    }
+
+    if ($request->minPrice && $request->maxPrice) {
+        $query->whereBetween('price', [$request->minPrice, $request->maxPrice]);
+    }
+
+    $publishers = $query->get();
+
+    return view('publishers.partials.publisher_list', compact('publishers'));
+}
+
 }

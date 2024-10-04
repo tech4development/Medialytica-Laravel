@@ -194,12 +194,12 @@
                                 </a>
                                 <!-- Collapsible Menu Items -->
                                 <ul id="orders-menu-items" class="hidden mt-2 space-y-1">
-                                    <li>
+                                    {{-- <li>
                                         <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">View All Orders</a>
-                                    </li>
-                                    <li>
+                                    </li> --}}
+                                    {{-- <li>
                                         <a href="{{ route('orders.create') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">Edit Order</a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li>
                             <!-- End::slide -->
@@ -263,6 +263,45 @@
 
                         </li>
                         <!-- End::slide -->
+
+                                <!-- Start::slide for Import -->
+        <li class="slide has-sub">
+            <!-- Main Menu Item for Import -->
+            <a href="javascript:void(0);" class="side-menu__item" id="import-menu">
+                <i class="ri-upload-cloud-line side-menu__icon"></i>
+                <span class="side-menu__label">Import</span>
+                <svg class="w-4 h-4 ml-auto transform transition-transform duration-200" id="import-toggle-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 15L10 11L14 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <!-- Collapsible Menu Items -->
+            <ul id="import-menu-items" class="hidden mt-2 space-y-1">
+                <li>
+                    <a href="{{ route('publishers.import') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">Import Publishers</a>
+                </li>
+                {{-- <li>
+                    <a href="{{ route('publishers.sampleDownload') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">Download Sample File</a>
+                </li> --}}
+                {{-- <li>
+                    <a href="{{ route('publishers.importHistory') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">Import History</a>
+                </li> --}}
+            </ul>
+        </li>
+        <!-- End::slide for Import -->
+
+                <script>
+            // JavaScript to toggle the collapsible menu for Import
+            document.getElementById('import-menu').addEventListener('click', function() {
+                const menuItems = document.getElementById('import-menu-items');
+                const toggleIcon = document.getElementById('import-toggle-icon');
+
+                // Toggle the visibility of the menu items
+                menuItems.classList.toggle('hidden');
+
+                // Rotate the toggle icon
+                toggleIcon.classList.toggle('rotate-180');
+            });
+        </script>
 
 
 

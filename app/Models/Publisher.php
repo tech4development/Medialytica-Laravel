@@ -16,7 +16,7 @@ class Publisher extends Model
         'phone_number', 'email', 'language', 'contact_person_name', 'contact_person_email',
         'contact_person_phone', 'country', 'link_type', 'do_follow_links', 'mark_paid_articles_as_sponsored',
         'link_insertion', 'link_insertion_amount', 'publishing_time', 'normal_post_cost',
-        'betting_casino_post_cost', 'crypto_forex_post_cost', 'cbd_post_cost', 'banner_cost',
+        'betting_casino_post_cost', 'crypto_forex_post_cost', 'cbd_post_cost', 'banner_cost', 'price',
         'youtube_ad_cost', 'paypal_email', 'social_media_pages'
     ];
        // Cast attributes to the desired types

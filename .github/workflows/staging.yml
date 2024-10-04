@@ -27,18 +27,20 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: "8.2"
 
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
 
-      - name: Copy .env.example to .env if .env does not exist
+      - name: Create .env file on server
         run: |
-          if [ ! -f .env ]; then
-            cp .env.example .env
-          fi
+          scp -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} .env.example your_user@your_server:/path-to-your-laravel-app/.env
+
+      - name: Clear Cache
+        run: |
+          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} your_user@your_server "cd /path-to-your-laravel-app && php artisan config:clear && php artisan cache:clear && php artisan route:clear && php artisan view:clear && php artisan optimize"
 
       - name: Install PHP and Node.js Dependencies
         run: |
@@ -93,5 +95,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: ${{ secrets.FTP_PORT }}
-          server-dir: '/public_html/staging.techfordevelopment.com/'
+          server-dir: "/public_html/staging.techfordevelopment.com/"
           exclude: .env

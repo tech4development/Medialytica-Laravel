@@ -5,20 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Toastify CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <!-- Add Toastify CSS -->
-     <!-- Add Toastify JS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
         <h1 class="text-2xl font-bold mb-4 text-center">Checkout</h1>
 
-        @if($cartItems->isEmpty())
+        @if($orderItems->isEmpty())
             <p class="text-gray-600">Your checkout is empty. <a href="{{ route('guest.page') }}" class="text-blue-500 hover:underline">Back to Publishers Database</a></p>
         @else
+            @if ($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <strong class="font-bold">Whoops!</strong>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <section class="bg-white shadow-md rounded-lg p-4 col-span-2">
                     <h2 class="text-xl font-semibold mb-2 text-center">Checkout</h2>
@@ -33,15 +40,15 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach($cartItems as $item)
+                                @foreach($orderItems as $item)
                                     <tr>
-                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $item->website_name }}</td>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $item['website_name'] }}</td>
                                         <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">
-                                            <a href="{{ $item->website_url }}" class="text-blue-500 hover:underline" target="_blank">{{ $item->website_url }}</a>
+                                            <a href="{{ $item['website_url'] }}" class="text-blue-500 hover:underline" target="_blank">{{ $item['website_url'] }}</a>
                                         </td>
-                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">${{ $item->price }}</td>
+                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">${{ $item['price'] }}</td>
                                         <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">
-                                            <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                            <form action="{{ route('cart.remove', $item['id']) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-600 hover:text-red-800">Remove</button>
@@ -52,6 +59,28 @@
                             </tbody>
                         </table>
                     </div>
+
+                <section class="bg-white shadow-md rounded-lg p-4">
+                    <h2 class="text-xl text-center font-semibold mb-4">Order Summary</h2>
+                    <div class="border border-gray-300 rounded-md p-4 mb-6">
+                        <h3 class="text-lg font-semibold mb-2">Order Summary</h3>
+                        <ul>
+                            @foreach($orderItems as $orderItem)
+                                <li class="mb-2">
+                                    <p class="font-semibold">{{ $orderItem['website_name'] }}</p>
+                                    <p class="text-gray-600">{{ $orderItem['website_url'] }}</p>
+                                    <p class="text-gray-600">${{ $orderItem['price'] }}</p>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-lg font-semibold">Total Price:</span>
+                            <span class="text-lg font-semibold text-blue-600">${{ $orderItems->sum('price') }}</span>
+                        </div>
+                    </div>
+
+                  
+                </section>
                 </section>
 
                 <section class="bg-white shadow-md rounded-lg p-4">
@@ -59,17 +88,17 @@
                     <div class="border border-gray-300 rounded-md p-4 mb-6">
                         <h3 class="text-lg font-semibold mb-2">Order Summary</h3>
                         <ul>
-                            @foreach($cartItems as $item)
+                            @foreach($orderItems as $orderItem)
                                 <li class="mb-2">
-                                    <p class="font-semibold">{{ $item->website_name }}</p>
-                                    <p class="text-gray-600">{{ $item->website_url }}</p>
-                                    <p class="text-gray-600">${{ $item->price }}</p>
+                                    <p class="font-semibold">{{ $orderItem['website_name'] }}</p>
+                                    <p class="text-gray-600">{{ $orderItem['website_url'] }}</p>
+                                    <p class="text-gray-600">${{ $orderItem['price'] }}</p>
                                 </li>
                             @endforeach
                         </ul>
                         <div class="flex justify-between items-center mt-4">
                             <span class="text-lg font-semibold">Total Price:</span>
-                            <span class="text-lg font-semibold text-blue-600">${{ $cartItems->sum('price') }}</span>
+                            <span class="text-lg font-semibold text-blue-600">${{ $orderItems->sum('price') }}</span>
                         </div>
                     </div>
 
@@ -89,14 +118,12 @@
                         </div>
 
                         @auth('advertiser')
-                            <!-- Show Proceed to Checkout button if advertiser is logged in -->
                             <button type="submit" id="checkout-button" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg text-center hover:bg-blue-700">
-                                Proceed to Checkout
+                                Place Order
                             </button>
                         @else
-                            <!-- Show Login to Checkout button if not logged in -->
                             <a href="{{ route('advertiserlogin') }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg text-center hover:bg-blue-700">
-                                Login to Checkout
+                                Proceed to Checkout
                             </a>
                         @endauth
 
@@ -108,7 +135,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const checkoutButton = document.getElementById('checkout-button');
@@ -157,5 +183,4 @@
         });
     </script>
 </body>
-
 </html>

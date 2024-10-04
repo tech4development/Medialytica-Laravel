@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use App\Models\Order;
+use App\Models\Advertiser;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PayPalController extends Controller
 {
@@ -16,8 +19,15 @@ class PayPalController extends Controller
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
 
-        // Get the total price from the request
-        $totalPrice = $request->input('total_price');
+        // Get cart items from session
+        $cartItems = Session::get('cart', []);
+
+        if (empty($cartItems)) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
+        }
+
+        // Calculate the total price from the cart items
+        $totalPrice = collect($cartItems)->sum('price');
 
         // Create PayPal order
         $response = $provider->createOrder([
@@ -40,65 +50,73 @@ class PayPalController extends Controller
         if (isset($response['id']) && $response['id'] != null) {
             foreach ($response['links'] as $link) {
                 if ($link['rel'] === 'approve') {
-                    // Store order details in session
+                    // Store the order details in session to use later
                     session()->put('order_details', [
                         'total_price' => $totalPrice,
-                        'user_name' => $request->input('user_name'),
-                        'user_email' => $request->input('user_email'),
-                        'publisher_website_name' => $request->input('publisher_website_name'),
-                        'publisher_website_url' => $request->input('publisher_website_url'),
+                        'cart_items' => $cartItems,
+                        'payment_method' => 'paypal'
                     ]);
 
                     return redirect()->away($link['href']);
                 }
             }
         } else {
-            return redirect()->route('paypal.cancel')->with('error', 'Failed to create PayPal order.');
+            return view('errors.payment_failed', ['message' => 'Failed to create PayPal order.']);
         }
     }
 
     public function success(Request $request)
     {
+        // Initialize PayPal Client
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
 
-        // The token is expected to be in the request parameters
+        // The order ID is expected to be in the request parameters
         $orderId = $request->input('token');
 
-        // Check if orderId is provided
         if (!$orderId) {
-            return redirect()->route('paypal.cancel')->with('error', 'Order ID is missing.');
+            return view('errors.payment_failed', ['message' => 'Order ID is missing.']);
         }
 
         // Capture the payment order
         $response = $provider->capturePaymentOrder($orderId);
 
-        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-            // Retrieve order details from session
+        if (isset($response['status']) && $response['status'] === 'COMPLETED') {
+            // Retrieve order details and cart items from session
             $orderDetails = session()->get('order_details');
+            $cartItems = $orderDetails['cart_items'];
+            $advertiserId = Auth::id(); // Assuming the advertiser is authenticated
 
-            // Insert payment data into database
-            $order = new Order;
-            $order->user_name = $orderDetails['user_name'];
-            $order->user_email = $orderDetails['user_email'];
-            $order->publisher_website_name = $orderDetails['publisher_website_name'];
-            $order->publisher_website_url = $orderDetails['publisher_website_url'];
-            $order->price = $response['purchase_units'][0]['amount']['value'];
-            $order->payment_method = "paypal"; // Set the payment method as "PayPal"
-            $order->status = "completed"; // Set the order status to "Completed"
-            $order->save(); // Save to database
+            // Create orders for each item in the cart
+            foreach ($cartItems as $item) {
+                Order::create([
+                    'advertiser_id' => $advertiserId,
+                    'publisher_website_name' => $item['website_name'],
+                    'publisher_website_url' => $item['website_url'],
+                    'price' => $item['price'],
+                    'payment_method' => $orderDetails['payment_method'],
+                    'status' => 'Paid'
+                ]);
+            }
 
-            // Clear session data
-            session()->forget('order_details');
+            // Clear the cart and session data
+            Session::forget('cart');
+            Session::forget('order_details');
 
-            return view('advertisers.payment.success'); // Redirect to a success view or similar
+            // Return success view
+            return view('advertisers.payment.success', [
+                'message' => 'Your order has been placed successfully.',
+                'order_details' => $orderDetails
+            ]);
         } else {
-            return redirect()->route('paypal.cancel')->with('error', 'Payment capture failed.');
+            return view('errors.payment_failed', ['message' => 'Payment capture failed.']);
         }
     }
 
-    public function cancel(Request $request)
+    public function cancel()
     {
-        return view('advertisers.payment.cancel');
+        return view('advertisers.payment.cancel', [
+            'message' => 'You have canceled the PayPal transaction.'
+        ]);
     }
 }

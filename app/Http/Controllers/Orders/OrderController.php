@@ -10,16 +10,19 @@ use App\Models\Advertiser;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InvoiceSent;
+use App\Mail\InvoiceSentToAdvertiser;
 use PDF;
 
-class OrderController extends Controller
-{
+    class OrderController extends Controller
+    {
 
-    /**
-     * Show the checkout page with cart items and totals.
-     *
-     * @return \Illuminate\View\View
-     */
+        /**
+         * Show the checkout page with cart items and totals.
+         *
+         * @return \Illuminate\View\View
+         */
     public function checkout()
     {
         // Fetch the cart from the session
@@ -35,20 +38,29 @@ class OrderController extends Controller
         // Fetch publisher details based on the cart item IDs
         $cartItems = Publisher::whereIn('id', $cartItemIds)->get();
 
-        // Calculate the total price
-        $totalPrice = $cartItems->sum('price');
+        // Extract only the necessary fields into a new collection
+        $orderItems = $cartItems->map(function ($item) {
+            return [
+                'website_url' => $item->website_url,
+                'website_name' => $item->website_name,
+                'price' => $item->price,
+                'id' => $item->id, // Ensure you have the ID for removal
+            ];
+        });
 
-        return view('advertisers.checkout.index', compact('cartItems', 'totalPrice'));
+        // Calculate the total price
+        $totalPrice = $orderItems->sum('price');
+
+        return view('advertisers.checkout.index', compact('orderItems', 'totalPrice'));
     }
 
 
-
-            /**
-         * Place an order based on cart items.
-         *
-         * @param Request $request
-         * @return \Illuminate\Http\Response
-         */
+                /**
+                 * Place an order based on cart items.
+                 *
+                 * @param Request $request
+                 * @return \Illuminate\Http\Response
+                 */
             public function placeOrder(Request $request)
             {
                 // Ensure the user is authenticated as an advertiser
@@ -56,53 +68,50 @@ class OrderController extends Controller
                     return redirect()->route('login')->with('error', 'You must be logged in as an advertiser to place an order.');
                 }
 
+                // Retrieve the authenticated advertiser
                 $advertiser = auth()->guard('advertiser')->user();
+
+                // Get the existing cart from the session
                 $cartItems = session()->get('cart', []);
 
-                // Check if the cart is empty
+                // If the cart is empty, redirect to the guest page instead of cart page
                 if (empty($cartItems)) {
-                    return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
+                    return redirect()->route('guest.page')->with('error', 'Your cart is empty.'); // Change route to guest page
                 }
 
-                // Assuming all items in the cart are from the same publisher
-
-                $cartItems = session()->get('cart', []); // Fetch cart items from session
-
-                // Check if the cart is an array and not empty
-                if (is_array($cartItems) && !empty($cartItems)) {
-                    $firstItem = reset($cartItems); // Get the first item from the cart
-
-                    // Check if the first item is an array and has required keys
-                    if (is_array($firstItem) && isset($firstItem['website_name'], $firstItem['website_url'])) {
-                        $publisher = Publisher::where('website_name', $firstItem['website_name'])
-                            ->where('website_url', $firstItem['website_url'])
-                            ->first();
-                    } else {
-                        // Handle case where the cart structure is invalid
-                        return redirect()->back()->with('error', 'Invalid cart structure.');
+                // Group the cart items by website_url
+                $groupedItems = [];
+                foreach ($cartItems as $item) {
+                    if (isset($item['website_name'], $item['website_url'], $item['price'])) {
+                        $key = $item['website_url'];
+                        if (!isset($groupedItems[$key])) {
+                            $groupedItems[$key] = [
+                                'website_name' => $item['website_name'],
+                                'website_url' => $item['website_url'],
+                                'price' => 0,
+                            ];
+                        }
+                        $groupedItems[$key]['price'] += $item['price'];
                     }
-                } else {
-                    // Handle empty cart case
-                    return redirect()->back()->with('error', 'Cart is empty.');
                 }
 
-
-                if (!$publisher) {
-                    return redirect()->route('cart.index')->with('error', 'Publisher not found.');
-                }
+                // Create a new order with the total price of the grouped items
+                $totalPrice = collect($groupedItems)->sum('price');
+                $firstPublisher = reset($groupedItems);
+                $publisherWebsiteUrl = implode(', ', array_keys($groupedItems));
 
                 // Create the order
                 $order = Order::create([
                     'advertiser_id' => $advertiser->id,
-                    'publisher_website_name' => $publisher->website_name,
-                    'publisher_website_url' => $publisher->website_url,
-                    'price' => collect($cartItems)->sum('price'), // Summing the total price of cart items
-                    'payment_method' => $request->input('payment_method', 'offline'), // Default to offline
-                    'status' => 'pending',
+                    'publisher_website_name' => $firstPublisher['website_name'],
+                    'publisher_website_url' => $publisherWebsiteUrl,
+                    'price' => $totalPrice,
+                    'payment_method' => $request->input('payment_method'),
+                    'status' => 'placed',
                 ]);
 
-                // Loop through each cart item and add them as order items
-                foreach ($cartItems as $item) {
+                // Create order items
+                foreach ($groupedItems as $item) {
                     $order->items()->create([
                         'website_name' => $item['website_name'],
                         'website_url' => $item['website_url'],
@@ -110,19 +119,34 @@ class OrderController extends Controller
                     ]);
                 }
 
-                // Clear the cart after placing the order
+                // Clear the cart
                 session()->forget('cart');
 
-                // Handle payment method
-                if ($request->payment_method == 'paypal') {
-                    return redirect()->route('paypal', $order->id); // Redirect to PayPal if chosen
-                } elseif ($request->payment_method == 'offline') {
-                    return redirect()->route('thankyou', ['orderId' => $order->id])
-                    ->with('toast_success', 'Order placed successfully!');
-                }
+                // Create an invoice
+                $invoice = Invoice::create([
+                    'order_id' => $order->id,
+                    'price' => $totalPrice,
+                    'isSent' => false,
+                    'status' => 'generated',
+                    'payment_method' => 'offline',
+                    'isPaymentReceived' => false,
+                    'user_name' => $advertiser->name,
+                    'user_email' => $advertiser->email,
+                    'publisher_website_name' => $order->publisher_website_name,
+                    'publisher_website_url' => $order->publisher_website_url,
+                ]);
 
-                return redirect()->back()->with('error', 'Invalid payment method selected.');
+                // Send the invoice to the advertiser's email
+               // Mail::to($advertiser->email)->send(new InvoiceSentToAdvertiser($invoice));
+
+                // Redirect to the invoice view
+return redirect()->route('invoice.show', $invoice->id)
+                 ->with('success', 'Invoice created successfully!')
+                 ->header('Refresh', '60;url='.route('thank_you', ['orderId' => $order->id]));  // Redirect to thank you page after 1 minute
+
             }
+
+
 
 
     /**
@@ -131,20 +155,21 @@ class OrderController extends Controller
      * @param int $orderId
      * @return \Illuminate\Http\Response
      */
-    public function thankYou($orderId)
-    {
-        $order = Order::find($orderId);
+   public function thankYou($orderId)
+{
+    $order = Order::find($orderId);
 
-        if (!$order) {
-            return redirect()->route('cart.index')->with('error', 'Order not found.');
-        }
-
-        // Fetch all order items related to this order (if applicable)
-        $orderItems = Order::where('advertiser_id', $order->advertiser_id)->get();
-        $totalPrice = $orderItems->sum('price');
-
-        return view('advertisers.ordersummary.thankyou', compact('orderItems', 'totalPrice'));
+    if (!$order) {
+        return redirect()->route('cart.index')->with('error', 'Order not found.');
     }
+
+    // Fetch all order items related to this order (if applicable)
+    $orderItems = $order->items; // Assuming the Order model has a relationship with items
+    $totalPrice = $orderItems->sum('price');
+
+    return view('advertisers.ordersummary.thankyou', compact('orderItems', 'totalPrice'));
+}
+
 
 
     /**
@@ -159,8 +184,15 @@ class OrderController extends Controller
         // Create an invoice
         $invoice = Invoice::create([
             'order_id' => $order->id,
-            'amount' => $order->price,
-            'is_sent' => false,
+            'price' => $totalPrice,  // Ensure this is correctly calculated
+            'isSent' => false,
+            'status' => 'generated',
+            'payment_method' => 'offline',
+            'isPaymentReceived' => false,
+            'user_name' => $advertiser->name,
+            'user_email' => $advertiser->email,
+            'publisher_website_name' => $order->publisher_website_name,
+            'publisher_website_url' => $order->publisher_website_url,
         ]);
 
         // Generate the PDF invoice

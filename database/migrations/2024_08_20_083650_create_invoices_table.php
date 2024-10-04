@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->boolean('isSent')->default(false);
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->decimal('price', 10, 2);
+            $table->decimal('price', 10, 2);  // Ensure this exists
+            $table->boolean('isSent')->default(false);
             $table->boolean('isPaymentReceived')->default(false);
-            $table->string('order_number');
+            $table->string('status');
+            $table->string('payment_method');
             $table->string('user_name');
             $table->string('user_email');
             $table->string('publisher_website_name');
             $table->string('publisher_website_url');
-
-        });
+            $table->timestamps();
+});
     }
 
     /**

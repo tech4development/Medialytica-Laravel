@@ -23,7 +23,7 @@ class HomeController extends Controller
         $instagramspublishers = ScPublisherInstagram::all();
         $xspublishers = ScPublisherTwitter::all();
         $tiktokspublishers = ScPublisherTiktok::all();
-        $telegramspublishers = ScPublisherTelegram::all();
+         $telegramspublishers = ScPublisherTelegram::all(); // Adjust as necessary
         $whatsappspublishers = WhatsappChannels::all();
         $youtubespublishers = ScPublisherYoutube::all();
         $countries = Country::all();

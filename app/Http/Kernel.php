@@ -71,6 +71,8 @@ class Kernel extends HttpKernel
         'superadmin' => \App\Http\Middleware\SuperadminMiddleware::class,
         'advertiser.auth' => \App\Http\Middleware\AdvertiserAuth::class,
         'check.advertiser' => \App\Http\Middleware\CheckAdvertiser::class,
+        'returning.advertiser' => \App\Http\Middleware\ReturningAdvertiserMiddleware::class,
+
     ];
 
 }

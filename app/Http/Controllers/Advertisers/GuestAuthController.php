@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 class GuestAuthController extends Controller
 {
     public function index()
+
+
     {
         return view('pages.advertisers.guest');
     }

@@ -114,7 +114,13 @@ Route::middleware('auth', 'superadmin',  'user_role:super admin')->group(functio
     Route::get('superadmin/orders', [OrderController::class, 'index'])->name('index');
     Route::get('superadmin/{order}/edit', [OrderController::class, 'edit'])->name('edit');
     Route::put('superadmin/{order}', [OrderController::class, 'update'])->name('update');
+    Route::post('/import-publishers', [PublisherController::class, 'importExcelData'])->name('import.publishers');
+    Route::get('/import-publishers', [PublisherController::class, 'showImportForm'])->name('publishers.import');
 });
+
+Route::get('/filters-data', [PublisherController::class, 'getFiltersData']);
+Route::post('/filter-publishers', [PublisherController::class, 'filterPublishers']);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -169,6 +175,9 @@ Route::middleware('auth','user_role:publisher')->group(function () {
     Route::delete('/publisher/{id}', [PublisherController::class, 'destroy'])->name('publisher.destroy');
 
     });
+
+
+
 
 
 /*
@@ -413,7 +422,7 @@ Route::middleware(['check.advertiser'])->group(function () {
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::delete('/cart/remove/{cartId}', [CartController::class, 'remove'])->name('cart.remove');
+Route::delete('/cart/remove/{Id}', [CartController::class, 'remove'])->name('cart.remove');
 Route::put('/cart/update/{cartId}', [CartController::class, 'update'])->name('cart.update');
 // Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
@@ -431,6 +440,11 @@ Route::post('/checkout/verify', function () {
 
 Route::get('/thank-you/{orderId}', [OrderController::class, 'thankYou'])->name('thank_you');
 
+
+// Route::middleware(['returning.advertiser'])->group(function () {
+//     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.index');
+//     Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
+// });
 /*
 |--------------------------------------------------------------------------
                   Order and Checkout Routes
@@ -455,8 +469,13 @@ Route::post('/order/{id}/update-status', [OrderController::class, 'updateStatus'
 */
 
 Route::post('paypal', [PayPalController::class, 'paypal'])->name('paypal');
-Route::get('success', [PayPalController::class, 'success'])->name('success');
-Route::get('cancel', [PayPalController::class, 'cancel'])->name('cancel');
+Route::get('success', [PayPalController::class, 'success'])->name('paypal.success');
+Route::get('cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
+
+
+// Route::post('/paypal/pay', [PayPalController::class, 'payWithPayPal'])->name('paypal.pay');
+// Route::get('/paypal/success', [PayPalController::class, 'success'])->name('paypal.success');
+// Route::get('/paypal/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
 
 
 Route::get('/check-auth', function () {
@@ -476,18 +495,22 @@ Route::get('/check-auth', function () {
 
 Route::prefix('invoice')->group(function () {
     // Route to create an invoice and display it
-    Route::get('/create/{orderId}', [InvoiceController::class, 'create'])->name('invoice.create');
+    Route::get('create/{orderId}', [InvoiceController::class, 'create'])->name('invoice.create');
 
     // Route to display a specific invoice
     Route::get('/{invoiceId}', [InvoiceController::class, 'show'])->name('invoice.show');
 
     // Route to mark payment as received
-    Route::post('/mark-payment-received/{invoiceId}', [InvoiceController::class, 'markPaymentReceived'])
+    Route::post('mark-payment-received/{invoiceId}', [InvoiceController::class, 'markPaymentReceived'])
         ->name('invoice.markPaymentReceived');
 
-Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])->name('invoice.download');
-Route::get('/invoice/email/{id}', [InvoiceController::class, 'email'])->name('invoice.email');
+    // Route to download the invoice PDF
+    Route::get('download/{id}', [InvoiceController::class, 'download'])->name('invoice.download');
+
+    // Route to email the invoice
+    Route::get('email/{id}', [InvoiceController::class, 'email'])->name('invoice.email');
 });
+
 /*
 |--------------------------------------------------------------------------
                 400, 404 Error and 500 Error pages routes
@@ -498,7 +521,7 @@ Route::get('/invoice/email/{id}', [InvoiceController::class, 'email'])->name('in
 
 // Optionally, define a route for 404 errors if you need specific handling
 Route::get('/404', function () {
-    
+
     return response()->view('errors.404', [], 404);
 });
 

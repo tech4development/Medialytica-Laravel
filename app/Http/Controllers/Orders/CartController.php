@@ -12,69 +12,53 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function add(Request $request)
-    {
-        // Validate the input
-        $request->validate([
-            'publisher_id' => 'required|integer|exists:publishers,id',
-        ]);
 
-        $publisherId = $request->input('publisher_id');
+public function add(Request $request)
+{
+    $publisherIds = $request->publisher_ids ?? [$request->publisher_id];  // Handle both single and multiple additions
 
-        // Get the current cart from the session
-        $cart = session()->get('cart', []);
+    foreach ($publisherIds as $publisherId) {
+        $publisher = Publisher::find($publisherId);
 
-        // Ensure cart is an array
-        if (!is_array($cart)) {
-            $cart = [];
+        if (!$publisher) {
+            return redirect()->back()->with('error', 'Publisher not found.');
         }
 
-        // Add publisher to cart if not already present
-        if (!array_key_exists($publisherId, $cart)) {
-            // Fetch publisher details
-            $publisher = Publisher::find($publisherId);
+        $cart = session()->get('cart', []);
 
-            if (!$publisher) {
-                return redirect()->route('cart.index')->with('error', 'Publisher not found!');
-            }
-
-            // Add new publisher to cart
-            $cart[$publisherId] = [
-                'name' => $publisher->website_name, // Adjust as needed
+        // Check if the publisher is already in the cart
+        if (!isset($cart[$publisher->id])) {
+            // Add publisher to cart with the correct structure
+            $cart[$publisher->id] = [
+                'Id' => $publisher->id,  // Store the publisher ID
+                'website_url' => $publisher->website_url,
+                'website_name' => $publisher->website_name,
                 'price' => $publisher->price,
+                'niches' => $publisher->niches
             ];
 
-            session()->put('cart', $cart);
 
-            return redirect()->route('cart.index')->with('success', 'Publisher added to cart successfully!');
+
+            session()->put('cart', $cart); // Update the session cart
         }
-
-        return redirect()->route('cart.index')->with('info', 'Publisher is already in the cart.');
     }
 
-    public function index()
-    {
-        $cart = session()->get('cart', []);
+    return redirect()->route('cart.index')->with('success', 'Publisher(s) added to cart successfully!');
+}
 
-        // Ensure $cart is an array
-        if (!is_array($cart)) {
-            $cart = [];
+
+        public function index()
+        {
+             $cartItems = session()->get('cart', []);
+             $totalPrice = array_sum(array_column($cartItems, 'price'));
+             $itemCount = count($cartItems);
+
+            return view('advertisers.cart.index', compact('cartItems', 'totalPrice', 'itemCount'));
+            // dd($cartItems);
+
         }
 
-        // Fetch publisher details based on the cart item IDs
-        $cartItemIds = array_keys($cart);
-        $cartItems = Publisher::whereIn('id', $cartItemIds)->get();
 
-        // Fetch related websites (assuming a function or a model for this purpose)
-        $relatedWebsites = $this->getRelatedWebsites($cartItems);
-
-        if ($cartItems->isEmpty()) {
-            // Redirect to checkout page if cart is empty
-            return redirect()->route('checkout.index');
-        }
-
-        return view('advertisers.cart.index', compact('cartItems', 'relatedWebsites', 'cart'));
-    }
 
     private function getRelatedWebsites($cartItems)
     {
@@ -96,4 +80,17 @@ class CartController extends Controller
         // Remove any duplicate websites by their ID
         return $relatedWebsites->unique('id');
     }
+
+public function remove($index)
+{
+    $cart = session()->get('cart', []);
+
+    if(isset($cart[$index])) {
+        unset($cart[$index]);
+        session()->put('cart', $cart);
+    }
+
+    return redirect()->back()->with('success', 'Item removed from cart successfully!');
+}
+
 }

@@ -37,6 +37,11 @@ class Order extends Model
         return $this->belongsTo(Publisher::class, 'publisher_website_url', 'website_url');
     }
 
+    public function invoice()
+{
+    return $this->hasOne(Invoice::class);
+}
+
 }
 
 

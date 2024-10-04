@@ -40,7 +40,7 @@ class InvoiceSentToAdvertiser extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'advertisers.invoice.index',
         );
     }
 
@@ -58,7 +58,7 @@ class InvoiceSentToAdvertiser extends Mailable
         return $this->view('emails.invoice_notification_advertiser')
                     ->with([
                         'invoice' => $this->invoice,
-                        'paypalEmail' => 'paypal@example.com', // Replace with actual PayPal email
+                        'paypalEmail' => 'jeffkarani@gmail.com', // Replace with actual PayPal email
                     ])
                     ->attach(storage_path('invoices/' . $this->invoice->id . '.pdf'));
     }

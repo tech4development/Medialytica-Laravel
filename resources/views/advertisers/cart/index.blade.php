@@ -6,130 +6,206 @@
     <title>Cart</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+       <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="shortcut icon"
+            href="{{ asset('backend/assets/img/brand-logos/favicon.ico') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ asset('backend/assets/css/style.css') }}"
+        />
+        <link
+            id="style"
+            href="{{
+                asset('backend/assets/libs/simplebar/simplebar.min.css')
+            }}"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+                asset('backend/assets/libs/@simonwep/pickr/themes/nano.min.css')
+            }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+                asset('backend/assets/libs/swiper/swiper-bundle.min.css')
+            }}"
+        />
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
+<body class="bg-gray-100 font-poppins">
 
-        @if($cartItems->isEmpty())
-            <!-- Cart is empty, no further cart details to show -->
-            <p class="text-gray-600">Your cart is empty. <a href="{{ route('guest.page') }}" class="text-blue-500 hover:underline">Back to Publishers Database</a></p>
-        @else
-            <!-- Cart Layout -->
-            <div class="grid grid-cols-3 md:grid-cols-4 gap-6">
-                <!-- Cart Item Details -->
-                <section class="bg-white shadow-md rounded-lg p-4">
-                    <h2 class="text-xl font-semibold mb-2">Cart Item Details</h2>
-                    <div class="overflow-x-auto border border-gray-300 rounded-md">
-                        <table class="min-w-full table-auto border-collapse">
-                            <thead class="bg-blue-600 text-white">
-                                <tr>
-                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website Name</th>
-                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website URL</th>
-                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Price</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach($cartItems as $item)
-                                    <tr>
-                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $item->website_name }}</td>
-                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">
-                                            <a href="{{ $item->website_url }}" class="text-blue-500 hover:underline" target="_blank">{{ $item->website_url }}</a>
-                                        </td>
-                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">${{ $item->price }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+    <div class="container mx-auto mt-10">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Your Cart</h2>
 
-                <!-- Cart Table -->
-                <section class="bg-white shadow-md rounded-lg p-4 col-span-2">
-                    <h2 class="text-xl font-semibold mb-2">Cart Table</h2>
-                    <div class="overflow-x-auto border border-gray-300 rounded-md">
-                        <table class="min-w-full table-auto border-collapse">
-                            <thead class="bg-blue-600 text-white">
-                                <tr>
-                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website Name</th>
-                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Website URL</th>
-                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Price</th>
-                                    <th class="px-4 py-2 border border-gray-300 text-left text-xs font-medium uppercase">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach($cartItems as $item)
-                                    <tr>
-                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">{{ $item->website_name }}</td>
-                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">
-                                            <a href="{{ $item->website_url }}" class="text-blue-500 hover:underline" target="_blank">{{ $item->website_url }}</a>
-                                        </td>
-                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">${{ $item->price }}</td>
-                                        <td class="px-4 py-2 border border-gray-300 text-sm text-gray-900">
-                                            <form action="{{ route('cart.remove', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-800">Remove</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
 
-                <!-- Total Price and Buttons -->
-                <section class="bg-white shadow-md rounded-lg p-4">
-                    <h2 class="text-xl font-semibold mb-4">Cart Total</h2>
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-lg font-semibold">Total Price:</span>
-                        <span class="text-lg font-semibold text-blue-600">${{ $cartItems->sum('price') }}</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Cart Items -->
+            <div class="col-span-2 bg-white p-8 rounded-lg shadow-lg">
+                @if(session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                        <strong class="font-bold">Success!</strong>
+                        <span>{{ session('success') }}</span>
                     </div>
-                    <div class="flex flex-col space-y-4">
-                        <a href="{{ route('checkout.index') }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg text-center hover:bg-blue-700">Proceed to Checkout</a>
-                        <a href="{{ route('guest.page') }}" class="inline-block px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg text-center hover:bg-gray-700">Back to Publishers Database</a>
-                    </div>
-                </section>
-            </div>
+                @endif
 
-            <!-- Related Websites Carousel -->
-            <section class="mt-8">
-                <h2 class="text-2xl font-bold mb-4">You Might Be Interested In</h2>
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        @foreach($relatedWebsites as $website)
-                            <div class="swiper-slide bg-white p-4 shadow-md rounded-lg relative">
-                                <!-- Price tag on the top right -->
-                                <div class="absolute top-2 right-2 bg-blue-600 text-white rounded-full px-2 py-1 text-sm">
-                                    ${{ $website->price }}
+                @if(!empty($cartItems))
+<div class="relative">
+    <table class="min-w-full table-auto border-collapse mb-6">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="px-4 py-2 text-left font-semibold text-gray-600">Publisher Name</th>
+                <th class="px-4 py-2 text-left font-semibold text-gray-600">Website URL</th>
+                <th class="px-4 py-2 text-left font-semibold text-gray-600">Price</th>
+                <th class="px-4 py-2 text-left font-semibold text-gray-600">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        @php
+            $totalPrice = 0;
+            $totalItems = 0;
+        @endphp
+        @foreach($cartItems as $index => $item)
+            @if(isset($item['website_name']))
+                @php
+                    $totalPrice += $item['price'];
+                    $totalItems++;
+                @endphp
+                <tr class="border-b">
+                    <td class="px-4 py-4 text-gray-800">{{ $item['website_name'] }}</td>
+                    <td class="px-4 py-4 text-blue-500 underline">{{ $item['website_url'] }}</td>
+                    <td class="px-4 py-4 text-green-500">${{ number_format($item['price'], 2) }}</td>
+                    <td class="px-4 py-4 text-red-500">
+                        <form action="{{ route('cart.remove', $index) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this item from your cart?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 hover:text-red-700">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            @endif
+        @endforeach
+          <div class="fixed - right-4 bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Cart Summary</h3>
+        <p class="text-gray-600">Total Items: <span class="font-bold">{{ $totalItems }}</span></p>
+        <p class="text-gray-600">Total Price: <span class="font-bold text-green-500">${{ number_format($totalPrice, 2) }}</span></p>
+    </div>
+        </tbody>
+
+
+         <p class="text-gray-600">Total Items: <span class="font-bold">{{ $totalItems }}</span></p>
+        <p class="text-gray-600">Total Price: <span class="font-bold text-green-500">${{ number_format($totalPrice, 2) }}</span></p>
+
+    </table>
+       <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-gray-800">Order Summary</h3>
+                @if(!empty($cartItems))
+                    <div class="mb-6 space-y-4">
+                        @foreach($cartItems as $item)
+                            @if(isset($item['website_name']))
+                                <div class="border p-4 rounded-lg">
+                                    <p><strong>Website Name:</strong> {{ $item['website_name'] }}</p>
+                                    <p><strong>Website URL:</strong> <a href="{{ $item['website_url'] }}" class="text-blue-500">{{ $item['website_url'] }}</a></p>
+                                    <p><strong>Price:</strong> ${{ number_format($item['price'], 2) }}</p>
                                 </div>
-                                <!-- Website Name -->
-                                <h3 class="text-lg font-semibold mb-2">{{ $website->website_name }}</h3>
-                                <!-- Website URL -->
-                                <a href="{{ $website->website_url }}" class="text-blue-500 hover:underline" target="_blank">
-                                    {{ $website->website_url }}
-                                </a>
-                                <!-- Order Now Button -->
-                                <form action="{{ route('cart.add') }}" method="POST" class="mt-4">
-                                    @csrf
-                                    <input type="hidden" name="publisher_id" value="{{ $website->id }}">
-                                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                                        Order Now
-                                    </button>
-                                </form>
-                            </div>
+                            @endif
                         @endforeach
                     </div>
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination"></div>
-                    <!-- Add Navigation -->
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
-            </section>
-        @endif
+
+
+
+
+                @else
+                    <p class="text-gray-500 text-center">No publisher details to display.</p>
+                @endif
+            </div>
+     <p class="text-gray-600">Total Items: <span class="font-bold">{{ $totalItems }}</span></p>
+    <p class="text-gray-600">Total Price: <span class="font-bold text-green-500">${{ number_format($totalPrice, 2) }}</span></p>
+     <a href="{{ route('checkout.index') }}" class="block w-full text-center bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition">Proceed to Checkout</a>
+                    <a href="{{ route('guest.page') }}" class="block w-full text-center mt-4 bg-gray-300 text-black py-3 rounded-lg font-semibold hover:bg-gray-400 transition">Back to Publishers</a>
+
+
+</div>
+
+
+                @else
+                    <p class="text-gray-500 text-lg text-center">Your cart is empty.</p>
+                @endif
+            </div>
+
+            <!-- Sidebar - Checkout -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-gray-800">Order Summary</h3>
+                @if(!empty($cartItems))
+                    <div class="mb-6 space-y-4">
+                        @foreach($cartItems as $item)
+                            @if(isset($item['website_name']))
+                                <div class="border p-4 rounded-lg">
+                                    <p><strong>Website Name:</strong> {{ $item['website_name'] }}</p>
+                                    <p><strong>Website URL:</strong> <a href="{{ $item['website_url'] }}" class="text-blue-500">{{ $item['website_url'] }}</a></p>
+                                    <p><strong>Price:</strong> ${{ number_format($item['price'], 2) }}</p>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="mb-6 space-y-4">
+                  <p class="text-gray-600">Total Items: <span class="font-bold">{{ $totalItems }}</span></p>
+                  <p class="text-gray-600">Total Price: <span class="font-bold text-green-500">${{ number_format($totalPrice, 2) }}</span></p>
+                    </div>
+
+                    <!-- Proceed to Checkout Button -->
+                    <a href="{{ route('checkout.index') }}" class="block w-full text-center bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition">Proceed to Checkout</a>
+                    <a href="{{ route('guest.page') }}" class="block w-full text-center mt-4 bg-gray-300 text-black py-3 rounded-lg font-semibold hover:bg-gray-400 transition">Back to Publishers</a>
+                @else
+                    <p class="text-gray-500 text-center">No publisher details to display.</p>
+                @endif
+            </div>
+        </div>
     </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/Toastify.min.js"></script>
+
+    <script>
+    @if(session('success'))
+        Toastify({
+            text: "{{ session('success') }}",
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: 'right',
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+        }).showToast();
+    @endif
+
+    @if(session('error'))
+        Toastify({
+            text: "{{ session('error') }}",
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: 'right',
+            backgroundColor: "linear-gradient(to right, #FF5F6D, #FFC371)",
+        }).showToast();
+    @endif
+
+    @if(session('info'))
+        Toastify({
+            text: "{{ session('info') }}",
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: 'right',
+            backgroundColor: "linear-gradient(to right, #FF9800, #FFC107)",
+        }).showToast();
+    @endif
+    </script>
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
