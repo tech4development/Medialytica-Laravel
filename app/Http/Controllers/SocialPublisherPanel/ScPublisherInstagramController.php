@@ -37,7 +37,8 @@ class ScPublisherInstagramController extends Controller
             'number_of_followers' => 'required|integer',
             'influencer_category' =>  'required|in:Mega Influencers (More than 1M followers),Macro Influencers (100K - 1M followers),Micro Influencers (1K - 100K followers),Nano Influencers (Below 1K followers)',
             'target_audience' => 'required|in:Below 18 years,18 to 35 years,Over 35 years',
-            'post_types' => 'required|in:Skits,Video Ads,Instagram Reels,Image/Poster/Banner/Text posts',
+            'postTypes' => 'nullable|array',
+            'postTypes.*' => 'in:Skits,Video Ads,Reels,Image/Poster/Banner/Text posts', // Include postTypes validation
             'cost_per_post' => 'nullable|numeric',
             'cost_per_hour' => 'nullable|numeric',
             'cost_per_day' => 'nullable|numeric',
@@ -68,7 +69,10 @@ class ScPublisherInstagramController extends Controller
         $instagramPublisher = ScPublisherInstagram::create($validated);
 
         // Return a response or redirect as needed
-        return response()->json($instagramPublisher, 201);
+        session()->put('success', 'Your Instagram details have been successfully captured! We will be in touch with you shortly');
+
+        return redirect()->route('socialpublisher.dashboard');
+
     }
 
     // Other methods for index, show, update, delete, etc. can be added her

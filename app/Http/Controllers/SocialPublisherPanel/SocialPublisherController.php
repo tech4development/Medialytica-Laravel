@@ -11,4 +11,13 @@ class SocialPublisherController extends Controller
 
         return view('socialpublisher.dashboard');
     }
+
+   // Shows the guest page for a specific social publisher (if needed)
+    public function guestPage()
+    {
+        // You can optionally pass an ID for future expansion, or remove it if not needed
+        return view('pages.socialpublishers.socialguest');
+    }
 }
+
+

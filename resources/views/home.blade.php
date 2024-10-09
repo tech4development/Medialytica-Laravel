@@ -667,163 +667,97 @@
             </div>
             <!-- End::Social Publisher Section -->
 
-            <div class="grid grid-cols-12 gap-6">
-                <div class="col-span-12">
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <div class="mb-4">
-                            <h5
-                                class="text-lg font-bold text-[#004466] text-center"
-                            >
-                                Browse our database of 10K+ Publishers
-                            </h5>
-                        </div>
-                        <div
-                            class="overflow-x-auto border border-gray-300 bg-custom-dark rounded-md mt-4"
-                        >
+         <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-12">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="mb-4">
+                        <h5 class="text-lg font-bold text-[#004466] text-center">
+                            Browse our database of 10K+ Publishers
+                        </h5>
+                    </div>
+               <div class="overflow-x-auto border border-gray-300 bg-custom-dark rounded-md mt-4">
+    <div class="flex justify-center">
+        <table class="min-w-150 table-auto border-collapse">
+            <thead class="bg-[#004466]">
+                <tr>
+                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        Publishers
+                    </th>
+                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        Niches
+                    </th>
+                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        DA
+                    </th>
+                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        DR
+                    </th>
+                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        Traffic
+                    </th>
+                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        Country
+                    </th>
+                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        Price
+                    </th>
+                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
+                        Order Now
+                    </th>
+                </tr>
+            </thead>
+            <!-- Apply dark background to the table body -->
+            <tbody class="bg-[#1a1a1a] text-white divide-y divide-gray-700">
+                @foreach($publishers as $publisher)
+                    <tr>
+                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap">
+                            <a href="#" class="text-white hover:underline">{{ $publisher->website_url }}</a>
+                        </td>
+                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
+                            {{ is_array($publisher->niches) ? implode(', ', $publisher->niches) : $publisher->niches }}
+                        </td>
+                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
+                            {{ $publisher->moz_da }}
+                        </td>
+                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
+                            {{ $publisher->ahref_dr }}
+                        </td>
+                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
+                            {{ $publisher->traffic }}
+                        </td>
+                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
+                            {{ $publisher->country }}
+                        </td>
+                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
+                            {{ $publisher->price }}
+                        </td>
+                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap">
                             <div class="flex justify-center">
-                                <table
-                                    class="min-w-150 table-auto border-collapse"
-                                >
-                                    <thead class="bg-[#004466]">
-                                        <tr>
-                                            <th
-                                                scope="col"
-                                                class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                            >
-                                                Publishers
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                            >
-                                                Niches
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                            >
-                                                DA
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                            >
-                                                DR
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                            >
-                                                Traffic
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                            >
-                                                Country
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                            >
-                                                Price
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                            >
-                                                Order Now
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody
-                                        class="bg-white divide-y divide-gray-200"
-                                    >
-                                        @foreach($publishers as $publisher)
-                                        <tr>
-                                            <td
-                                                class="px-2 py-2 border border-gray-300 whitespace-nowrap"
-                                            >
-                                                <a
-                                                    href="#"
-                                                    class="text-white hover:underline"
-                                                    >{{ $publisher->website_url }}</a
-                                                >
-                                            </td>
-                                            <td
-                                                class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900"
-                                            >
-                                                {{ is_array($publisher->niches) ? implode(', ', $publisher->niches) : $publisher->niches }}
-                                            </td>
-                                            <td
-                                                class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900"
-                                            >
-                                                {{ $publisher->moz_da }}
-                                            </td>
-                                            <td
-                                                class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900"
-                                            >
-                                                {{ $publisher->ahref_dr }}
-                                            </td>
-                                            <td
-                                                class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900"
-                                            >
-                                                {{ $publisher->traffic }}
-                                            </td>
-                                            <td
-                                                class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900"
-                                            >
-                                                {{ $publisher->country }}
-                                            </td>
-                                            <td
-                                                class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-gray-900"
-                                            >
-                                                {{ $publisher->price }}
-                                            </td>
-                                            <td
-                                                class="px-2 py-2 border border-gray-300 whitespace-nowrap"
-                                            >
-                                                <div
-                                                    class="flex justify-center"
-                                                >
-                                                    <form
-                                                        action="{{ route('cart.add', ['publisherId' => $publisher->id]) }}"
-                                                        method="POST"
-                                                    >
-                                                        @csrf
-                                                        <input
-                                                            type="hidden"
-                                                            name="publisher_id"
-                                                            value="{{ $publisher->id }}"
-                                                        />
-                                                        <input
-                                                            type="hidden"
-                                                            name="website_url"
-                                                            value="{{ $publisher->website_url }}"
-                                                        />
-                                                        <input
-                                                            type="hidden"
-                                                            name="price"
-                                                            value="{{ $publisher->price }}"
-                                                        />
-                                                        <button
-                                                            type="submit"
-                                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                                        >
-                                                            Order Now
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                <form action="{{ route('cart.add', ['publisherId' => $publisher->id]) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="publisher_id" value="{{ $publisher->id }}" />
+                                    <input type="hidden" name="website_url" value="{{ $publisher->website_url }}" />
+                                    <input type="hidden" name="price" value="{{ $publisher->price }}" />
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        Order Now
+                                    </button>
+                                </form>
                             </div>
-                        </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
+                    <!-- Pagination Links -->
+                    <div class="mt-4">
+                        {{ $publishers->links() }}
                     </div>
                 </div>
             </div>
+        </div>
 
             <div class="bg-custom-blue-150">
                 <div class="mb-4">
@@ -2036,4 +1970,5 @@
             incrementCounter("tasksCompleted", 10000, 2000);
         };
     </script>
+
 </html>

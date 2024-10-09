@@ -33,7 +33,7 @@
     <div class="container mx-auto p-6 max-w-4xl">
         <div class="bg-white p-8 rounded-lg shadow-md">
             <h1 class="text-2xl font-bold mb-4 text-center">Add your Instagram Page Details</h1>
-            <form action="{{ route('scp_instagram.store') }}" method="POST">
+            <form action="{{ route('instagram.store') }}" method="POST">
                 @csrf
                 <!-- Name -->
                 <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
@@ -47,7 +47,7 @@
                  <!-- Email -->
                  <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700">Enter your email address</label>
-                    <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="email" id="email" name="email_address" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
 
                 <!-- Phone Number -->
@@ -109,7 +109,7 @@
                             'Travel Blogger'
                         ] as $category)
                             <div class="flex items-center">
-                                <input type="checkbox" id="influencer_type_{{ $loop->index }}" name="influencer_types[]" value="{{ $category }}" class="mr-2">
+                                <input type="checkbox" id="influencer_type_{{ $loop->index }}" name="influencer_type[]" value="{{ $category }}" class="mr-2">
                                 <label for="influencer_type_{{ $loop->index }}" class="text-gray-600">{{ $category }}</label>
                             </div>
                         @endforeach
@@ -214,19 +214,19 @@
                         <span class="block text-sm font-medium text-gray-700">Which type of posts do you make on your Insagram page? Select all that apply *</span>
                         <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
                             <div class="flex items-center">
-                                <input type="checkbox" id="post_type_skits" name="post_types[]" value="Skits" class="mr-2" onchange="toggleDivs()">
+                                <input type="checkbox" id="post_type_skits" name="postTypes[]" value="Skits" class="mr-2" onchange="toggleDivs()">
                                 <label for="post_type_skits" class="text-gray-600">Skits</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox" id="post_type_video_ads" name="post_types[]" value="Video Ads" class="mr-2" onchange="toggleDivs()">
+                                <input type="checkbox" id="post_type_video_ads" name="postTypes[]" value="Video Ads" class="mr-2" onchange="toggleDivs()">
                                 <label for="post_type_video_ads" class="text-gray-600">Video Ads</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox" id="post_type_reels" name="post_types[]" value="Reels" class="mr-2" onchange="toggleDivs()">
+                                <input type="checkbox" id="post_type_reels" name="postTypes[]" value="Reels" class="mr-2" onchange="toggleDivs()">
                                 <label for="post_type_reels" class="text-gray-600">Reels</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox" id="post_type_posts" name="post_types[]" value="Image/Poster/Banner/Text posts" class="mr-2" onchange="toggleDivs()">
+                                <input type="checkbox" id="post_type_posts" name="postTypes[]" value="Image/Poster/Banner/Text posts" class="mr-2" onchange="toggleDivs()">
                                 <label for="post_type_image_poster_banner_text" class="text-gray-600">Image/Poster/Banner/Text posts</label>
                             </div>
                         </div>

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('contact_person_phone')->nullable();
             $table->string('language');
             $table->string('country');
-            $table->enum('influencer_type', [
+            $table->longtext('influencer_type', [
                 'Musician/Artist',
                 'DJ/MC',
                 'TV Personality',
@@ -46,7 +46,7 @@ return new class extends Migration
             $table->string('facebook_profile_name');
             $table->string('facebook_profile_url')->unique();
             $table->unsignedBigInteger('number_of_followers')->nullable();
-            $table->enum('influencer_category', [
+            $table->longText('influencer_category', [
                 'Mega Influencers(More than 1M followers)',
                 'Macro Influencers(100K - 1M followers)',
                 'Micro Influencers(1K - 100K followers)',
@@ -54,7 +54,7 @@ return new class extends Migration
             ]);
 
             $table->enum('target_audience', ['Below 18 years', '18 to 35 years', 'Over 35 years']);
-            $table->enum('post_types', ['Skits', 'Video Ads', 'Reels', 'Image/Poster/Banner/Text posts'])->nullable();
+            $table->longText('post_types', ['Skits', 'Video Ads', 'Reels', 'Image/Poster/Banner/Text posts'])->nullable();
             $table->unsignedDecimal('cost_per_post', 8, 2)->nullable();
             $table->unsignedDecimal('cost_per_hour', 8, 2)->nullable();
             $table->unsignedDecimal('cost_per_day', 8, 2)->nullable();
@@ -79,6 +79,7 @@ return new class extends Migration
             $table->unsignedDecimal('cost_per_skit_week', 8, 2)->nullable();
             $table->unsignedDecimal('cost_per_skit_month', 8, 2)->nullable();
             $table->unsignedDecimal('cpm_rate_skits', 8, 2)->nullable();
+            $table->unsignedDecimal('price', 8, 2)->nullable();
             $table->timestamps();
         });
 

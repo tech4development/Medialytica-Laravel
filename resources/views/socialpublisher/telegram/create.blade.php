@@ -33,7 +33,7 @@
     <div class="container mx-auto p-6 max-w-4xl">
         <div class="bg-white p-8 rounded-lg shadow-md">
             <h1 class="text-2xl font-bold mb-4 text-center">Add your Telegram Channel Details</h1>
-            <form action="{{ route('scp_telegram.store') }}" method="POST">
+            <form action="{{ route('telegram.store') }}" method="POST">
                 @csrf
                 <!-- Name -->
                 <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">

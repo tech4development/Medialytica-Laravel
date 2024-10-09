@@ -44,7 +44,7 @@ return new class extends Migration
             $table->string('instagram_page_name');
             $table->string('instagram_page_url')->unique();
             $table->unsignedBigInteger('number_of_followers');
-            $table->enum('influencer_category', [
+            $table->longText('influencer_category', [
                 'Mega Influencers (More than 1M followers)',
                 'Macro Influencers (100K - 1M followers)',
                 'Micro Influencers (1K - 100K followers)',
@@ -56,7 +56,7 @@ return new class extends Migration
                 '18 to 35 years',
                 'Over 35 years'
             ]);
-            $table->enum('post_types', [
+            $table->longTest('post_types', [
                 'Skits',
                 'Video ads',
                 'Image/Poster/Banner/Text Posts',
@@ -86,6 +86,7 @@ return new class extends Migration
             $table->decimal('cost_per_skit_week', 8, 2)->nullable();
             $table->decimal('cost_per_skit_month', 8, 2)->nullable();
             $table->decimal('cpm_rate_skits', 8, 2)->nullable();
+             $table->decimal('price', 8, 2)->nullable();
             $table->timestamps();
         });
     }

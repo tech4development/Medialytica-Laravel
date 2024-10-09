@@ -15,54 +15,55 @@ class ScPublisherFacebookController extends Controller
     }
 
     // Method to handle form submission and store data
-    public function store(Request $request)
-    {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email_address' => 'required|email|max:255',
-            'phone_number' => 'nullable|string|max:255',
-            'contact_person_name' => 'required|string|max:255',
-            'contact_person_email' => 'required|email|max:255',
-            'contact_person_phone' => 'nullable|string|max:255',
-            'language' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
-            'influencer_type' => 'required|array|min:1',
-            'other_influencer_types' =>'nullable|string|max:255',
-            'niches_themes' => 'required|array|min:1',
-            'publishing_time' => 'required|string',
-            'paypal_email' => 'required|email|max:255|',
-            'facebook_profile_url' => 'required|url|max:255|unique:scp_facebook_profiles,facebook_profile_url',
-            'facebook_profile_name' => 'required|string|max:255',
-            'influencer_category' => 'required|string|in:Mega Influencers(More than 1M followers),Macro Influencers(100K - 1M followers),Micro Influencers(1K - 100K followers),Nano Influencers(Below 1K followers)',
-            'number_of_followers' => 'required|integer',
-            'target_audience' => 'required|string|in:Below 18 years,18 to 35 years,Over 35 years',
-            'post_types' => 'nullable|string|in:Skits,Video Ads,Reels,Image/Poster/Banner/Text posts',
-            'cost_per_post' => 'nullable|numeric',
-            'cost_per_hour' => 'nullable|numeric',
-            'cost_per_day' => 'nullable|numeric',
-            'cost_per_week' => 'nullable|numeric',
-            'cost_per_month' => 'nullable|numeric',
-            'cpm_rate_posts' => 'nullable|numeric',
-            'cost_per_reel' => 'nullable|numeric',
-            'cost_per_reel_hour' => 'nullable|numeric',
-            'cost_per_reel_day' => 'nullable|numeric',
-            'cost_per_reel_week' => 'nullable|numeric',
-            'cost_per_reel_month' => 'nullable|numeric',
-            'cpm_rate_reels' => 'nullable|numeric',
-            'cost_per_video_ad' => 'nullable|numeric',
-            'cost_per_video_ad_hour' => 'nullable|numeric',
-            'cost_per_video_ad_day' => 'nullable|numeric',
-            'cost_per_video_ad_week' => 'nullable|numeric',
-            'cost_per_video_ad_month' => 'nullable|numeric',
-            'cpm_rate_video_ads' => 'nullable|numeric',
-            'cost_per_skit' => 'nullable|numeric',
-            'cost_per_skit_hour' => 'nullable|numeric',
-            'cost_per_skit_day' => 'nullable|numeric',
-            'cost_per_skit_week' => 'nullable|numeric',
-            'cost_per_skit_month' => 'nullable|numeric',
-            'cpm_rate_skits' => 'nullable|numeric',
-        ]);
+                public function store(Request $request)
+                {
+                    // Validate the request data
+                $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email_address' => 'required|email|max:255',
+                'phone_number' => 'nullable|string|max:255',
+                'contact_person_name' => 'required|string|max:255',
+                'contact_person_email' => 'required|email|max:255',
+                'contact_person_phone' => 'nullable|string|max:255',
+                'language' => 'required|string|max:255',
+                'country' => 'required|string|max:255',
+                'influencer_type' => 'required|array|min:1', // Ensures at least one selection
+                'other_influencer_types' =>'nullable|string|max:255',
+                'niches_themes' => 'required|array|min:1',
+                'publishing_time' => 'required|string',
+                'paypal_email' => 'required|email|max:255',
+                'facebook_profile_url' => 'required|url|max:255|unique:scp_facebook_profiles,facebook_profile_url',
+                'facebook_profile_name' => 'required|string|max:255',
+                'influencer_category' => 'required|in:Mega Influencers,Macro Influencers,Micro Influencers,Nano Influencers',
+                'number_of_followers' => 'required|integer',
+                'target_audience' => 'required|string|in:Below 18 years,18 to 35 years,Over 35 years',
+                'postTypes' => 'nullable|array',
+                'postTypes.*' => 'in:Skits,Video Ads,Reels,Image/Poster/Banner/Text posts', // Include postTypes validation
+                'cost_per_post' => 'nullable|numeric',
+                'cost_per_hour' => 'nullable|numeric',
+                'cost_per_day' => 'nullable|numeric',
+                'cost_per_week' => 'nullable|numeric',
+                'cost_per_month' => 'nullable|numeric',
+                'cpm_rate_posts' => 'nullable|numeric',
+                'cost_per_reel' => 'nullable|numeric',
+                'cost_per_reel_hour' => 'nullable|numeric',
+                'cost_per_reel_day' => 'nullable|numeric',
+                'cost_per_reel_week' => 'nullable|numeric',
+                'cost_per_reel_month' => 'nullable|numeric',
+                'cpm_rate_reels' => 'nullable|numeric',
+                'cost_per_video_ad' => 'nullable|numeric',
+                'cost_per_video_ad_hour' => 'nullable|numeric',
+                'cost_per_video_ad_day' => 'nullable|numeric',
+                'cost_per_video_ad_week' => 'nullable|numeric',
+                'cost_per_video_ad_month' => 'nullable|numeric',
+                'cpm_rate_video_ads' => 'nullable|numeric',
+                'cost_per_skit' => 'nullable|numeric',
+                'cost_per_skit_hour' => 'nullable|numeric',
+                'cost_per_skit_day' => 'nullable|numeric',
+                'cost_per_skit_week' => 'nullable|numeric',
+                'cost_per_skit_month' => 'nullable|numeric',
+                'cpm_rate_skits' => 'nullable|numeric',
+            ]);
         $validatedData = [
             'name' => $request->input('name'),
             'email_address' => $request->input('email_address'),
@@ -82,7 +83,7 @@ class ScPublisherFacebookController extends Controller
             'influencer_category' => $request->input('influencer_category'),
             'number_of_followers' => $request->input('number_of_followers'),
             'target_audience' => $request->input('target_audience'),
-            'post_types' => $request->input('post_types'),
+            'postTypes' => implode(',', $request->input('postTypes', [])), // Correct key for input
             'cost_per_post' => $request->input('cost_per_post'),
             'cost_per_hour' => $request->input('cost_per_hour'),
             'cost_per_day' => $request->input('cost_per_day'),
@@ -110,7 +111,7 @@ class ScPublisherFacebookController extends Controller
 
         ];
 
-        // $validatedData['niches_themes'] = implode(',', $validatedData['niches_themes']);
+       // $validatedData['niches_themes'] = implode(',', $validatedData['niches_themes']);
 
         // Store the validated data
         ScPublisherFacebook::create($validatedData);
@@ -120,6 +121,7 @@ class ScPublisherFacebookController extends Controller
 
 
         // Redirect with success message
-        return redirect()->route('socialpublisher.dashboard');
+        //return redirect()->route('socialpublisher.dashboard');
+        return dd($validatedData);
     }
 }

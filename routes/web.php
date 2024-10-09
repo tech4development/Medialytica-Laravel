@@ -342,6 +342,12 @@ Route::post('socialpublisher/tiktokgroup/store', [TiktokGroupController::class, 
 });
 
 
+    Route::get('/socialpublisher', [SocialPublisherController::class, 'guestPage'])->name('socialpublisher');
+
+    Route::get('/filter-publishers', [GuestAuthController::class, 'filterPublishers'])->name('filter.publishers');
+
+
+
 /*
 |--------------------------------------------------------------------------
                            Editor routes, middlewares

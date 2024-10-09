@@ -17,8 +17,9 @@ use App\Models\Country;
 class HomeController extends Controller
 {
     public function index()
+
     {
-        $publishers = Publisher::all(); // Fetch all publishers
+        $publishers = Publisher::paginate(10);
         $facebookspublishers = ScPublisherFacebook::all();
         $instagramspublishers = ScPublisherInstagram::all();
         $xspublishers = ScPublisherTwitter::all();
@@ -116,5 +117,8 @@ class HomeController extends Controller
 
     return view('advertisers.countries.index', compact('countries'));
 }
+
+
+
 
 }
