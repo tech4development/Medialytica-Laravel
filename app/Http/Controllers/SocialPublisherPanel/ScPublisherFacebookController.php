@@ -111,6 +111,34 @@ class ScPublisherFacebookController extends Controller
 
         ];
 
+         // Calculate the highest price
+    $prices = [
+        $request->input('cost_per_post', 0),
+        $request->input('cost_per_hour', 0),
+        $request->input('cost_per_day', 0),
+        $request->input('cost_per_week', 0),
+        $request->input('cost_per_month', 0),
+        $request->input('cost_per_reel', 0),
+        $request->input('cost_per_reel_hour', 0),
+        $request->input('cost_per_reel_day', 0),
+        $request->input('cost_per_reel_week', 0),
+        $request->input('cost_per_reel_month', 0),
+        $request->input('cost_per_video_ad', 0),
+        $request->input('cost_per_video_ad_hour', 0),
+        $request->input('cost_per_video_ad_day', 0),
+        $request->input('cost_per_video_ad_week', 0),
+        $request->input('cost_per_video_ad_month', 0),
+        $request->input('cost_per_skit', 0),
+        $request->input('cost_per_skit_hour', 0),
+        $request->input('cost_per_skit_day', 0),
+        $request->input('cost_per_skit_week', 0),
+        $request->input('cost_per_skit_month', 0),
+
+    ];
+
+    // Store the highest price in the 'price' column
+    $validatedData['price'] = max($prices);
+
        // $validatedData['niches_themes'] = implode(',', $validatedData['niches_themes']);
 
         // Store the validated data
@@ -118,10 +146,19 @@ class ScPublisherFacebookController extends Controller
 
         session()->put('success', 'Your publisher details have been successfully captured! We will be in touch with you shortly');
 
-
-
         // Redirect with success message
-        //return redirect()->route('socialpublisher.dashboard');
-        return dd($validatedData);
+        return redirect()->route('socialpublisher.dashboard');
+        //return dd($validatedData);
+    }
+
+
+    public function index()
+    {
+        // Fetch paginated data from the scp_facebook_pages table
+        $facebookprofilespublishers = ScPublisherFacebook::paginate(10);
+
+        // Pass the data to the view
+        return view('socialAdvertisers.pages.facebookprofile', compact('facebookprofilespublishers'));
     }
 }
+

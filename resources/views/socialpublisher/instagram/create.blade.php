@@ -25,9 +25,19 @@
 </head>
 
 <body class="bg-gray-100">
-    @if (session('success'))
+    {{-- @if (session('success'))
     <div class="bg-success border border-success text-white alert" role="alert">
         <span class="font-bold">Success</span> {{ session('success') }}
+    </div>
+@endif --}}
+@if($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <h4 class="font-bold text-lg mb-2">Please fix the following errors:</h4>
+        <ul class="list-none space-y-2">
+            @foreach ($errors->all() as $error)
+                <li><strong>Oh Snap!</strong> {{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
 @endif
     <div class="container mx-auto p-6 max-w-4xl">
@@ -86,8 +96,7 @@
                     <input type="text" id="country" name="country" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
                 </div>
-
-                <!-- Influencer Categories -->
+<!-- Influencer Categories -->
                 <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
                 <div class="mb-4">
                     <span class="block text-sm font-medium text-gray-700">Select your social publisher/influencer categories *</span>
@@ -108,15 +117,14 @@
                             'Food Blogger',
                             'Travel Blogger'
                         ] as $category)
-                            <div class="flex items-center">
-                                <input type="checkbox" id="influencer_type_{{ $loop->index }}" name="influencer_type[]" value="{{ $category }}" class="mr-2">
-                                <label for="influencer_type_{{ $loop->index }}" class="text-gray-600">{{ $category }}</label>
-                            </div>
+                        <div class="flex items-center">
+                        <input type="checkbox" id="influencer_type_{{ $loop->index }}" name="influencer_type[]" value="{{ $category }}" class="mr-2">
+                        <label for="influencer_type_{{ $loop->index }}" class="text-gray-600">{{ $category }}</label>
+                    </div>
                         @endforeach
                     </div>
                 </div>
                 </div>
-
 
                  <!-- Niches -->
                  <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
@@ -164,15 +172,15 @@
                  <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
                     <h2 class="text-lg font-semibold mb-2 text-gray-800">Faceboom Profile</h2>
                  <div class="mb-4">
-                    <label for="insagram_page_name" class="block text-sm font-medium text-gray-700">Enter your insagram page name *</label>
-                    <input type="text" id="insagram_page_name" name="insagram_page_name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <label for="instagram_page_name" class="block text-sm font-medium text-gray-700">Enter your insagram page name *</label>
+                    <input type="text" id="instagram_page_name" name="instagram_page_name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
 
 
                 <!-- Insagram Page URL -->
                 <div class="mb-4">
-                    <label for="insagram_page_url" class="block text-sm font-medium text-gray-700">Enter your insagram page URL *</label>
-                    <input type="url" id="insagram_page_url" name="insagram_page_url" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <label for="instagram_page_url" class="block text-sm font-medium text-gray-700">Enter your insagram page URL *</label>
+                    <input type="url" id="instagram_page_url" name="instagram_page_url" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
 
 
@@ -196,16 +204,16 @@
 
 
                 <!-- Influencer Category -->
-                <div class="mb-4">
-                    <label for="influencer_category" class="block text-sm font-medium text-gray-700">Influencer Category *</label>
-                    <select id="influencer_category" name="influencer_category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                        <option value="" disabled selected>Select your influencer category</option>
-                        <option value="Mega Influencers">Mega Influencers (More than 1M followers)</option>
-                        <option value="Macro Influencers">Macro Influencers (100K - 1M followers)</option>
-                        <option value="Micro Influencers">Micro Influencers (1K - 100K followers)</option>
-                        <option value="Nano Influencers">Nano Influencers (Below 1K followers)</option>
-                    </select>
-                </div>
+               <div class="mb-4">
+                <label for="influencer_category" class="block text-sm font-medium text-gray-700">Influencer Category *</label>
+                <select id="influencer_category" name="influencer_category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
+                    <option value="Mega Influencers (More than 1M followers)">Mega Influencers (More than 1M followers)</option>
+                    <option value="Macro Influencers (100K - 1M followers)">Macro Influencers (100K - 1M followers)</option>
+                    <option value="Micro Influencers (1K - 100K followers)">Micro Influencers (1K - 100K followers)</option>
+                    <option value="Nano Influencers (Below 1K followers)">Nano Influencers (Below 1K followers)</option>
+                </select>
+            </div>
+
                 </div>
 
                 <!-- Post Types -->
@@ -453,7 +461,7 @@
                             <!-- CPM Rate Posts -->
                             <div class="mb-4">
                                 <label for="cpm_rate_video_ads" class="block text-sm font-medium text-gray-700">What is the CPM Rate for Insagram video ads on your page? *</label>
-                                <input type="number" id="cpm_rate_video_ads" name="cpm_rate_viedo_ads" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cpm_rate_video_ads" name="cpm_rate_video_ads" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
                             </div>
 
                         </div>

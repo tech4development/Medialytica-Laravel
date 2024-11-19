@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('contact_person_phone')->nullable();
             $table->string('language');
             $table->string('country');
-            $table->longtext('influencer_type', [
+            $table->longText('influencer_type', [
                 'Musician/Artist',
                 'DJ/MC',
                 'TV Personality',
@@ -52,7 +52,6 @@ return new class extends Migration
                 'Micro Influencers(1K - 100K followers)',
                 'Nano Influencers(Below 1K followers)'
             ]);
-
             $table->enum('target_audience', ['Below 18 years', '18 to 35 years', 'Over 35 years']);
             $table->longText('post_types', ['Skits', 'Video Ads', 'Reels', 'Image/Poster/Banner/Text posts'])->nullable();
             $table->unsignedDecimal('cost_per_post', 8, 2)->nullable();

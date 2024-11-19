@@ -37,12 +37,6 @@ class FacebookPage extends Model
         'cost_per_week',
         'cost_per_month',
         'cpm_rate_posts',
-        'cost_per_reel',
-        'cost_per_reel_hour',
-        'cost_per_reel_day',
-        'cost_per_reel_week',
-        'cost_per_reel_month',
-        'cpm_rate_reels',
         'cost_per_video_ad',
         'cost_per_video_ad_hour',
         'cost_per_video_ad_day',
@@ -54,10 +48,57 @@ class FacebookPage extends Model
         'cost_per_skit_day',
         'cost_per_skit_week',
         'cost_per_skit_month',
-        'cpm_rate_skits'
+        'cpm_rate_skits',
+        'price'
     ];
 
     protected $casts = [
         'niches_themes' => 'array',
     ];
+
+    /**
+     * Get the highest price among all relevant cost attributes.
+     *
+     * @return float
+     */
+    public function getHighestPriceAttribute()
+    {
+        $prices = [
+            $this->cost_per_post,
+            $this->cost_per_hour,
+            $this->cost_per_day,
+            $this->cost_per_week,
+            $this->cost_per_month,
+            $this->cost_per_video_ad,
+            $this->cost_per_video_ad_hour,
+            $this->cost_per_video_ad_day,
+            $this->cost_per_video_ad_week,
+            $this->cost_per_video_ad_month,
+            $this->cost_per_skit,
+            $this->cost_per_skit_hour,
+            $this->cost_per_skit_day,
+            $this->cost_per_skit_week,
+            $this->cost_per_skit_month,
+        ];
+
+        // Filter out null values and return the highest price
+        return max(array_filter($prices, function($price) {
+            return !is_null($price);
+        }));
+    }
+
+    /**
+     * Save the maximum price in the `price` column before saving the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->price = $model->highest_price; // Use the computed highest price
+        });
+    }
 }
+

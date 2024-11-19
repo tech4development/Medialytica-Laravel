@@ -20,13 +20,13 @@ class HomeController extends Controller
 
     {
         $publishers = Publisher::paginate(10);
-        $facebookspublishers = ScPublisherFacebook::all();
-        $instagramspublishers = ScPublisherInstagram::all();
-        $xspublishers = ScPublisherTwitter::all();
-        $tiktokspublishers = ScPublisherTiktok::all();
-         $telegramspublishers = ScPublisherTelegram::all(); // Adjust as necessary
-        $whatsappspublishers = WhatsappChannels::all();
-        $youtubespublishers = ScPublisherYoutube::all();
+        $facebookspublishers = ScPublisherFacebook::paginate(10);
+        $instagramspublishers = ScPublisherInstagram::paginate(10);
+        $xspublishers = ScPublisherTwitter::paginate(10);
+        $tiktokspublishers = ScPublisherTiktok::paginate(10);
+        $telegramspublishers = ScPublisherTelegram::paginate(10); // Adjust as necessary
+        $whatsappspublishers = WhatsappChannels::paginate(10);
+        $youtubespublishers = ScPublisherYoutube::paginate(10);
         $countries = Country::all();
 
 

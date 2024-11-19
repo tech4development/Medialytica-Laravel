@@ -62,9 +62,17 @@ class Userseeder extends Seeder
 
           [
             'name' => 'Advetiser',
-            'email' => 'adverrtiser@gmail.com',
+            'email' => 'advertiser@gmail.com',
             'password' => Hash::make('12345678'),
             'user_role' => 'advertiser'
+
+          ],
+
+           [
+            'name' => 'Social Advetiser',
+            'email' => 'socialadvertiser@gmail.com',
+            'password' => Hash::make('12345678'),
+            'user_role' => 'social_advertiser'
 
           ],
 

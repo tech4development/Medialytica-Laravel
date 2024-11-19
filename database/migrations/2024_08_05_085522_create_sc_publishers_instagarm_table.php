@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('scp_instagarm_pages', function (Blueprint $table) {
+        Schema::create('scp_instagram_pages', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email_address');
@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('contact_person_name');
             $table->string('contact_person_email');
             $table->string('contact_person_phone')->nullable();
-            $table->string('language');
+            $table->string('language')->default('English');
             $table->string('country');
-            $table->enum('influencer_type', [
+            $table->longText('influencer_type', [
                 'Musician/Artist',
                 'DJ/MC',
                 'TV Personality',
@@ -36,32 +36,21 @@ return new class extends Migration
                 'Gamer',
                 'Food Blogger',
                 'Travel Blogger'
-            ])->default('Instagram Influencer'); // Set a default value if necessary
+            ])->default('Instagram Influencer');
             $table->string('other_influencer_types')->nullable();
-            $table->json('niches_themes');
+            $table->json('niches_themes'); // Use JSON to store multiple niche values
             $table->string('publishing_time');
             $table->string('paypal_email');
             $table->string('instagram_page_name');
             $table->string('instagram_page_url')->unique();
             $table->unsignedBigInteger('number_of_followers');
-            $table->longText('influencer_category', [
-                'Mega Influencers (More than 1M followers)',
-                'Macro Influencers (100K - 1M followers)',
-                'Micro Influencers (1K - 100K followers)',
-                'Nano Influencers (Below 1K followers)'
-            ]);
-
-            $table->enum('target_audience', [
+            $table->string('influencer_category');
+            $table->longText('target_audience', [
                 'Below 18 years',
                 '18 to 35 years',
                 'Over 35 years'
             ]);
-            $table->longTest('post_types', [
-                'Skits',
-                'Video ads',
-                'Image/Poster/Banner/Text Posts',
-                'Reels'
-            ]);
+            $table->longText('post_types', ['Skits', 'Video Ads', 'Reels', 'Image/Poster/Banner/Text posts'])->nullable();
             $table->decimal('cost_per_post', 8, 2)->nullable();
             $table->decimal('cost_per_hour', 8, 2)->nullable();
             $table->decimal('cost_per_day', 8, 2)->nullable();
@@ -86,7 +75,7 @@ return new class extends Migration
             $table->decimal('cost_per_skit_week', 8, 2)->nullable();
             $table->decimal('cost_per_skit_month', 8, 2)->nullable();
             $table->decimal('cpm_rate_skits', 8, 2)->nullable();
-             $table->decimal('price', 8, 2)->nullable();
+            $table->decimal('price', 8, 2)->nullable();
             $table->timestamps();
         });
     }
@@ -96,6 +85,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('scp_instagarm_pages');
+        Schema::dropIfExists('scp_instagram_pages');
     }
 };

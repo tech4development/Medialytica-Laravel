@@ -18,6 +18,8 @@ class SocialPublisherController extends Controller
         // You can optionally pass an ID for future expansion, or remove it if not needed
         return view('pages.socialpublishers.socialguest');
     }
+
+
 }
 
 

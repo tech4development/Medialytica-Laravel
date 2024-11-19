@@ -1,1974 +1,1807 @@
 <!DOCTYPE html>
-<html
-    lang="en"
-    class="h-full"
-    dir="ltr"
-    data-nav-layout="horizontal"
-    data-nav-style="menu-click"
-    data-menu-position="fixed"
->
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Medialytica</title>
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <script
-            src="https://kit.fontawesome.com/a076d05399.js"
-            crossorigin="anonymous"
-        ></script>
-        <link
-            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-            rel="stylesheet"
-        />
+<html class="h-full" data-nav-layout="horizontal" data-nav-style="menu-click" data-menu-position="fixed" lang="en"
+				dir="ltr">
 
-        <!-- Favicon -->
-        <link
-            rel="shortcut icon"
-            href="{{ asset('backend/assets/img/brand-logos/favicon.ico') }}"
-        />
+				<head>
+								<meta charset="UTF-8" />
+								<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+								<title>Medialytica</title>
+								<meta name="csrf-token" content="{{ csrf_token() }}" />
+								<meta name="description" content="" />
+								<meta name="keywords" content="" />
+								@vite('resources/css/app.css')
+								<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+								<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+								<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.2.2/dist/cdn.min.js" defer></script>
+								{{-- <link href="{{ asset('backend/assets/css/style.css') }}" rel="stylesheet" /> --}}
+								<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+								<link href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.css" rel="stylesheet" />
+								<style>
+												.hover-border-fill {
+																border: gray;
+																transition: all 0.3s ease-in-out;
+												}
 
-        <!-- Style Css -->
-        <link
-            rel="stylesheet"
-            href="{{ asset('backend/assets/css/style.css') }}"
-        />
+												.hover-border-fill:hover {
+																background-color: #01004c;
+																color: white;
+												}
 
-        <style>
-            .icon-container {
-                background-color: #e5efff;
-                color: #1a73e8;
-            }
-            .card-title {
-                color: #ffb100;
-            }
-        </style>
-    </head>
+												.hover-border-fill:hover h2,
+												.hover-border-fill:hover p,
+												.hover-border-fill:hover a {
+																color: inherit;
+																/* Inherit white color from parent on hover */
+												}
+								</style>
 
-    <body>
-        <!-- Navigation -->
-        <nav x-data="{ open: false }" class="bg-gray-50">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div
-                    class="relative flex h-16 items-center justify-between border-b border-gray-200"
-                >
-                    <!-- Logo -->
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <img
-                                class="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=violet&amp;shade=500"
-                                alt="Your Company"
-                            />
-                        </div>
 
-                        <!-- Desktop Links (hidden on mobile) -->
-                        <div class="hidden lg:ml-10 lg:block">
-                            <div class="flex space-x-4">
-                                <a
-                                    href="#"
-                                    class="bg-gray-100 px-3 py-2 rounded-md text-sm font-medium text-gray-900"
-                                    aria-current="page"
-                                    >Home</a
-                                >
-                                <a
-                                    href="#"
-                                    class="hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium text-gray-900"
-                                    >Services</a
-                                >
-                                <a
-                                    href="#"
-                                    class="hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium text-gray-900"
-                                    >What We Do</a
-                                >
-                                <a
-                                    href="#"
-                                    class="hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium text-gray-900"
-                                    >For Advertisers</a
-                                >
-                                <a
-                                    href="#"
-                                    class="hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium text-gray-900"
-                                    >For Publishers</a
-                                >
-                                <a
-                                    href="#"
-                                    class="hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium text-gray-900"
-                                    >About Us</a
-                                >
-                            </div>
-                        </div>
-                    </div>
+								<!-- Favicon -->
+								<link href="{{ asset('backend/assets/logo.png') }}" rel="shortcut icon" />
 
-                    <!-- Search Section -->
-                    <div
-                        class="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end"
-                    >
-                        <div class="w-40 max-w-lg lg:max-w-xs">
-                            <label for="search" class="sr-only">Search</label>
-                            <div
-                                class="relative text-gray-400 focus-within:text-gray-500"
-                            >
-                                <div
-                                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-                                >
-                                    <svg
-                                        class="h-5 w-5"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </div>
-                                <input
-                                    id="search"
-                                    class="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 leading-5 text-gray-900 placeholder-gray-500 focus:border-purple-500 focus:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-purple-500 sm:text-sm"
-                                    placeholder="Search"
-                                    type="search"
-                                    name="search"
-                                />
-                            </div>
-                        </div>
-                    </div>
+								<!-- Style Css -->
+								{{-- <link href="{{ asset('backend/assets/css/style.css') }}" rel="stylesheet" /> --}}
 
-                    <!-- Desktop Login/Signup (hidden on mobile) -->
-                    <div class="hidden lg:ml-4 lg:block">
-                                        <div class="flex items-center space-x-4">
-                    <a
-                        href="{{ route('login') }}"
-                        class="bg-blue-500 text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >Login</a>
+								<style>
+												@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-                    <a
-                        href="{{ route('register') }}"
-                        class="bg-teal-500 text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >Register</a>
-                </div>
+												/* Full-width and reset styles */
+												body {
+																font-family: 'Poppins', sans-serif;
 
-                    </div>
+																scroll-behavior: smooth;
+												}
 
-                    <!-- Mobile Menu Toggle Button -->
-                    <div class="-mr-2 flex lg:hidden">
-                        <button
-                            @click="open = !open"
-                            type="button"
-                            class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500"
-                            aria-expanded="false"
-                        >
-                            <span class="sr-only">Open main menu</span>
-                            <svg
-                                class="h-6 w-6"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 6h16M4 12h16m-7 6h7"
-                                ></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
+												.icon-container {
+																background-color: #e5efff;
+																color: #1a73e8;
+												}
 
-            <!-- Mobile Menu (hidden by default, shown when toggled) -->
-            <div class="lg:hidden" x-show="open" x-cloak>
-                <div class="space-y-1 px-2 pt-2 pb-3">
-                    <a
-                        href="#"
-                        class="bg-gray-100 block px-3 py-2 rounded-md font-medium text-gray-900"
-                        aria-current="page"
-                        >Services</a
-                    >
-                    <a
-                        href="#"
-                        class="hover:bg-gray-100 block px-3 py-2 rounded-md font-medium text-gray-900"
-                        >Advertisers</a
-                    >
-                    <a
-                        href="#"
-                        class="hover:bg-gray-100 block px-3 py-2 rounded-md font-medium text-gray-900"
-                        >Publishers</a
-                    >
-                    <a
-                        href="#"
-                        class="hover:bg-gray-100 block px-3 py-2 rounded-md font-medium text-gray-900"
-                        >Social Publishers</a
-                    >
-                    <a
-                        href="#"
-                        class="hover:bg-gray-100 block px-3 py-2 rounded-md font-medium text-gray-900"
-                        >About Us</a
-                    >
-                </div>
+												.card-title {
+																color: #ffb100;
+												}
+								</style>
+				</head>
 
-                <!-- Mobile Login/Signup Buttons -->
-                <div class="border-t border-gray-200 pt-4 pb-3 px-2">
-                    <a
-                        href="#"
-                        class="bg-blue-500 block text-white px-3 py-2 rounded-md font-medium text-center"
-                        >Login</a
-                    >
-                    <a
-                        href="#"
-                        class="bg-green-500 block text-white px-3 py-2 rounded-md font-medium text-center mt-1"
-                        >Sign Up</a
-                    >
-                </div>
-            </div>
-        </nav>
+				@include('partials.header')
 
-        <!-- Start::main-content -->
-        <div class="main-content landing-main !p-0">
-            <div
-                class="relative bg-cover bg-center h-screen"
-                style="background-image: url('{{
-                    asset('backend/assets/Home Leaderboard.jpg')
-                }}');"
-            >
-                <!-- Gray overlay -->
-                <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
-                <div class="absolute inset-0 bg-black opacity-50"></div>
-                <div
-                    class="container mx-auto h-full flex flex-col justify-center items-center px-6 py-12 relative z-10"
-                >
-                    <h1 class="text-5xl font-bold text-white text-center mb-12">
-                        We Connect Advertisers to Content Creators
-                    </h1>
-                    <div class="flex flex-col md:flex-row gap-6 w-full">
-                        <!-- Card 1 -->
-                        <div
-                            class="flex-1 bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl font-bold mb-4">
-                                Advertiser or Brand
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I am an SEO or media buying professional
-                                interested in paid content partnerships such as
-                                sponsored posts, link insertion, and banner
-                                advertising.
-                            </p>
-                            <a href="{{ route('guest.page') }}">
-                                <button
-                                    class="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    Get Started
-                                </button>
-                            </a>
-                        </div>
 
-                        <!-- Card 2 -->
-                        <div
-                            class="flex-1 bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl font-bold mb-4">
-                                Media or Blog
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I have a blog or website and would like to
-                                receive orders, publish promotional content, and
-                                get paid
-                            </p>
-                            <button
-                                class="bg-blue-500 text-white px-4 py-2 rounded"
-                            >
-                                Get Started
-                            </button>
-                        </div>
-                        <!-- Card 3 -->
-                        <div
-                            class="flex-1 bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl font-bold mb-4">
-                                Social Publishers
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I am a charismatic influencer or social media
-                                bigwig. I would like to showcase branded content
-                                on my social pages and get paid.
-                            </p>
-                            <button
-                                class="bg-blue-500 text-white px-4 py-2 rounded"
-                            >
-                                Get Started
-                            </button>
-                        </div>
-                        <!-- Card 4 -->
-                        <div
-                            class="flex-1 bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl font-bold mb-4">Write for me</h2>
-                            <p class="text-gray-600 mb-4">
-                                I am a business person or brand manager and
-                                would like professional SEO-friendly blog
-                                articles to promote my products and services.
-                            </p>
-                            <button
-                                class="bg-blue-500 text-white px-4 py-2 rounded"
-                            >
-                                Get Started
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- New Section with Counters -->
-            <div class="relative bg-custom-dark">
-                <div class="container mx-auto py-2 text-center">
-                    <div
-                        class="flex flex-col md:flex-row justify-around items-center gap-8 bg-custom-blue p-6 rounded-lg shadow-lg"
-                    >
-                        <div class="flex-1 border-l border-gray-200 p-2">
-                            <h3
-                                id="registeredWebsites"
-                                class="text-2xl font- text-white"
-                            >
-                                0
-                            </h3>
-                            <p class="text-xl text-gray-200">
-                                Registered Websites
-                            </p>
-                        </div>
-                        <div class="flex-1 border-l border-gray-200 p-2">
-                            <h3
-                                id="contentCreators"
-                                class="text-2xl font-semibold text-white"
-                            >
-                                0
-                            </h3>
-                            <p class="text-xl text-gray-200">
-                                Content Creators
-                            </p>
-                        </div>
-                        <div class="flex-1 border-l border-gray-200 p-2">
-                            <h3
-                                id="registeredAdvertisers"
-                                class="text-2xl font-semibold text-white"
-                            >
-                                0
-                            </h3>
-                            <p class="text-xl text-gray-200">
-                                Registered Advertisers
-                            </p>
-                        </div>
-                        <div class="flex-1 border-l border-gray-200 p-2">
-                            <h3
-                                id="tasksCompleted"
-                                class="text-2xl font-semibold text-white"
-                            >
-                                0
-                            </h3>
-                            <p class="text-xl text-gray-200">Tasks Completed</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+				<body>
 
-        <!-- End::main-content -->
-        <div class="">
-            <!-- Advertiser Section -->
-            <div class="bg-white dark:bg-bgdark py-10" id="advertiser">
-                <div class="container mx-auto text-center">
-                    <h2
-                        class="text-3xl font-bold text-whitew dark:text-white mb-4"
-                    >
-                        Are you an Advertiser or a Media Buyer?
-                    </h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                        Boost your traffic, make more sales, and grow your
-                        business. Explore our link-building services and fortify
-                        your backlink portfolio.
-                    </p>
-                    <div class="grid lg:grid-cols-2 gap-6 items-center">
-                        <div class="flex justify-center">
-                            <img
-                                src="{{
-                                    asset('backend/assets/advertisers.jpg')
-                                }}"
-                                class="shadow-lg object-cover h-60 w-360"
-                                alt="Advertiser meeting"
-                            />
-                        </div>
-                        <div class="text-left space-y-4">
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Browse our database with 10K+ publishers
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Select a site and make your order
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Get your content published within 24 hours
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Free account, no fees, no credit card needed
-                            </p>
-                            <a
-                                href="#"
-                                class="inline-block mt-6 py-3 px-6 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300"
-                            >
-                                Get Started as an Advertiser
-                                <i
-                                    class="ri-arrow-right-line rtl:rotate-180"
-                                ></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End::Advertiser Section -->
 
-            <!-- Advertiser Section -->
-            <div class="bg-white dark:bg-bgdark py-10" id="advertiser">
-                <div class="container mx-auto text-center">
-                    <h2
-                        class="text-3xl font-bold text-whitew dark:text-white mb-4"
-                    >
-                        Are you an Advertiser or a Media Buyer?
-                    </h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                        Boost your traffic, make more sales, and grow your
-                        business. Explore our link-building services and fortify
-                        your backlink portfolio.
-                    </p>
-                    <div class="grid lg:grid-cols-2 gap-4 items-center">
-                        <div class="flex justify-center">
-                            <img
-                                src="{{
-                                    asset('backend/assets/advertisers.jpg')
-                                }}"
-                                class="shadow-lg object-cover h-60 w-full max-w-xs rounded-lg"
-                                alt="Advertiser meeting"
-                            />
-                        </div>
+								<!-- Start::main-content -->
+								<div class="bg-white">
+												<div class="relative h-screen bg-cover bg-center"
+																style="background-image: url('{{ asset('backend/assets/Home Leaderboard.jpg') }}');">
+																<!-- Gray Overlay -->
+																<div class="absolute inset-0 bg-gray-900 opacity-40"></div>
+																<!-- Content Container -->
+																<div class="container relative z-10 mx-auto flex h-full flex-col items-center justify-center px-4 py-4">
+																				<!-- Title -->
+																				<h1 class="-mt-24 mb-8 text-center text-5xl text-white">
+																								We Connect Advertisers to Content Creators
+																				</h1>
 
-                        <div class="text-left space-y-4 lg:text-right">
-                            <!-- Add lg:text-right for right alignment on large screens -->
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Browse our database with 10K+ publishers
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Select a site and make your order
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Get your content published within 24 hours
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Free account, no fees, no credit card needed
-                            </p>
-                            <a
-                                href="#"
-                                class="inline-block mt-4 py-3 px-6 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300"
-                            >
-                                Get Started as an Advertiser
-                                <i
-                                    class="ri-arrow-right-line rtl:rotate-180"
-                                ></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End::Advertiser Section -->
+																				<!-- Cards Section -->
+																				<div class="flex w-full flex-col gap-6 md:flex-row">
+																								<!-- Card 1 -->
+																								<div class="flex-1 rounded-lg bg-white p-6 text-center shadow-lg">
+																												<h2 class="mb-4 text-xl font-bold">Advertiser or Brand</h2>
+																												<p class="mb-4 text-gray-600">
+																																I am an SEO or media buying professional interested in paid content partnerships such as
+																																sponsored posts, link insertion, and banner advertising.
+																												</p>
+																												<a href="{{ route('guest.page') }}">
+																																<button
+																																				class="rounded bg-[#01004c] px-4 py-2 text-white transition hover:bg-[#b78700]">Get
+																																				Started</button>
+																												</a>
+																								</div>
 
-            <!-- Social Publisher Section -->
-            <div class="bg-white dark:bg-bgdark py-10" id="advertiser">
-                <div class="container mx-auto text-center">
-                    <h2
-                        class="text-3xl font-bold text-gray-800 dark:text-white mb-4"
-                    >
-                        Are you an Advertiser or a Media Buyer?
-                    </h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                        Boost your traffic, make more sales, and grow your
-                        business. Explore our link-building services and fortify
-                        your backlink portfolio.
-                    </p>
-                    <div class="grid lg:grid-cols-2 gap-6 items-center">
-                        <div class="flex justify-center">
-                            <img
-                                src="{{
-                                    asset('backend/assets/advertisers.jpg')
-                                }}"
-                                class="shadow-lg object-cover h-60 w-360"
-                                alt="Advertiser meeting"
-                            />
-                        </div>
-                        <div class="text-left space-y-4">
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Browse our database with 10K+ publishers
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Select a site and make your order
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Get your content published within 24 hours
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                Free account, no fees, no credit card needed
-                            </p>
-                            <a
-                                href="#"
-                                class="inline-block mt-6 py-3 px-6 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300"
-                            >
-                                Get Started as an Advertiser
-                                <i
-                                    class="ri-arrow-right-line rtl:rotate-180"
-                                ></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End::Social Publisher Section -->
+																								<!-- Card 2 -->
+																								<div class="flex-1 rounded-lg bg-white p-6 text-center shadow-lg">
+																												<h2 class="mb-4 text-xl font-bold">Media or Blog</h2>
+																												<p class="mb-4 text-gray-600">
+																																I have a blog or website and would like to receive orders, publish promotional content,
+																																and get paid.
+																												</p>
+																												<button class="rounded bg-[#01004c] px-4 py-2 text-white transition hover:bg-[#b78700]">Get
+																																Started</button>
+																								</div>
 
-         <div class="grid grid-cols-12 gap-6">
-            <div class="col-span-12">
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="mb-4">
-                        <h5 class="text-lg font-bold text-[#004466] text-center">
-                            Browse our database of 10K+ Publishers
-                        </h5>
-                    </div>
-               <div class="overflow-x-auto border border-gray-300 bg-custom-dark rounded-md mt-4">
-    <div class="flex justify-center">
-        <table class="min-w-150 table-auto border-collapse">
-            <thead class="bg-[#004466]">
-                <tr>
-                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
-                        Publishers
-                    </th>
-                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
-                        Niches
-                    </th>
-                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
-                        DA
-                    </th>
-                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
-                        DR
-                    </th>
-                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
-                        Traffic
-                    </th>
-                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
-                        Country
-                    </th>
-                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
-                        Price
-                    </th>
-                    <th class="px-2 py-2 border border-gray-300 text-left text-xs font-medium text-white uppercase tracking-wider">
-                        Order Now
-                    </th>
-                </tr>
-            </thead>
-            <!-- Apply dark background to the table body -->
-            <tbody class="bg-[#1a1a1a] text-white divide-y divide-gray-700">
-                @foreach($publishers as $publisher)
-                    <tr>
-                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap">
-                            <a href="#" class="text-white hover:underline">{{ $publisher->website_url }}</a>
-                        </td>
-                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
-                            {{ is_array($publisher->niches) ? implode(', ', $publisher->niches) : $publisher->niches }}
-                        </td>
-                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
-                            {{ $publisher->moz_da }}
-                        </td>
-                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
-                            {{ $publisher->ahref_dr }}
-                        </td>
-                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
-                            {{ $publisher->traffic }}
-                        </td>
-                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
-                            {{ $publisher->country }}
-                        </td>
-                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap text-sm text-white">
-                            {{ $publisher->price }}
-                        </td>
-                        <td class="px-2 py-2 border border-gray-300 whitespace-nowrap">
-                            <div class="flex justify-center">
-                                <form action="{{ route('cart.add', ['publisherId' => $publisher->id]) }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="publisher_id" value="{{ $publisher->id }}" />
-                                    <input type="hidden" name="website_url" value="{{ $publisher->website_url }}" />
-                                    <input type="hidden" name="price" value="{{ $publisher->price }}" />
-                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                        Order Now
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
+																								<!-- Card 3 -->
+																								<div class="flex-1 rounded-lg bg-white p-6 text-center shadow-lg">
+																												<h2 class="mb-4 text-xl font-bold">Social Publishers</h2>
+																												<p class="mb-4 text-gray-600">
+																																I am a charismatic influencer or social media bigwig. I would like to showcase branded
+																																content on my social pages and get paid.
+																												</p>
+																												<button class="rounded bg-[#01004c] px-4 py-2 text-white transition hover:bg-[#b78700]">Get
+																																Started</button>
+																								</div>
 
-                    <!-- Pagination Links -->
-                    <div class="mt-4">
-                        {{ $publishers->links() }}
-                    </div>
-                </div>
-            </div>
-        </div>
+																								<!-- Card 4 -->
+																								<div class="flex-1 rounded-lg bg-white p-6 text-center shadow-lg">
+																												<h2 class="mb-4 text-xl font-bold">Write for me</h2>
+																												<p class="mb-4 text-gray-600">
+																																I am a business person or brand manager and would like professional SEO-friendly blog
+																																articles to promote my products and services.
+																												</p>
+																												<button class="rounded bg-[#01004c] px-4 py-2 text-white transition hover:bg-[#b78700]">Get
+																																Started</button>
+																								</div>
+																				</div>
+																</div>
+												</div>
 
-            <div class="bg-custom-blue-150">
-                <div class="mb-4">
-                    <h5 class="text-lg font-bold text-[#004466] text-center">
-                        Browse our database of 10K+ Social Publishers
-                    </h5>
-                </div>
-                <div class="container mx-auto p-4">
-                    <!-- Horizontal Menu -->
-                    <div class="flex justify-center mb-4 space-x-4">
-                        <button
-                            onclick="switchTable('telegram')"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                            id="telegram-btn"
-                        >
-                            <i class="fab fa-telegram-plane"></i> Telegram
-                        </button>
-                        <button
-                            onclick="switchTable('facebook')"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                            id="facebook-btn"
-                        >
-                            <i class="fab fa-facebook-f"></i> Facebook
-                        </button>
-                        <button
-                            onclick="switchTable('instagram')"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                            id="instagram-btn"
-                        >
-                            <i class="fab fa-instagram"></i> Instagram
-                        </button>
-                        <button
-                            onclick="switchTable('twitter')"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                            id="twitter-btn"
-                        >
-                            <i class="fab fa-twitter"></i> Twitter
-                        </button>
-                        <button
-                            onclick="switchTable('whatsapp')"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                            id="whatsapp-btn"
-                        >
-                            <i class="fab fa-whatsapp"></i> Whatsapp
-                        </button>
-                        <button
-                            onclick="switchTable('tiktok')"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                            id="tiktok-btn"
-                        >
-                            <i class="fab fa-tiktok"></i> Tiktok
-                        </button>
-                        <button
-                            onclick="switchTable('youtube')"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                            id="tiktok-btn"
-                        >
-                            <i class="fab fa-tiktok"></i> Youtube
-                        </button>
-                    </div>
+												<!-- Badges of Quality -->
+												{{-- <div class="absolute bottom-0 w-full bg-transparent py-6">
+																<div class="flex flex-wrap justify-center gap-6 lg:gap-10">
+																				<div class="w-[210px] px-4 py-2 text-center">
+																								<div class="counter text-2xl inline font-bold text-white" id="Courses_counter">0</div>
+																								<div class="text-2xl inline font-bold text-white">+</div>
+																								<p class="text-lg text-white">Courses</p>
+																				</div>
+																				<div class="w-[210px] px-4 py-2 text-center">
+																								<div class="counter text-2xl inline font-bold text-white" id="Learners_counter">0</div>
+																								<div class="text-2xl inline font-bold text-white">+</div>
+																								<p class="text-lg text-white">Learners</p>
+																				</div>
+																				<div class="w-[210px] px-4 py-2 text-center">
+																								<div class="counter text-2xl inline font-bold text-white" id="Companies_counter">0</div>
+																								<div class="text-2xl inline font-bold text-white">+</div>
+																								<p class="text-lg text-white">Affiliates</p>
+																				</div>
+																				<div class="w-[210px] px-4 py-2 text-center">
+																								<div class="counter text-2xl inline font-bold text-white" id="Venues_counter">0</div>
+																								<div class="text-2xl inline font-bold text-white">+</div>
+																								<p class="text-lg text-white">Trainings</p>
+																				</div>
+																				<div class="w-[210px] px-4 py-2 text-center">
+																								<div class="counter text-2xl inline font-bold text-white" id="Sector_counter">0</div>
+																								<div class="text-2xl inline font-bold text-white">+</div>
+																								<p class="text-lg text-white">Sectors served</p>
+																				</div>
+																				<div class="w-[210px] px-4 py-2 text-center">
+																								<div class="counter text-2xl inline font-bold text-white" id="Services_counter">0</div>
+																								<div class="text-2xl inline font-bold text-white">+</div>
+																								<p class="text-lg text-white">Consultancy Areas</p>
+																				</div>
+																</div>
+												</div> --}}
+								</div>
 
-                    <!-- Main Section with Vertical Toggle Menu -->
-                    <div class="flex">
-                        <!-- Vertical Drawer Menu -->
-                        <div
-                            class="flex flex-col items-start p-4 bg-gray-100 rounded-lg space-y-4"
-                        >
-                            <button
-                                onclick="switchTable('telegram')"
-                                class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group"
-                            >
-                                <i class="fab fa-telegram-plane"></i>
-                                <span
-                                    class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                >
-                                    Telegram
-                                </span>
-                            </button>
+								<!-- End::main-content -->
 
-                            <button
-                                onclick="switchTable('facebook')"
-                                class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group"
-                            >
-                                <i class="fab fa-facebook-f"></i>
-                                <span
-                                    class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                >
-                                    Facebook
-                                </span>
-                            </button>
+								<div class="">
+												<!-- Advertiser Section -->
+												<div class="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
+																<div class="mb-4 flex w-full items-center justify-center">
+																				<!-- Left Divider -->
+																				<span class="h-1 w-64 rounded bg-[#b78700]"></span>
 
-                            <button
-                                onclick="switchTable('instagram')"
-                                class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group"
-                            >
-                                <i class="fab fa-instagram"></i>
-                                <span
-                                    class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                >
-                                    Instagram
-                                </span>
-                            </button>
+																				<!-- Heading with hover effect -->
+																				<h2
+																								class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#01004c] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] hover:text-white dark:text-white">
+																								Are you an advertiser or a media buyer?
+																				</h2>
 
-                            <button
-                                onclick="switchTable('twitter')"
-                                class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group"
-                            >
-                                <i class="fab fa-twitter"></i>
-                                <span
-                                    class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                >
-                                    Twitter
-                                </span>
-                            </button>
+																				<!-- Right Divider -->
+																				<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+																</div>
 
-                            <button
-                                onclick="switchTable('whatsapp')"
-                                class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group"
-                            >
-                                <i class="fab fa-whatsapp"></i>
-                                <span
-                                    class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                >
-                                    Whatsapp
-                                </span>
-                            </button>
+																<p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+																				"Boost your traffic, make more sales, and grow your business. Explore our link-building services and
+																				fortify your backlink portfolio."
+																</p>
 
-                            <button
-                                onclick="switchTable('tiktok')"
-                                class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group"
-                            >
-                                <i class="fab fa-tiktok"></i>
-                                <span
-                                    class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                >
-                                    Tiktok
-                                </span>
-                            </button>
-                            <button
-                                onclick="switchTable('youtube')"
-                                class="relative flex items-center justify-center w-12 h-12 text-gray-800 bg-gray-200 hover:bg-blue-200 rounded-lg transition-all duration-300 group"
-                            >
-                                <i class="fab fa-youtube"></i>
-                                <span
-                                    class="absolute left-14 px-2 py-1 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                >
-                                    Youtube
-                                </span>
-                            </button>
-                        </div>
 
-                        <!-- Tables Section -->
-                        <div class="flex-grow p-4">
-                            <!-- Telegram Table -->
-                            <table
-                                class="min-w-full bg-white border border-gray-300"
-                                id="telegram-table"
-                            >
-                                <thead>
-                                    <tr class="bg-gray-200">
-                                        <th class="px-4 py-2 border">
-                                            Channel
-                                        </th>
-                                        <th class="px-4 py-2 border">
-                                            Channel URL
-                                        </th>
-                                        <th class="px-4 py-2 border">Niches</th>
-                                        <th class="px-4 py-2 border">
-                                            Members
-                                        </th>
-                                        <th class="px-4 py-2 border">
-                                            Category
-                                        </th>
-                                        <th class="px-4 py-2 border">
-                                            Target Audience
-                                        </th>
-                                        <th class="px-4 py-2 border">
-                                            Post Types
-                                        </th>
-                                        <th class="px-4 py-2 border">Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{-- @dd($telegramspublishers) --}}
-                                  {{-- @foreach($telegramspublishers as $telegramspublisher)
-                                    <tr>
-                                        <td class="px-4 py-2 border">
-                                            {{ $telegramspublisher->telegram_channel_name }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $telegramspublisher->telegram_channel_url }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $telegramspublisher->niches_themes }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $telegramspublisher->telegram_channel_members }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $telegramspublisher->influencer_category }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $telegramspublisher->target_audience }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $telegramspublisher->post_types }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $telegramspublisher->price }}
-                                        </td>
-                                    </tr>
-                                    @endforeach --}}
-                                </tbody>
-                            </table>
+																<section class="">
+																				<div class="container mx-auto max-w-xl space-y-12 p-6 lg:max-w-7xl lg:px-8">
+																								<div class="grid lg:grid-cols-2 lg:items-center lg:gap-8">
+																												<div>
+																																<div class="mt-4 space-y-8">
+																																				<div class="flex">
+																																								<div class="flex-shrink-0">
+																																												<div class="flex h-12 w-12 items-center justify-center rounded-md">
+																																																<svg class="lucide lucide-rocket text-[#b78700]"
+																																																				xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																																																				viewBox="0 0 24 24" fill="none" stroke="currentColor"
+																																																				stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+																																																				<path
+																																																								d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z">
+																																																				</path>
+																																																				<path
+																																																								d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z">
+																																																				</path>
+																																																				<path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+																																																				<path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+																																																</svg>
+																																												</div>
+																																								</div>
+																																								<div class="ml-4">
+																																												<h4 class="text-lg font-medium text-[#01004c]">Browse our database with 10K+
+																																																publishers</h4>
+																																												<p class="mt-2 text-gray-500">Discover fresh perspectives, expand your
+																																																horizons, and stay ahead of the curve.</p>
+																																								</div>
+																																				</div>
 
-                            <!-- Facebook Table -->
-                            <table
-                                class="min-w-full bg-white border border-gray-300 hidden"
-                                id="facebook-table"
-                            >
-                                <thead>
-                                    <tr class="bg-gray-200">
-                                        <th class="px-4 py-2 border">
-                                            Page Name
-                                        </th>
-                                        <th class="px-4 py-2 border">
-                                            Page URL
-                                        </th>
-                                        <th class="px-4 py-2 border">Niches</th>
-                                        <th class="px-4 py-2 border">
-                                            Followers
-                                        </th>
-                                        <th class="px-4 py-2 border">
-                                            Category
-                                        </th>
-                                        <th class="px-4 py-2 border">
-                                            Target Audience
-                                        </th>
-                                        <th class="px-4 py-2 border">
-                                            Post Types
-                                        </th>
-                                        <th class="px-4 py-2 border">Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{-- @foreach($facebookspublishers as
-                                    $facebookspublisher) --}}
-                                    {{-- <tr>
-                                        <td class="px-4 py-2 border">
-                                            {{ $facebookspublisher->facebook_page_name }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $facebookspublisher->facebook_page_url }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $facebookspublisher->niches_themes }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $facebookspublisher->number_of_followers }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $facebookspublisher->influencer_category }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $facebookspublisher->target_audience }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $facebookspublisher->post_types }}
-                                        </td>
-                                        <td class="px-4 py-2 border">
-                                            {{ $facebookspublisher->price }}
-                                        </td>
-                                    </tr> --}}
-                                    {{-- @endforeach --}}
-                                </tbody>
-                            </table>
+																																				<div class="flex">
+																																								<div class="flex-shrink-0">
+																																												<div class="flex h-12 w-12 items-center justify-center rounded-md">
+																																																<svg class="lucide lucide-bookmark-plus text-[#b78700]"
+																																																				xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																																																				viewBox="0 0 24 24" fill="none" stroke="currentColor"
+																																																				stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+																																																				<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z">
+																																																				</path>
+																																																				<line x1="12" x2="12" y1="7" y2="13">
+																																																				</line>
+																																																				<line x1="15" x2="9" y1="10" y2="10">
+																																																				</line>
+																																																</svg>
+																																												</div>
+																																								</div>
+																																								<div class="ml-4">
+																																												<h4 class="text-lg font-medium text-[#01004c]">Select a site and make your
+																																																order</h4>
+																																												<p class="mt-2 text-gray-500">Ready to reach your target audience? Select
+																																																your ideal destination from our vast network of websites.</p>
+																																								</div>
+																																				</div>
 
-                            <!-- Add other tables similarly -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+																																				<div class="flex">
+																																								<div class="flex-shrink-0">
+																																												<div class="flex h-12 w-12 items-center justify-center rounded-md">
+																																																<svg class="lucide lucide-video text-[#b78700]"
+																																																				xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																																																				viewBox="0 0 24 24" fill="none" stroke="currentColor"
+																																																				stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+																																																				<path d="m22 8-6 4 6 4V8Z"></path>
+																																																				<rect width="14" height="12" x="2" y="6" rx="2"
+																																																								ry="2"></rect>
+																																																</svg>
+																																												</div>
+																																								</div>
+																																								<div class="ml-4">
+																																												<h4 class="text-lg font-medium text-[#01004c]">Get your content published
+																																																within 24 hours</h4>
+																																												<p class="mt-2 text-gray-500">Accelerate your content journey. Submit your
+																																																article and watch it go live within 24 hours.</p>
+																																								</div>
+																																				</div>
 
-            <!-- Start::Services Content -->
-            <section class="py-12 bg-gray-900 text-gray-100 sm:py-12 lg:py-16">
-                <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div class="max-w-xl mx-auto text-center xl:max-w-2xl">
-                        <h2
-                            class="text-3xl font-bold leading-tight text-gray-50 sm:text-4xl xl:text-5xl mb-6"
-                        >
-                            We are just getting started!
-                        </h2>
-                        <p class="mb-4">
-                            We are creating a tool that helps you be more
-                            productive and efficient when building websites and
-                            webapps
-                        </p>
-                    </div>
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6 w-full"
-                    >
-                        <!-- Card 1 -->
-                        <div
-                            class="bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl text-gray-600 font-bold mb-4">
-                                Advertiser or Brand
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I am an SEO or media buying professional
-                                interested in paid content partnerships such as
-                                sponsored posts, link insertion, and banner
-                                advertising.
-                            </p>
-                            <a href="{{ route('guest.page') }}">
-                                <button
-                                    class="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    Get Started
-                                </button>
-                            </a>
-                        </div>
+																																				<div class="-mb-12 ml-12">
+																																								<a class="inline-block rounded-lg bg-[#01004c] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#b78700]"
+																																												href="#">
+																																												Get Started as an Advertiser
+																																								</a>
+																																				</div>
+																																</div>
 
-                        <!-- Card 1 -->
-                        <div
-                            class="bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl text-gray-600 font-bold mb-4">
-                                Advertiser or Brand
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I am an SEO or media buying professional
-                                interested in paid content partnerships such as
-                                sponsored posts, link insertion, and banner
-                                advertising.
-                            </p>
-                            <a href="{{ route('guest.page') }}">
-                                <button
-                                    class="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    Get Started
-                                </button>
-                            </a>
-                        </div>
+																												</div>
+																												<div class="mt-10 lg:mt-0" aria-hidden="true">
+																																<img class="dark-bg-gray-500 mx-auto rounded-lg shadow-lg"
+																																				src="https://images.unsplash.com/photo-1516542076529-1ea3854896f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxNHx8Y29tcHV0ZXJ8ZW58MHwwfHx8MTY5OTE3MDk1N3ww&ixlib=rb-4.0.3&q=80&w=1080"
+																																				style="color:transparent" width="600" height="600">
+																												</div>
+																								</div>
+																				</div>
+																</section>
 
-                        <!-- Card 1 -->
-                        <div
-                            class="bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl text-gray-600 font-bold mb-4">
-                                Advertiser or Brand
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I am an SEO or media buying professional
-                                interested in paid content partnerships such as
-                                sponsored posts, link insertion, and banner
-                                advertising.
-                            </p>
-                            <a href="{{ route('guest.page') }}">
-                                <button
-                                    class="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    Get Started
-                                </button>
-                            </a>
-                        </div>
+												</div>
+												<!-- End::Advertiser Section -->
 
-                        <!-- Card 1 -->
-                        <div
-                            class="bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl text-gray-600 font-bold mb-4">
-                                Advertiser or Brand
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I am an SEO or media buying professional
-                                interested in paid content partnerships such as
-                                sponsored posts, link insertion, and banner
-                                advertising.
-                            </p>
-                            <a href="{{ route('guest.page') }}">
-                                <button
-                                    class="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    Get Started
-                                </button>
-                            </a>
-                        </div>
 
-                        <!-- Card 1 -->
-                        <div
-                            class="bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl text-gray-600 font-bold mb-4">
-                                Advertiser or Brand
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I am an SEO or media buying professional
-                                interested in paid content partnerships such as
-                                sponsored posts, link insertion, and banner
-                                advertising.
-                            </p>
-                            <a href="{{ route('guest.page') }}">
-                                <button
-                                    class="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    Get Started
-                                </button>
-                            </a>
-                        </div>
+												<!-- Publisher Section -->
+												<div class="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
+																<div class="mb-4 flex w-full items-center justify-center">
+																				<!-- Left Divider -->
+																				<span class="h-1 w-64 rounded bg-[#b78700]"></span>
 
-                        <!-- Card 1 -->
-                        <div
-                            class="bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl text-gray-600 font-bold mb-4">
-                                Advertiser or Brand
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I am an SEO or media buying professional
-                                interested in paid content partnerships such as
-                                sponsored posts, link insertion, and banner
-                                advertising.
-                            </p>
-                            <a href="{{ route('guest.page') }}">
-                                <button
-                                    class="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    Get Started
-                                </button>
-                            </a>
-                        </div>
+																				<!-- Heading with hover effect -->
+																				<h2
+																								class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#01004c] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] hover:text-white dark:text-white">
+																								Do you own a blog or a website?
+																				</h2>
 
-                        <!-- Card 1 -->
-                        <div
-                            class="bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl text-gray-600 font-bold mb-4">
-                                Advertiser or Brand
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I am an SEO or media buying professional
-                                interested in paid content partnerships such as
-                                sponsored posts, link insertion, and banner
-                                advertising.
-                            </p>
-                            <a href="{{ route('guest.page') }}">
-                                <button
-                                    class="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    Get Started
-                                </button>
-                            </a>
-                        </div>
+																				<!-- Right Divider -->
+																				<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+																</div>
 
-                        <!-- Card 1 -->
-                        <div
-                            class="bg-white rounded-lg shadow-lg p-6 text-center"
-                        >
-                            <h2 class="text-xl text-gray-600 font-bold mb-4">
-                                Advertiser or Brand
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                I am an SEO or media buying professional
-                                interested in paid content partnerships such as
-                                sponsored posts, link insertion, and banner
-                                advertising.
-                            </p>
-                            <a href="{{ route('guest.page') }}">
-                                <button
-                                    class="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    Get Started
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- End::Services Content -->
 
-            <!-- Niche Markets Section -->
 
-            <main class="pt-16">
-                <!-- Hero Section -->
-                <section
-                    class="relative bg-gradient-to-br from-blue-900 to-indigo-800 text-white overflow-hidden"
-                >
-                    <div class="absolute inset-0 bg-black opacity-50"></div>
-                    <div
-                        class="absolute inset-0 bg-cover bg-center"
-                        style="
-                            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-                        "
-                    ></div>
+																<p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+																				"Turn your blog or website into a powerful revenue-generating asset. Leverage our expert
+																				link-building services to boost your SEO rankings, attract quality traffic, and unlock new
+																				opportunities for growth. It’s time to take the lead in your niche!"
+																</p>
 
-                    <div
-                        class="container mx-auto px-4 py-24 md:py-32 relative z-10"
-                    >
-                        <div
-                            class="flex flex-col md:flex-row items-center justify-between"
-                        >
-                            <!-- Left Side: Company Info -->
-                            <div class="w-full md:w-1/2 mb-12 md:mb-0">
-                                <h1
-                                    class="text-5xl md:text-6xl font-bold mb-6 leading-tight"
-                                >
-                                    Innovate.<br />Transform.<br />Succeed.
-                                </h1>
-                                <p class="text-xl mb-8 text-gray-300">
-                                    Empowering businesses with cutting-edge
-                                    solutions for a digital future.
-                                </p>
-                                <div
-                                    class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
-                                >
-                                    <a
-                                        href="#"
-                                        class="bg-white text-blue-900 font-semibold px-8 py-3 rounded-full hover:bg-blue-100 transition duration-300 text-center"
-                                        >Get Started</a
-                                    >
-                                    <a
-                                        href="#"
-                                        class="border-2 border-white text-white font-semibold px-8 py-3 rounded-full hover:bg-white hover:text-blue-900 transition duration-300 text-center"
-                                        >Learn More</a
-                                    >
-                                </div>
-                            </div>
+																<section class="">
+																				<div class="container mx-auto max-w-xl space-y-12 p-6 lg:max-w-7xl lg:px-8">
+																								<div class="grid lg:grid-cols-2 lg:items-center lg:gap-8">
+																												<div class="mt-10 lg:mt-0" aria-hidden="true">
+																																<img class="dark-bg-gray-500 mx-auto rounded-lg shadow-lg"
+																																				src="https://images.unsplash.com/photo-1516542076529-1ea3854896f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxNHx8Y29tcHV0ZXJ8ZW58MHwwfHx8MTY5OTE3MDk1N3ww&ixlib=rb-4.0.3&q=80&w=1080"
+																																				style="color:transparent" width="600" height="600">
+																												</div>
+																												<div>
+																																<div class="mt-4 space-y-8">
+																																				<div class="flex">
+																																								<div class="flex-shrink-0">
+																																												<div class="flex h-12 w-12 items-center justify-center rounded-md">
+																																																<svg class="lucide lucide-rocket text-[#b78700]"
+																																																				xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																																																				viewBox="0 0 24 24" fill="none" stroke="currentColor"
+																																																				stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+																																																				<path
+																																																								d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z">
+																																																				</path>
+																																																				<path
+																																																								d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z">
+																																																				</path>
+																																																				<path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+																																																				<path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+																																																</svg>
+																																												</div>
+																																								</div>
+																																								<div class="ml-4">
+																																												<h4 class="text-lg font-medium text-[#01004c]">Get Listed on 10K+ Publishers:
+																																																</h4>
+																																												<p class="mt-2 text-gray-500">Join a network of over 10,000 publishers and gain access to top advertisers seeking partnerships.</p>
+																																								</div>
+																																				</div>
 
-                            <!-- Right Side: Features -->
-                            <div class="w-full md:w-1/2 md:pl-12">
-                                <div
-                                    class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-8 shadow-2xl"
-                                >
-                                    <h2 class="text-2xl font-semibold mb-6">
-                                        Why MyCompany?
-                                    </h2>
-                                    <ul class="space-y-4">
-                                        <li class="flex items-center">
-                                            <svg
-                                                class="w-6 h-6 mr-3 text-yellow-400"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                                                ></path>
-                                            </svg>
-                                            <span
-                                                >Lightning-fast
-                                                Performance</span
-                                            >
-                                        </li>
-                                        <li class="flex items-center">
-                                            <svg
-                                                class="w-6 h-6 mr-3 text-green-400"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                                                ></path>
-                                            </svg>
-                                            <span>Bank-grade Security</span>
-                                        </li>
-                                        <li class="flex items-center">
-                                            <svg
-                                                class="w-6 h-6 mr-3 text-purple-400"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-                                                ></path>
-                                            </svg>
-                                            <span>AI-powered Insights</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+																																				<div class="flex">
+																																								<div class="flex-shrink-0">
+																																												<div class="flex h-12 w-12 items-center justify-center rounded-md">
+																																																<svg class="lucide lucide-bookmark-plus text-[#b78700]"
+																																																				xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																																																				viewBox="0 0 24 24" fill="none" stroke="currentColor"
+																																																				stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+																																																				<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z">
+																																																				</path>
+																																																				<line x1="12" x2="12" y1="7"
+																																																								y2="13">
+																																																				</line>
+																																																				<line x1="15" x2="9" y1="10"
+																																																								y2="10">
+																																																				</line>
+																																																</svg>
+																																												</div>
+																																								</div>
+																																								<div class="ml-4">
+																																												<h4 class="text-lg font-medium text-[#01004c]">Receive Orders from Advertisers</h4>
+																																												<p class="mt-2 text-gray-500">Get direct orders from advertisers, saving you time and boosting your revenue.</p>
+																																								</div>
+																																				</div>
 
-                    <!-- Decorative Element -->
-                    <div class="absolute bottom-0 left-0 right-0">
-                        <svg
-                            viewBox="0 0 1440 120"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z"
-                                fill="white"
-                            />
-                        </svg>
-                    </div>
-                </section>
+																																				<div class="flex">
+																																								<div class="flex-shrink-0">
+																																												<div class="flex h-12 w-12 items-center justify-center rounded-md">
+																																																<svg class="lucide lucide-video text-[#b78700]"
+																																																				xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																																																				viewBox="0 0 24 24" fill="none" stroke="currentColor"
+																																																				stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+																																																				<path d="m22 8-6 4 6 4V8Z"></path>
+																																																				<rect width="14" height="12" x="2" y="6" rx="2"
+																																																								ry="2"></rect>
+																																																</svg>
+																																												</div>
+																																								</div>
+																																								<div class="ml-4">
+																																												<h4 class="text-lg font-medium text-[#01004c]">Get Paid Within 24 Hours</h4>
+																																												<p class="mt-2 text-gray-500">Enjoy fast, hassle-free payments within 24 hours after hosting advertiser content.
 
-                <!-- ... (rest of your main content) ... -->
-            </main>
 
-            <!-- Advertiser Section -->
-            <div class="bg-[#667788] dark:bg-bgdark py-10 mt-8" id="advertiser">
-                <div class="container mx-auto text-center">
-                    <h2
-                        class="text-3xl font-bold text-gray-800 dark:text-white mb-4"
-                    >
-                        Why Choose Medialytica?
-                    </h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                        Boost your traffic, make more sales, and grow your
-                        business. Explore our link-building services and fortify
-                        your backlink portfolio.
-                    </p>
-                    <div class="grid lg:grid-cols-2 gap-6 items-center">
-                        <div class="flex justify-center">
-                            <img
-                                src="{{
-                                    asset('backend/assets/Contact-banner.jpg')
-                                }}"
-                                class="shadow-lg object-cover h-80 w-360"
-                                alt="Advertiser meeting"
-                            />
-                        </div>
-                        <div class="text-left space-y-4">
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                We have taken time to build an extensive network
-                                of publishers, media outlets, and influencers.
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                We are committed to transparency and open
-                                communication through regular updates and
-                                detailed reports.
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                We assign every project a dedicated Account
-                                Manager for efficiency and personalized support.
-                            </p>
-                            <p
-                                class="flex items-center text-lg text-gray-700 dark:text-gray-300"
-                            >
-                                <svg
-                                    class="w-6 h-6 text-blue-500 mr-2"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z"
-                                    />
-                                </svg>
-                                We have fulfilled thousands of orders,
-                                demonstrating our credibility and track record
-                                of excellence
-                            </p>
-                            <a
-                                href="#"
-                                class="inline-block mt-6 py-3 px-6 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition duration-300"
-                            >
-                                Contact Us
-                                <i
-                                    class="ri-arrow-right-line rtl:rotate-180"
-                                ></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End::Advertiser Section -->
 
-            <!-- Brand Growth Section -->
-            <div class="py-16 bg-white">
-                <div class="container mx-auto text-center">
-                    <h2 class="text-3xl font-bold text-blue-900 mb-12">
-                        We Are Here to Grow Your Brand Exponentially
-                    </h2>
-                    <div
-                        class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-                    >
-                        <!-- Service Card Template Start -->
-                        <div
-                            class="bg-custom-dark hover:bg-custom-dark p-6 rounded-lg shadow-lg text-center transition-colors duration-300"
-                        >
-                            <div
-                                class="icon-container p-4 rounded-full mb-4 inline-block"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="w-8 h-8 text-white"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <rect
-                                        x="2"
-                                        y="2"
-                                        width="20"
-                                        height="20"
-                                        rx="2"
-                                        ry="2"
-                                    ></rect>
-                                    <line x1="8" y1="6" x2="16" y2="6"></line>
-                                    <line x1="8" y1="12" x2="16" y2="12"></line>
-                                    <line x1="8" y1="18" x2="16" y2="18"></line>
-                                </svg>
-                            </div>
-                            <h3
-                                class="card-title text-xl font-semibold mb-2 text-white"
-                            >
-                                Sponsored Posts
-                            </h3>
-                            <p class="text-gray-300">
-                                Elevate your brand's presence with content that
-                                resonates. Reach the right audience, drive
-                                engagement and impact.
-                            </p>
-                        </div>
-                        <!-- Service Card Template End -->
 
-                        <!-- Repeat the Service Card Template for other services -->
-                        <div
-                            class="bg-custom-dark hover:bg-custom-dark p-6 rounded-lg shadow-lg text-center transition-colors duration-300"
-                        >
-                            <div
-                                class="icon-container p-4 rounded-full mb-4 inline-block"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="w-8 h-8 text-white"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <path
-                                        d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zM2 22c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2v1H2v-1z"
-                                    />
-                                </svg>
-                            </div>
-                            <h3
-                                class="card-title text-xl font-semibold mb-2 text-white"
-                            >
-                                Link Insertion & Exchanges
-                            </h3>
-                            <p class="text-gray-300">
-                                We are focused on contextual relevance, quality
-                                assurance, SEO benefits, customized strategies
-                                and search engine visibility.
-                            </p>
-                        </div>
 
-                        <div
-                            class="bg-custom-dark hover:bg-custom-dark p-6 rounded-lg shadow-lg text-center transition-colors duration-300"
-                        >
-                            <div
-                                class="icon-container p-4 rounded-full mb-4 inline-block"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="w-8 h-8 text-white"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <path
-                                        d="M3 3h18v18H3V3zm2 2v14h14V5H5zm8 4h3v6h-2v-3h-1v3H8v-3H7v3H5v-3H4v6H3v-8h6V9H4v2H3V5h14v6H13z"
-                                    />
-                                </svg>
-                            </div>
-                            <h3
-                                class="card-title text-xl font-semibold mb-2 text-white"
-                            >
-                                Banner Advertising
-                            </h3>
-                            <p class="text-gray-300">
-                                Elevate your online presence through banner
-                                advertising, focusing on targeted placement,
-                                measurable results, adaptability, and
-                                customization.
-                            </p>
-                        </div>
 
-                        <div
-                            class="bg-custom-dark hover:bg-custom-dark p-6 rounded-lg shadow-lg text-center transition-colors duration-300"
-                        >
-                            <div
-                                class="icon-container p-4 rounded-full mb-4 inline-block"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="w-8 h-8 text-white"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <path
-                                        d="M5 20h14v-2H5v2zm14-9h-4v-2c0-2.22-1.78-4-4-4s-4 1.78-4 4v2H5c-1.1 0-2 .9-2 2v5h18v-5c0-1.1-.9-2-2-2z"
-                                    />
-                                </svg>
-                            </div>
-                            <h3
-                                class="card-title text-xl font-semibold mb-2 text-white"
-                            >
-                                CPM Campaigns
-                            </h3>
-                            <p class="text-gray-300">
-                                Drive conversions, we are focused on precision
-                                targeting, strategic ad placement, budget
-                                efficiency, transparent reporting, and
-                                customization.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
-    <!-- Start:Footer Content-->
-    <footer class="bg-custom-dark">
-        <div class="container mx-auto p-0 md:p-8 xl:px-0">
-            <div class="mx-auto max-w-7xl px-6 pb-10 pt-16">
-                <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-                    <div class="space-y-4">
-                        <div>
-                            <a href="/">
-                                <div
-                                    class="flex items-center space-x-2 text-2xl font-medium"
-                                >
-                                    <span>
-                                        <img
-                                            src="https://www.svgrepo.com/show/452102/slack.svg"
-                                            alt="AI Logo"
-                                            width="64"
-                                            height="64"
-                                            class="w-16"
-                                        />
-                                    </span>
-                                    <span class="text-white">Medialytica</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="max-w-md pr-16 text-md text-gray-200">
-                            Enhance productivity and efficiency with
-                            cutting-edge artificial intelligence solutions for
-                            your business operations.
-                        </div>
-                        <div class="flex space-x-2">
-                            <a
-                                href=""
-                                target="_blank"
-                                class="text-gray-200 hover:text-gray-200"
-                            >
-                                <span class="sr-only">Linkedin</span
-                                ><svg
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                    class="h-6 w-6"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z"
-                                        clip-rule="evenodd"
-                                    ></path>
-                                </svg>
-                            </a>
-                            <a
-                                href=""
-                                target="_blank"
-                                class="text-gray-200 hover:text-gray-200"
-                            >
-                                <span class="sr-only">Twitter</span
-                                ><svg
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                    class="h-6 w-6"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"
-                                    ></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                    <div
-                        class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0"
-                    >
-                        <div class="md:grid md:grid-cols-2 md:gap-8">
-                            <div>
-                                <h3
-                                    class="text-md font-semibold leading-6 text-white"
-                                >
-                                    Our Solutions
-                                </h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li>
-                                        <a
-                                            href="/aiplatform"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >AI Platform
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="/aialgorithms"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >AI Algorithms
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="/industryapplications"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Industry Applications
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-10 md:mt-0">
-                                <h3
-                                    class="text-md font-semibold leading-6 text-white"
-                                >
-                                    Use Cases
-                                </h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li>
-                                        <a
-                                            href="/predictiveanalysis"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Predictive Analysis
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="/customerexperience"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Customer Experience
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="/automation"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Automation
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="md:grid md:grid-cols-2 md:gap-8">
-                            <div>
-                                <h3
-                                    class="text-md font-semibold leading-6 text-white"
-                                >
-                                    Resources
-                                </h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li>
-                                        <a
-                                            href="/pricing"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Pricing
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="/blog"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Blog
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="/casestudies"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Case Studies
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="/terms"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Terms of Service
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="/privacy"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Privacy Policy
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-10 md:mt-0">
-                                <h3
-                                    class="text-md font-semibold leading-6 text-white"
-                                >
-                                    Company
-                                </h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li>
-                                        <a
-                                            href="/aboutus"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >About Us
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="/careers"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Careers
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="/contactus"
-                                            class="text-md leading-6 text-gray-300 hover:text-gray-50"
-                                            >Contact Us
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="mt-16 border-t border-gray-400/30 pt-8 sm:mt-20 lg:mt-24"
-                >
-                    <div class="text-md text-center text-white">
-                        Copyright © 2024 . Crafted with
-                        <span class="text-gray-50">♥</span> by AI enthusiasts at
-                        <a rel="noopener" href="/">AIOps. </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- End:Footer Content-->
+</p>
+																																								</div>
+																																				</div>
 
-    <!-- Back To Top -->
-    <div class="scrollToTop">
-        <span class="arrow"><i class="ri-arrow-up-s-fill text-xl"></i></span>
-    </div>
+																																				<div class="-mb-12 ml-12">
+																																								<a class="inline-block rounded-lg bg-[#01004c] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#b78700]"
+																																												href="#">
+																																												Get Started as a Publisher
+																																								</a>
+																																				</div>
+																																</div>
 
-    <div id="responsive-overlay"></div>
-    <!-- Tabulator JS -->
-    <script src="{{
-            asset('backend/assets/libs/tabulator-tables/js/tabulator.min.js')
-        }}"></script>
+																												</div>
 
-    <!-- Choices JS -->
-    <script src="{{
-            asset(
-                'backend/assets/libs/choices.js/public/assets/scripts/choices.min.js'
-            )
-        }}"></script>
+																								</div>
+																				</div>
+																</section>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const tables = [
-                "telegram",
-                "facebook",
-                "instagram",
-                "twitter",
-                "whatsapp",
-                "tiktok",
-                "youtube",
-            ];
-            let activeTable = "telegram"; // Default table
+												</div>
+												<!-- End::Publisher Section -->
 
-            // Function to switch tables
-            function switchTable(table) {
-                if (tables.includes(table)) {
-                    activeTable = table;
-                    renderTables();
-                }
-            }
+												<!-- Social Publisher Section -->
+												<div class="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
+																<div class="mb-4 flex w-full items-center justify-center">
+																				<!-- Left Divider -->
+																				<span class="h-1 w-64 rounded bg-[#b78700]"></span>
 
-            // Function to render tables based on activeTable
-            function renderTables() {
-                tables.forEach((t) => {
-                    const tableElement = document.getElementById(`${t}-table`);
-                    if (tableElement) {
-                        tableElement.style.display =
-                            t === activeTable ? "table" : "none";
-                    }
-                });
-            }
+																				<!-- Heading with hover effect -->
+																				<h2
+																								class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#01004c] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] hover:text-white dark:text-white">
+																								Are you a charismatic influencer or social publisher?
+																				</h2>
 
-            // Add event listeners to buttons
-            document.querySelectorAll(".table-button").forEach((button) => {
-                button.addEventListener("click", () => {
-                    const tableName = button.getAttribute("data-table");
-                    switchTable(tableName);
-                });
-            });
+																				<!-- Right Divider -->
+																				<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+																</div>
 
-            // Initial rendering
-            renderTables();
-        });
-    </script>
 
-    <script>
-        function placeOrder(publisherId) {
-            fetch('{{ route('order.place') }}', {  // Use named route for the URL
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                },
-                body: JSON.stringify({ publisher_id: publisherId }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Order placed successfully!');
-                } else {
-                    alert('There was an error placing the order.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('There was an error placing the order.');
-            });
-        }
-    </script>
+																<p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+																				"Leverage your platform and transform your passion into profit! Partner with leading advertisers
+																				ready to feature their content on your blog or social channels. With pre-written articles and an
+																				easy onboarding process, you can grow your income while captivating your audience."
+																</p>
 
-    <!-- JavaScript for Incremental Counters -->
-    <script>
-        function incrementCounter(elementId, targetNumber, duration) {
-            const element = document.getElementById(elementId);
-            let count = 0;
-            const increment = targetNumber / (duration / 100);
 
-            const interval = setInterval(() => {
-                count += increment;
-                if (count >= targetNumber) {
-                    count = targetNumber;
-                    clearInterval(interval);
-                }
-                element.innerText = Math.floor(count);
-            }, 100);
-        }
 
-        window.onload = () => {
-            incrementCounter("registeredWebsites", 10000, 2000);
-            incrementCounter("contentCreators", 850000, 3000);
-            incrementCounter("registeredAdvertisers", 10000, 2000);
-            incrementCounter("tasksCompleted", 10000, 2000);
-        };
-    </script>
+																<section class="">
+																				<div class="container mx-auto max-w-xl space-y-12 p-6 lg:max-w-7xl lg:px-8">
+																								<div class="grid lg:grid-cols-2 lg:items-center lg:gap-8">
+																												<div>
+																																<div class="mt-4 space-y-8">
+																																				<div class="flex">
+																																								<div class="flex-shrink-0">
+																																												<div class="flex h-12 w-12 items-center justify-center rounded-md">
+																																																<svg class="lucide lucide-rocket text-[#b78700]"
+																																																				xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																																																				viewBox="0 0 24 24" fill="none" stroke="currentColor"
+																																																				stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+																																																				<path
+																																																								d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z">
+																																																				</path>
+																																																				<path
+																																																								d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z">
+																																																				</path>
+																																																				<path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+																																																				<path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+																																																</svg>
+																																												</div>
+																																								</div>
+																																								<div class="ml-4">
+																																												<h4 class="text-lg font-medium text-[#01004c]">Browse our database with
+																																																10K+
+																																																publishers</h4>
+																																												<p class="mt-2 text-gray-500">Discover fresh perspectives, expand your
+																																																horizons, and stay ahead of the curve.</p>
+																																								</div>
+																																				</div>
+
+																																				<div class="flex">
+																																								<div class="flex-shrink-0">
+																																												<div class="flex h-12 w-12 items-center justify-center rounded-md">
+																																																<svg class="lucide lucide-bookmark-plus text-[#b78700]"
+																																																				xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																																																				viewBox="0 0 24 24" fill="none" stroke="currentColor"
+																																																				stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+																																																				<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z">
+																																																				</path>
+																																																				<line x1="12" x2="12" y1="7"
+																																																								y2="13">
+																																																				</line>
+																																																				<line x1="15" x2="9" y1="10"
+																																																								y2="10">
+																																																				</line>
+																																																</svg>
+																																												</div>
+																																								</div>
+																																								<div class="ml-4">
+																																												<h4 class="text-lg font-medium text-[#01004c]">Select a site and make your
+																																																order</h4>
+																																												<p class="mt-2 text-gray-500">Ready to reach your target audience? Select
+																																																your ideal destination from our vast network of websites.</p>
+																																								</div>
+																																				</div>
+
+																																				<div class="flex">
+																																								<div class="flex-shrink-0">
+																																												<div class="flex h-12 w-12 items-center justify-center rounded-md">
+																																																<svg class="lucide lucide-video text-[#b78700]"
+																																																				xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																																																				viewBox="0 0 24 24" fill="none" stroke="currentColor"
+																																																				stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+																																																				<path d="m22 8-6 4 6 4V8Z"></path>
+																																																				<rect width="14" height="12" x="2" y="6" rx="2"
+																																																								ry="2"></rect>
+																																																</svg>
+																																												</div>
+																																								</div>
+																																								<div class="ml-4">
+																																												<h4 class="text-lg font-medium text-[#01004c]">Get your content published
+																																																within 24 hours</h4>
+																																												<p class="mt-2 text-gray-500">Accelerate your content journey. Submit your
+																																																article and watch it go live within 24 hours.</p>
+																																								</div>
+																																				</div>
+
+																																				<div class="-mb-12 ml-12">
+																																								<a class="inline-block rounded-lg bg-[#01004c] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#b78700]"
+																																												href="#">
+																																												Get Started as an Influencer
+																																								</a>
+																																				</div>
+																																</div>
+
+																												</div>
+																												<div class="mt-10 lg:mt-0" aria-hidden="true">
+																																<img class="dark-bg-gray-500 mx-auto rounded-lg shadow-lg"
+																																				src="https://images.unsplash.com/photo-1516542076529-1ea3854896f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxNHx8Y29tcHV0ZXJ8ZW58MHwwfHx8MTY5OTE3MDk1N3ww&ixlib=rb-4.0.3&q=80&w=1080"
+																																				style="color:transparent" width="600" height="600">
+																												</div>
+																								</div>
+																				</div>
+																</section>
+
+												</div>
+												<!-- End::Social Publisher Section -->
+
+												<div class="grid grid-cols-12 gap-6">
+																<div class="col-span-12">
+																				<div class="rounded-lg bg-white p-6 shadow-lg">
+																								<div class="mb-4 flex w-full items-center justify-center">
+																												<!-- Left Divider -->
+																												<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+
+																												<!-- Heading with hover effect -->
+																												<h2
+																																class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#01004c] px-4 py-2 text-xl font-bold text-white hover:border-[#01004c] hover:bg-[#b78700] hover:text-white dark:text-white">
+																																Browse our 10k+ publishers
+																												</h2>
+
+
+																												<!-- Right Divider -->
+																												<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+																								</div>
+
+
+																								<p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+																												"Boost your traffic, make more sales, and grow your business. Explore our link-building
+																												services and
+																												fortify your backlink portfolio."
+																								</p>
+
+																								<div class="mt-4 rounded-md border border-gray-300">
+																												<div class="flex justify-center">
+																																<table class="w-full table-auto border-collapse">
+																																				<thead class="bg-gray-50">
+																																								<tr>
+																																												<th class="w-1/20 px-1 py-1 text-left text-sm font-semibold text-gray-900">
+																																																<input id="select-all" type="checkbox" />
+																																												</th>
+																																												<th class="w-1/10 px-1 py-1 text-left text-sm font-semibold text-gray-900">
+																																																URL</th>
+																																												<th class="w-1/10 px-1 py-1 text-left text-sm font-semibold text-gray-900">
+																																																Niches</th>
+																																												<th class="w-1/10 px-1 py-1 text-left text-sm font-semibold text-gray-900">
+																																																DA</th>
+																																												<th class="w-1/10 px-1 py-1 text-left text-sm font-semibold text-gray-900">
+																																																DR</th>
+																																												<th
+																																																class="w-1/10 px-1 py-1 pr-0 text-left text-sm font-semibold text-gray-900">
+																																																Traffic</th>
+																																												<th
+																																																class="w-1/10 px-1 py-1 pl-0 text-left text-sm font-semibold text-gray-900">
+																																																Country</th>
+
+
+																																												<th class="w-1/10 px-1 py-1 text-left text-sm font-semibold text-gray-900">
+																																																Price</th>
+																																												<th class="w-1/10 px-1 py-1 text-left text-sm font-semibold text-gray-900">
+																																																Order Now</th>
+																																								</tr>
+																																				</thead>
+																																				<tbody class="divide-y divide-[#01004c] bg-white">
+																																								@foreach ($publishers as $publisher)
+																																												<tr class="hover:bg-gray-50">
+																																																<td class="w-1/20 px-1 py-1">
+																																																				<input name="publisher_ids[]" type="checkbox"
+																																																								value="{{ $publisher->id }}">
+																																																</td>
+																																																<td
+																																																				class="w-1/10 truncate whitespace-nowrap px-1 py-1 text-sm font-medium text-gray-900">
+																																																				<span class="text-[#01004c]-600"
+																																																								style="pointer-events: none; user-select: none;">
+																																																								{{ Str::limit($publisher->website_url, 15) }}
+																																																				</span>
+																																																</td>
+																																																<td
+																																																				class="w-1/10 truncate whitespace-nowrap px-1 py-1 text-sm text-gray-500">
+																																																				{{ Str::limit($publisher->niches, 15) }}
+																																																</td>
+																																																<td
+																																																				class="w-1/10 truncate whitespace-nowrap px-1 py-1 text-sm text-gray-500">
+																																																				{{ $publisher->moz_da }}
+																																																</td>
+																																																<td
+																																																				class="w-1/10 truncate whitespace-nowrap px-1 py-1 text-sm text-gray-500">
+																																																				{{ $publisher->ahref_dr }}
+																																																</td>
+																																																<td
+																																																				class="w-1/10 truncate whitespace-nowrap px-1 py-1 text-sm text-gray-500">
+																																																				{{ $publisher->traffic }}
+																																																</td>
+																																																<td
+																																																				class="w-1/10 truncate whitespace-nowrap px-1 py-1 text-sm text-gray-500">
+																																																				{{ $publisher->country }}
+																																																</td>
+
+																																																<td
+																																																				class="w-1/10 truncate whitespace-nowrap px-1 py-1 text-sm text-gray-500">
+																																																				{{ $publisher->price }}
+																																																</td>
+																																																<td
+																																																				class="w-1/10 truncate whitespace-nowrap px-1 py-1 text-right text-sm font-medium">
+																																																				<form action="{{ route('cart.add') }}" method="POST">
+																																																								@csrf
+																																																								<input name="publisher_id" type="hidden"
+																																																												value="{{ $publisher->id }}">
+																																																								<button
+																																																												class="hover:bg-[#01004c]-700 mx-auto block w-full rounded bg-[#b78700] px-4 py-2 text-sm text-white sm:w-auto"
+																																																												type="submit">
+																																																												Order Now
+																																																								</button>
+
+																																																				</form>
+																																																</td>
+																																												</tr>
+																																								@endforeach
+																																				</tbody>
+																																</table>
+
+
+
+
+																												</div>
+																								</div>
+
+																								<!-- Pagination Links -->
+																								<div class="mt-4">
+																												{{ $publishers->links() }}
+																								</div>
+																				</div>
+																</div>
+												</div>
+
+												<!-- Publisher Section -->
+												{{--
+												<div class="grid grid-cols-12 gap-6">
+																<div class="col-span-12">
+																				<div class="rounded-lg bg-white p-6 shadow-lg">
+																								<div class="mb-4">
+																												<h5 class="text-center text-lg font-bold text-[#004466]">
+																																Browse our database of 10K+ Social Publishers
+																												</h5>
+																								</div>
+
+																								<!-- End:: Publisher Section -->
+
+																								<!-- Start::Social Publisher Section -->
+																								<div class="bg-[#01004c] mt-4 overflow-x-auto rounded-md border border-gray-300">
+																												<div class="flex justify-center">
+																																<table class="min-w-150 table-auto border-collapse">
+																																				<thead class="bg-[#004466]">
+																																								<tr>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Social Publisher
+																																												</th>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Page URL
+																																												</th>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Page Name
+																																												</th>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Page Members
+																																												</th>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Niches/Themes Accepted
+																																												</th>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Influencer Type
+																																												</th>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Influencer Category
+																																												</th>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Language
+																																												</th>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Country
+																																												</th>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Price
+																																												</th>
+																																												<th
+																																																class="border border-gray-300 px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-white">
+																																																Order Now
+																																												</th>
+																																								</tr>
+																																				</thead>
+																																				<tbody class="divide-y divide-gray-700 bg-[#1a1a1a] text-white">
+																																								@foreach ($facebookspublishers as $facebookspublisher)
+																																												<tr>
+																																																<td class="whitespace-nowrap border border-gray-300 px-2 py-2">
+																																																				<a class="text-white hover:underline"
+																																																								href="#">{{ $facebookspublisher->name }}</a>
+																																																</td>
+																																																<td
+																																																				class="whitespace-nowrap border border-gray-300 px-2 py-2 text-sm text-white">
+																																																				{{ $facebookspublisher->facebook_page_name }}
+																																																</td>
+																																																<td
+																																																				class="whitespace-nowrap border border-gray-300 px-2 py-2 text-sm text-white">
+																																																				{{ $facebookspublisher->facebook_page_url }}
+																																																</td>
+																																																<td
+																																																				class="whitespace-nowrap border border-gray-300 px-2 py-2 text-sm text-white">
+																																																				{{ $facebookspublisher->facebook_page_members }}
+																																																</td>
+																																																<td
+																																																				class="whitespace-nowrap border border-gray-300 px-2 py-2 text-sm text-white">
+																																																				{{ is_array($facebookspublisher->niches_themes) ? implode(', ', $facebookspublisher->niches_themes) : $facebookspublisher->niches_themes }}
+																																																</td>
+																																																<td
+																																																				class="whitespace-nowrap border border-gray-300 px-2 py-2 text-sm text-white">
+																																																				{{ is_array($facebookspublisher->influencer_type) ? implode(', ', $facebookspublisher->influencer_type) : $facebookspublisher->influencer_type }}
+																																																</td>
+																																																<td
+																																																				class="whitespace-nowrap border border-gray-300 px-2 py-2 text-sm text-white">
+																																																				{{ $facebookspublisher->language }}
+																																																</td>
+																																																<td
+																																																				class="whitespace-nowrap border border-gray-300 px-2 py-2 text-sm text-white">
+																																																				{{ $facebookspublisher->influencer_category }}
+																																																</td>
+																																																<td
+																																																				class="whitespace-nowrap border border-gray-300 px-2 py-2 text-sm text-white">
+																																																				{{ $facebookspublisher->country }}
+																																																</td>
+																																																<td
+																																																				class="whitespace-nowrap border border-gray-300 px-2 py-2 text-sm text-white">
+																																																				{{ $facebookspublisher->price }}
+																																																</td>
+																																																<td class="whitespace-nowrap border border-gray-300 px-2 py-2">
+																																																				<div class="flex justify-center">
+																																																								<form
+																																																												action="{{ route('cart.add', ['publisherId' => $facebookspublisher->id]) }}"
+																																																												method="POST">
+																																																												@csrf
+																																																												<input name="publisher_id" type="hidden"
+																																																																value="{{ $facebookspublisher->id }}" />
+																																																												<input name="website_url" type="hidden"
+																																																																value="{{ $facebookspublisher->facebook_page_url }}" />
+																																																												<input name="price" type="hidden"
+																																																																value="{{ $facebookspublisher->price }}" />
+																																																												<button
+																																																																class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+																																																																type="submit">
+																																																																Order Now
+																																																												</button>
+																																																								</form>
+																																																				</div>
+																																																</td>
+																																												</tr>
+																																								@endforeach
+																																				</tbody>
+																																</table>
+																												</div>
+																								</div>
+																								<!-- Pagination Links -->
+																								<div class="mt-4">
+																												{{ $facebookspublishers->links() }}
+																								</div>
+
+																								<!-- End::Social Publisher Section -->
+																				</div>
+																</div>
+												</div> --}}
+
+
+
+            	<!-- Services Section -->
+												<div class="bg-white py-16">
+																<div class="container mx-auto text-center">
+																				<div class="mb-4 flex w-full items-center justify-center">
+																								<!-- Left Divider -->
+																								<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+
+																								<!-- Heading with hover effect -->
+																								<h2
+																												class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#01004c] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] hover:text-white dark:text-white">
+																												Supercharge Your Content with Our All-in-One Solution
+																								</h2>
+
+
+																								<!-- Right Divider -->
+																								<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+																				</div>
+
+																				<p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+																							"Elevate your content game with our comprehensive suite of tools. From SEO optimization to social media promotion, we've got you covered. Our expert team will work tirelessly to ensure your content reaches its full potential, driving traffic and boosting engagement."
+																				</p>
+
+
+																				<div class="grid grid-cols-1 gap-6 md:grid-cols-4">
+																								<!-- First Card -->
+																								<div class="border-gray border p-6 hover:bg-[#01004c] hover:text-white transition-all duration-300">
+
+
+																												<h2 class=" mt-2 text-left font-medium uppercase text-[#b78700]">Sponsored Posts
+
+																												</h2>
+																												<p class="mb-3 mt-3 text-left text-sm font-light text-gray-500  group-hover:text-white">Boost your brand visibility with targeted sponsored posts. Reach a wider audience
+																																through sponsored posts designed to engage and convert.</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">Explore More
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+
+																								<!-- Second Card -->
+																								<div class="border-gray border p-6 hover:bg-[#01004c] hover:text-white transition-all duration-300">
+
+
+
+																												<h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">Guest Posting
+																												</h2>
+																												<p class="mb-3 mt-3 text-left text-sm font-light text-gray-500  group-hover:text-white">Want to outpace your competition? Guest posting boosts your brand visibility, attracts
+																																new audiences, and builds valuable backlinks on high-authority websites.</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">Explore More
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+
+																								<!-- Third Card -->
+																								<div class="border-gray border p-6 hover:bg-[#01004c] hover:text-white transition-all duration-300">
+
+
+																												<h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">Affiliate Marketing
+																												</h2>
+																												<p class="mb-3 mt-3 text-left text-sm font-light text-gray-500  group-hover:text-white">Grow your brand with affiliate marketing. Expand your reach, drive sales, and boost
+																																credibility by partnering with influencers and affiliates who promote your products to a
+																																wider audience.</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">Explore More
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+																								<!-- Fourth Card -->
+																								<div class="border-gray border p-6 hover:bg-[#01004c] hover:text-white transition-all duration-300">
+
+
+																												<h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">Influencer Marketing
+																												</h2>
+																												<p class="mb-3 mt-3 text-left text-sm font-light text-gray-500  group-hover:text-white">At Medialytica, we boost your brand’s reach by connecting you with top influencers. Through authentic storytelling and trusted voices, we help amplify your message, captivate audiences, and drive measurable results.</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">Explore More
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+                        <!-- Fifth Card -->
+																								<div class="border-gray border p-6 hover:bg-[#01004c] hover:text-white transition-all duration-300">
+
+
+																												<h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">Link Insertions
+																												</h2>
+																												<p class="mb-3 mt-3 text-left text-sm font-light text-gray-500  group-hover:text-white">Boost your website's authority and drive organic traffic with high-quality backlinks.
+																																Our expert team helps you find the best opportunities to enhance visibility and outpace
+																																the competition.</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">Explore More
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+                        <!-- Sixth Card -->
+																								<div class="border-gray border p-6 hover:bg-[#01004c] hover:text-white transition-all duration-300">
+
+
+																												<h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">TV/Radio Advertising
+																												</h2>
+																												<p class="mb-3 mt-3 text-left text-sm font-light text-gray-500  group-hover:text-white">Elevate your brand with TV and radio advertising. Reach a broad audience, increase brand
+																																awareness, and create lasting impressions through powerful, mass-media channels. Stay
+																																top of mind and ahead of the competition.</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">Explore More
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+                        <!-- Seventh Card -->
+																								<div class="border-gray border p-6 hover:bg-[#01004c] hover:text-white transition-all duration-300">
+
+
+																												<h2 class=" mb-2 text-left font-medium uppercase text-[#b78700]">CPM Campaigns
+																												</h2>
+																												<p class="mb-3 mt-3 text-left text-sm font-light text-gray-500  group-hover:text-white">Maximize your reach with CPM campaigns. Target high-traffic platforms to boost
+																																visibility, drive impressions, and stay ahead of the competition.</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">Explore More
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+                        <!-- Eighth Card -->
+																								<div class="border-gray border p-6 hover:bg-[#01004c] hover:text-white transition-all duration-300">
+
+
+																												<h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">Outdoor Advertising
+																												</h2>
+																												<p class="mb-3 mt-3 text-left text-sm font-light text-gray-500  group-hover:text-white">Enhance your brand with outdoor advertising. Reach a large audience, boost visibility,
+																																and stay top of mind with impactful, high-traffic placements.</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">Explore More
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+
+
+
+
+																				</div>
+
+																</div>
+												</div>
+            	<!-- Services Section -->
+
+												<!-- Why Choose Medialytica -->
+												<div class="mt-8 bg-white py-10" id="advertiser">
+																<div class="container mx-auto text-center">
+																				<div class="mb-4 flex w-full items-center justify-center">
+																								<!-- Left Divider -->
+																								<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+
+																								<!-- Heading with hover effect -->
+																								<h2
+																												class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#01004c] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] hover:text-white dark:text-white">
+																												Outpace the Competition with Medialytica
+																								</h2>
+
+
+																								<!-- Right Divider -->
+																								<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+																				</div>
+
+
+																				<p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+																								"Boost your traffic, make more sales, and grow your business. Explore our link-building services
+																								and
+																								fortify your backlink portfolio."
+																				</p>
+																				<div class="grid items-center gap-6 lg:grid-cols-2">
+																								<div class="flex justify-center">
+																												<img class="w-360 h-80 object-cover shadow-lg"
+																																src="{{ asset('backend/assets/Contact-banner.jpg') }}" alt="Advertiser meeting" />
+																								</div>
+																								<div class="space-y-4 text-left">
+																												<p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+																																<svg class="mr-2 h-6 w-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+																																				<path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+																																</svg>
+																																We have taken time to build an extensive network
+																																of publishers, media outlets, and influencers.
+																												</p>
+																												<p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+																																<svg class="mr-2 h-6 w-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+																																				<path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+																																</svg>
+																																We are committed to transparency and open
+																																communication through regular updates and
+																																detailed reports.
+																												</p>
+																												<p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+																																<svg class="mr-2 h-6 w-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+																																				<path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+																																</svg>
+																																We assign every project a dedicated Account
+																																Manager for efficiency and personalized support.
+																												</p>
+																												<p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+																																<svg class="mr-2 h-6 w-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+																																				<path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
+																																</svg>
+																																We have fulfilled thousands of orders,
+																																demonstrating our credibility and track record
+																																of excellence
+																												</p>
+																												<a class="mt-6 inline-block rounded-lg bg-[#01004c] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#b78700]"
+																																href="#">
+																																Contact Us
+																																<i class="ri-arrow-right-line rtl:rotate-180"></i>
+																												</a>
+																								</div>
+																				</div>
+																</div>
+												</div>
+												<!-- End::Why Choose Medialytica -->
+
+												<!-- Niche Markets Section -->
+
+												<div class="mt-8 bg-white py-10" id="advertiser">
+																<div class="container mx-auto text-center">
+																				<div class="mb-4 flex w-full items-center justify-center">
+																								<!-- Left Divider -->
+																								<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+
+																								<!-- Heading with hover effect -->
+																								<h2
+																												class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#01004c] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] hover:text-white dark:text-white">
+																												Our Core Competencies
+																								</h2>
+
+
+																								<!-- Right Divider -->
+																								<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+																				</div>
+
+
+																				<p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+																								"Boost your traffic, make more sales, and grow your business. Explore our link-building services
+																								and
+																								fortify your backlink portfolio."
+																				</p>
+
+
+																				<section>
+																								<div class="max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+																												<div class="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-16">
+
+																																<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+																																				<a class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-[#01004c] hover:ring-1 hover:ring-[#01004c] focus:outline-none focus:ring"
+																																								href="#">
+																																								<span class="inline-block rounded-lg bg-gray-50 p-3">
+																																												<svg class="size-6" fill="none" stroke="currentColor"
+																																																viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+																																																<path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+																																																<path
+																																																				d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
+																																																</path>
+																																																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+																																																				d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222">
+																																																</path>
+																																												</svg>
+																																								</span>
+
+																																								<h2 class="mt-2 font-bold">Betting and Casinos</h2>
+
+
+																																				</a>
+
+																																				<a class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-[#01004c] hover:ring-1 hover:ring-[#01004c] focus:outline-none focus:ring"
+																																								href="#">
+																																								<span class="inline-block rounded-lg bg-gray-50 p-3">
+																																												<svg class="size-6" fill="none" stroke="currentColor"
+																																																viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+																																																<path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+																																																<path
+																																																				d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
+																																																</path>
+																																																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+																																																				d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222">
+																																																</path>
+																																												</svg>
+																																								</span>
+
+																																								<h2 class="mt-2 font-bold">Real Estate</h2>
+
+
+																																				</a>
+
+
+																																				<a class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-[#01004c] hover:ring-1 hover:ring-[#01004c] focus:outline-none focus:ring"
+																																								href="#">
+																																								<span class="inline-block rounded-lg bg-gray-50 p-3">
+																																												<svg class="size-6" fill="none" stroke="currentColor"
+																																																viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+																																																<path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+																																																<path
+																																																				d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
+																																																</path>
+																																																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+																																																				d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222">
+																																																</path>
+																																												</svg>
+																																								</span>
+
+																																								<h2 class="mt-2 font-bold">Automotive</h2>
+
+
+																																				</a>
+
+
+
+																																				<a class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-[#01004c] hover:ring-1 hover:ring-[#01004c] focus:outline-none focus:ring"
+																																								href="#">
+																																								<span class="inline-block rounded-lg bg-gray-50 p-3">
+																																												<svg class="size-6" fill="none" stroke="currentColor"
+																																																viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+																																																<path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+																																																<path
+																																																				d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
+																																																</path>
+																																																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+																																																				d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222">
+																																																</path>
+																																												</svg>
+																																								</span>
+
+																																								<h2 class="mt-2 font-bold">Fintech</h2>
+
+
+																																				</a>
+
+																																				<a class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-[#01004c] hover:ring-1 hover:ring-[#01004c] focus:outline-none focus:ring"
+																																								href="#">
+																																								<span class="inline-block rounded-lg bg-gray-50 p-3">
+																																												<svg class="size-6" fill="none" stroke="currentColor"
+																																																viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+																																																<path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+																																																<path
+																																																				d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
+																																																</path>
+																																																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+																																																				d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222">
+																																																</path>
+																																												</svg>
+																																								</span>
+
+																																								<h2 class="mt-2 font-bold">Active Lifestyle</h2>
+
+																																				</a>
+
+																																				<a class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-[#01004c] hover:ring-1 hover:ring-[#01004c] focus:outline-none focus:ring"
+																																								href="#">
+																																								<span class="inline-block rounded-lg bg-gray-50 p-3">
+																																												<svg class="size-6" fill="none" stroke="currentColor"
+																																																viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+																																																<path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+																																																<path
+																																																				d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
+																																																</path>
+																																																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+																																																				d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222">
+																																																</path>
+																																												</svg>
+																																								</span>
+
+																																								<h2 class="mt-2 font-bold">Crypto and Forex</h2>
+
+
+																																				</a>
+
+																																				<a class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-[#01004c] hover:ring-1 hover:ring-[#01004c] focus:outline-none focus:ring"
+																																								href="#">
+																																								<span class="inline-block rounded-lg bg-gray-50 p-3">
+																																												<svg class="size-6" fill="none" stroke="currentColor"
+																																																viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+																																																<path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+																																																<path
+																																																				d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
+																																																</path>
+																																																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+																																																				d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222">
+																																																</path>
+																																												</svg>
+																																								</span>
+
+																																								<h2 class="mt-2 font-bold">Fashion</h2>
+
+
+																																				</a>
+
+																																				<a class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-[#01004c] hover:ring-1 hover:ring-[#01004c] focus:outline-none focus:ring"
+																																								href="#">
+																																								<span class="inline-block rounded-lg bg-gray-50 p-3">
+																																												<svg class="size-6" fill="none" stroke="currentColor"
+																																																viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+																																																<path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+																																																<path
+																																																				d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
+																																																</path>
+																																																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+																																																				d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222">
+																																																</path>
+																																												</svg>
+																																								</span>
+
+																																								<h2 class="mt-2 font-bold">Gadgets and Applicances</h2>
+
+
+																																				</a>
+																																</div>
+																																<div
+																																				class="mx-auto -mt-8 max-w-lg text-center lg:mx-0 ltr:lg:text-left rtl:lg:text-right">
+																																				<h2 class="text-3xl font-bold sm:text-4xl">Explore Our Niches</h2>
+
+																																				<p class="mt-4 text-gray-600">
+																																								Dive into a world of possibilities with our carefully curated, ever-expanding selection of high-authority niches. From technology and lifestyle to business and beyond, we cater to a wide range of industries and audiences. Whether you're targeting specific demographics or exploring global markets, our niches are designed to connect your brand with the right audience, helping you amplify your reach, credibility, and impact in a competitive landscape.
+																																				</p>
+
+																																				<a class="mt-8 inline-block rounded bg-[#01004c] px-12 py-3 text-sm font-medium text-white transition hover:bg-[#b78700] focus:outline-none focus:ring focus:ring-yellow-400"
+																																								href="#">
+																																								Get Started Today
+																																				</a>
+																																</div>
+																												</div>
+																								</div>
+																				</section>
+																</div>
+												</div>
+
+												<!-- Brand Growth Section -->
+												<div class="bg-white py-16">
+																<div class="container mx-auto text-center">
+																				<div class="mb-4 flex w-full items-center justify-center">
+																								<!-- Left Divider -->
+																								<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+
+																								<!-- Heading with hover effect -->
+																								<h2
+																												class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#01004c] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] hover:text-white dark:text-white">
+																												We are here to grow your brand exponentially
+																								</h2>
+
+
+																								<!-- Right Divider -->
+																								<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+																				</div>
+
+																				<p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+																								"Boost your traffic, make more sales, and grow your business. Explore our link-building services
+																								and
+																								fortify your backlink portfolio."
+																				</p>
+
+
+																				<div class="grid grid-cols-1 gap-6 md:grid-cols-4">
+																								<!-- First Card -->
+																								<div class="border-gray border p-8">
+																												<div
+																																class="flex h-16 w-16 items-center justify-center rounded-full bg-[#01004c] text-[#b78700] shadow-2xl">
+																																<svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</div>
+																												<h2 class="mb-3 mt-6 text-left font-medium uppercase text-[#01004c]"> Ever-Updating
+																																Database
+																												</h2>
+																												<p class="mb-3 text-left text-sm font-light text-gray-500">Our dynamic database is
+																																constantly updated with the latest information, ensuring your brand stays connected to
+																																top-tier opportunities.</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">More about us
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+
+																								<!-- Second Card -->
+																								<div class="border-gray border p-8">
+																												<div
+																																class="flex h-16 w-16 items-center justify-center rounded-full bg-[#01004c] text-[#b78700] shadow-2xl">
+																																<svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</div>
+																												<h2 class="mb-3 mt-6 text-left font-medium uppercase text-[#01004c]">Expansive Reach
+																												</h2>
+																												<p class="mb-3 text-left text-sm font-light text-gray-500">Tap into diverse markets and
+																																unlock your brand’s full potential with our global reach. Partner with us to extend your
+																																presence across borders and achieve unparalleled growth.</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">More about us
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+
+																								<!-- Third Card -->
+																								<div class="border-gray border p-8">
+																												<div
+																																class="flex h-16 w-16 items-center justify-center rounded-full bg-[#01004c] text-[#b78700] shadow-2xl">
+																																<svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</div>
+																												<h2 class="mb-3 mt-6 text-left font-medium uppercase text-[#01004c]">Expert Support Team
+																												</h2>
+																												<p class="mb-3 text-left text-sm font-light text-gray-500">Our dedicated experts are with you at every step. From strategic planning to execution, we provide hands-on support to ensure your brand’s exponential growth.
+
+</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">More about us
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+																								<!-- Fourth Card -->
+																								<div class="border-gray border p-8">
+																												<div
+																																class="flex h-16 w-16 items-center justify-center rounded-full bg-[#01004c] text-[#b78700] shadow-2xl">
+																																<svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</div>
+																												<h2 class="mb-3 mt-6 text-left font-medium uppercase text-[#01004c]">Partnerships That Work
+																												</h2>
+																												<p class="mb-3 text-left text-sm font-light text-gray-500">Collaborate with premium publishers and advertisers. Build sustainable partnerships that elevate your brand and create lasting impressions in your industry..</p>
+																												<a class="flex items-center text-left text-[#b78700] hover:text-[#01004c]"
+																																href="/">More about us
+																																<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+																																				fill="currentColor">
+																																				<path fill-rule="evenodd"
+																																								d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+																																								clip-rule="evenodd" />
+																																</svg>
+																												</a>
+																								</div>
+
+
+
+
+																				</div>
+
+
+
+
+
+
+
+																</div>
+												</div>
+
+
+												<!-- Brand Growth Section -->
+												<div class="bg-white py-16">
+																<div class="container mx-auto text-center">
+																				<div class="mb-4 flex w-full items-center justify-center">
+																								<!-- Left Divider -->
+																								<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+
+																								<!-- Heading with hover effect -->
+																								<h2
+																												class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#01004c] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] hover:text-white dark:text-white">
+																												The Proof is in the pudding: Client Reviews
+																								</h2>
+
+
+																								<!-- Right Divider -->
+																								<span class="h-1 w-64 rounded bg-[#b78700]"></span>
+																				</div>
+
+																				<p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+																								"See how our clients have achieved extraordinary results with our innovative solutions.
+																								Discover firsthand how we've helped businesses of all sizes elevate their brand, drive traffic,
+																								and boost sales.."
+																				</p>
+																				<section class="bg-gray-50">
+																								<div
+																												class="mx-auto max-w-[1340px] px-4 py-12 sm:px-6 lg:me-0 lg:py-16 lg:pe-0 lg:ps-8 xl:py-24">
+																												<div class="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:items-center lg:gap-16">
+																																<div class="max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
+																																				<h2 class="text-3xl font-bold tracking-tight text-[#01004c] sm:text-4xl">
+																																								Don't just take our word for it...
+																																				</h2>
+
+																																				<p class="mt-4 text-gray-700">
+																																								Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas veritatis
+																																								illo placeat
+																																								harum porro optio fugit a culpa sunt id!
+																																				</p>
+
+																																				<div class="hidden lg:mt-8 lg:flex lg:gap-4">
+																																								<button
+																																												class="rounded-full border border-[#b78700] p-3 text-[#b78700] transition hover:bg-[#b78700] hover:text-white"
+																																												id="keen-slider-previous-desktop" aria-label="Previous slide">
+																																												<svg class="size-5 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg"
+																																																fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+																																																stroke="currentColor">
+																																																<path stroke-linecap="round" stroke-linejoin="round"
+																																																				d="M15.75 19.5L8.25 12l7.5-7.5" />
+																																												</svg>
+																																								</button>
+
+																																								<button
+																																												class="rounded-full border border-[#b78700] p-3 text-[#b78700] transition hover:bg-[#b78700] hover:text-white"
+																																												id="keen-slider-next-desktop" aria-label="Next slide">
+																																												<svg class="size-5 rtl:rotate-180" fill="none" stroke="currentColor"
+																																																viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+																																																<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"
+																																																				stroke-width="2" />
+																																												</svg>
+																																								</button>
+																																				</div>
+																																</div>
+
+																																<div class="-mx-6 lg:col-span-2 lg:mx-0">
+																																				<div class="keen-slider" id="keen-slider">
+																																								<div class="keen-slider__slide">
+																																												<blockquote
+																																																class="flex h-full flex-col justify-between bg-white p-6 shadow-sm sm:p-8 lg:p-12">
+																																																<div>
+
+
+																																																				<div class="mt-4">
+																																																								<p class="text-2xl font-bold text-[#b78700] sm:text-3xl">
+																																																												Stayin'
+																																																												Alive</p>
+
+																																																								<p class="mt-4 leading-relaxed text-gray-700">
+																																																												No, Rose, they are not breathing. And they have no arms or
+																																																												legs … Where are
+																																																												they? You know what? If we come across somebody with no arms
+																																																												or legs, do we
+																																																												bother resuscitating them? I mean, what quality of life do
+																																																												we have there?
+																																																								</p>
+																																																				</div>
+																																																</div>
+
+																																																<footer class="mt-4 text-sm font-medium text-gray-700 sm:mt-6">
+																																																				&mdash; Michael Scott
+																																																</footer>
+																																												</blockquote>
+																																								</div>
+
+																																								<div class="keen-slider__slide">
+																																												<blockquote
+																																																class="flex h-full flex-col justify-between bg-white p-6 shadow-sm sm:p-8 lg:p-12">
+																																																<div>
+
+
+																																																				<div class="mt-4">
+																																																								<p class="text-2xl font-bold text-[#b78700] sm:text-3xl">
+																																																												Stayin'
+																																																												Alive</p>
+
+																																																								<p class="mt-4 leading-relaxed text-gray-700">
+																																																												No, Rose, they are not breathing. And they have no arms or
+																																																												legs … Where are
+																																																												they? You know what? If we come across somebody with no arms
+																																																												or legs, do we
+																																																												bother resuscitating them? I mean, what quality of life do
+																																																												we have there?
+																																																								</p>
+																																																				</div>
+																																																</div>
+
+																																																<footer class="mt-4 text-sm font-medium text-gray-700 sm:mt-6">
+																																																				&mdash; Michael Scott
+																																																</footer>
+																																												</blockquote>
+																																								</div>
+
+																																								<div class="keen-slider__slide">
+																																												<blockquote
+																																																class="flex h-full flex-col justify-between bg-white p-6 shadow-sm sm:p-8 lg:p-12">
+																																																<div>
+
+
+																																																				<div class="mt-4">
+																																																								<p class="text-2xl font-bold text-[#b78700] sm:text-3xl">
+																																																												Stayin'
+																																																												Alive</p>
+
+																																																								<p class="mt-4 leading-relaxed text-gray-700">
+																																																												No, Rose, they are not breathing. And they have no arms or
+																																																												legs … Where are
+																																																												they? You know what? If we come across somebody with no arms
+																																																												or legs, do we
+																																																												bother resuscitating them? I mean, what quality of life do
+																																																												we have there?
+																																																								</p>
+																																																				</div>
+																																																</div>
+
+																																																<footer class="mt-4 text-sm font-medium text-gray-700 sm:mt-6">
+																																																				&mdash; Michael Scott
+																																																</footer>
+																																												</blockquote>
+																																								</div>
+																																				</div>
+																																</div>
+																												</div>
+
+																												<div class="mt-8 flex justify-center gap-4 lg:hidden">
+																																<button
+																																				class="rounded-full border border-[#b78700] p-4 text-[#b78700] transition hover:bg-[#b78700] hover:text-white"
+																																				id="keen-slider-previous" aria-label="Previous slide">
+																																				<svg class="size-5 -rotate-180 transform" fill="none" stroke="currentColor"
+																																								viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+																																								<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"
+																																												stroke-width="2" />
+																																				</svg>
+																																</button>
+
+																																<button
+																																				class="rounded-full border border-[#b78700] p-4 text-[#b78700] transition hover:bg-[#b78700] hover:text-white"
+																																				id="keen-slider-next" aria-label="Next slide">
+																																				<svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+																																								xmlns="http://www.w3.org/2000/svg">
+																																								<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"
+																																												stroke-width="2" />
+																																				</svg>
+																																</button>
+																												</div>
+																								</div>
+																				</section>
+																</div>
+												</div>
+
+
+
+
+
+
+
+
+				</body>
+
+				@include('partials.footer')
+
+
+				<!-- Back To Top -->
+				<div class="fixed bottom-8 right-8 hidden cursor-pointer rounded-full bg-[#b78700] p-3 text-white shadow-lg transition duration-300 ease-in-out hover:bg-[#01004c]"
+								id="scrollToTop">
+								<i class="ri-arrow-up-s-fill text-xl"></i>
+				</div>
+
+
+				<div id="responsive-overlay"></div>
+
+				<!-- Back To Top -->
+				<script>
+								const scrollToTopButton = document.getElementById('scrollToTop');
+
+								// Show/hide the button based on scroll position
+								window.addEventListener('scroll', () => {
+												if (window.scrollY > 200) { // Show after scrolling 200px
+																scrollToTopButton.classList.remove('hidden');
+												} else {
+																scrollToTopButton.classList.add('hidden');
+												}
+								});
+
+								// Scroll smoothly back to top when clicked
+								scrollToTopButton.addEventListener('click', () => {
+												window.scrollTo({
+																top: 0,
+																behavior: 'smooth'
+												});
+								});
+				</script>
+
+
+				<script>
+								function switchTable(platform) {
+												const tables = ['telegram', 'facebook', 'instagram', 'twitter', 'whatsapp', 'tiktok', 'youtube'];
+												tables.forEach(table => {
+																document.getElementById(`${table}-table`).classList.add('hidden');
+												});
+												document.getElementById(`${platform}-table`).classList.remove('hidden');
+								}
+				</script>
+
+
+				<script type="module">
+								import KeenSlider from 'https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/+esm'
+
+								const keenSlider = new KeenSlider(
+												'#keen-slider', {
+																loop: true,
+																slides: {
+																				origin: 'center',
+																				perView: 1.25,
+																				spacing: 16,
+																},
+																breakpoints: {
+																				'(min-width: 1024px)': {
+																								slides: {
+																												origin: 'auto',
+																												perView: 1.5,
+																												spacing: 32,
+																								},
+																				},
+																},
+												},
+												[]
+								)
+
+								const keenSliderPrevious = document.getElementById('keen-slider-previous')
+								const keenSliderNext = document.getElementById('keen-slider-next')
+
+								const keenSliderPreviousDesktop = document.getElementById('keen-slider-previous-desktop')
+								const keenSliderNextDesktop = document.getElementById('keen-slider-next-desktop')
+
+								keenSliderPrevious.addEventListener('click', () => keenSlider.prev())
+								keenSliderNext.addEventListener('click', () => keenSlider.next())
+
+								keenSliderPreviousDesktop.addEventListener('click', () => keenSlider.prev())
+								keenSliderNextDesktop.addEventListener('click', () => keenSlider.next())
+				</script>
+
+
+
+
+
+
+				<script>
+								document.addEventListener("DOMContentLoaded", () => {
+												const tables = [
+																"telegram",
+																"facebook",
+																"instagram",
+																"twitter",
+																"whatsapp",
+																"tiktok",
+																"youtube",
+												];
+												let activeTable = "telegram"; // Default table
+
+												// Function to switch tables
+												function switchTable(table) {
+																if (tables.includes(table)) {
+																				activeTable = table;
+																				renderTables();
+																}
+												}
+
+												// Function to render tables based on activeTable
+												function renderTables() {
+																tables.forEach((t) => {
+																				const tableElement = document.getElementById(`${t}-table`);
+																				if (tableElement) {
+																								tableElement.style.display =
+																												t === activeTable ? "table" : "none";
+																				}
+																});
+												}
+
+												// Add event listeners to buttons
+												document.querySelectorAll(".table-button").forEach((button) => {
+																button.addEventListener("click", () => {
+																				const tableName = button.getAttribute("data-table");
+																				switchTable(tableName);
+																});
+												});
+
+												// Initial rendering
+												renderTables();
+								});
+				</script>
+
+				<script>
+								function placeOrder(publisherId) {
+												fetch('{{ route('order.place') }}', { // Use named route for the URL
+																				method: 'POST',
+																				headers: {
+																								'Content-Type': 'application/json',
+																								'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+																				},
+																				body: JSON.stringify({
+																								publisher_id: publisherId
+																				}),
+																})
+																.then(response => response.json())
+																.then(data => {
+																				if (data.success) {
+																								alert('Order placed successfully!');
+																				} else {
+																								alert('There was an error placing the order.');
+																				}
+																})
+																.catch(error => {
+																				console.error('Error:', error);
+																				alert('There was an error placing the order.');
+																});
+								}
+				</script>
+
+				<!-- JavaScript for Incremental Counters -->
+				<script>
+								function incrementCounter(elementId, targetNumber, duration) {
+												const element = document.getElementById(elementId);
+												let count = 0;
+												const increment = targetNumber / (duration / 100);
+
+												const interval = setInterval(() => {
+																count += increment;
+																if (count >= targetNumber) {
+																				count = targetNumber;
+																				clearInterval(interval);
+																}
+																element.innerText = Math.floor(count);
+												}, 100);
+								}
+
+								window.onload = () => {
+												incrementCounter("registeredWebsites", 10000, 2000);
+												incrementCounter("contentCreators", 850000, 3000);
+												incrementCounter("registeredAdvertisers", 10000, 2000);
+												incrementCounter("tasksCompleted", 10000, 2000);
+								};
+				</script>
 
 </html>

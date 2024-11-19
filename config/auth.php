@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'advertisers',
         ],
+         'social_advertiser' => [
+            'driver' => 'session',
+            'provider' => 'social_advertisers',
+        ],
     ],
 
     /*
@@ -72,6 +76,10 @@ return [
         'advertisers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Advertiser::class,
+        ],
+         'social_advertisers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\SocialAdvertiser::class,
         ],
 
         // 'users' => [

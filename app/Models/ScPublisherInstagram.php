@@ -9,10 +9,10 @@ class ScPublisherInstagram extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    // protected $guarded = [];
 
     // Table associated with the model
-    protected $table = 'scp_instagarm_pages';
+    protected $table = 'scp_instagram_pages';
 
     // The attributes that are mass assignable
     protected $fillable = [
@@ -23,6 +23,8 @@ class ScPublisherInstagram extends Model
         'contact_person_email',
         'contact_person_phone',
         'country',
+        'influencer_type',
+        'other_influencer_types',
         'niches_themes',
         'publishing_time',
         'paypal_email',
@@ -62,4 +64,55 @@ class ScPublisherInstagram extends Model
     protected $casts = [
         'niches_themes' => 'array',
     ];
+
+
+    /**
+     * Get the highest price among all relevant cost attributes.
+     *
+     * @return float
+     */
+    public function getHighestPriceAttribute()
+    {
+        $prices = [
+            $this->cost_per_post,
+            $this->cost_per_hour,
+            $this->cost_per_day,
+            $this->cost_per_week,
+            $this->cost_per_month,
+            $this->cost_per_reel,
+            $this->cost_per_reel_hour,
+            $this->cost_per_reel_day,
+            $this->cost_per_reel_week,
+            $this->cost_per_reel_month,
+            $this->cost_per_video_ad,
+            $this->cost_per_video_ad_hour,
+            $this->cost_per_video_ad_day,
+            $this->cost_per_video_ad_week,
+            $this->cost_per_video_ad_month,
+            $this->cost_per_skit,
+            $this->cost_per_skit_hour,
+            $this->cost_per_skit_day,
+            $this->cost_per_skit_week,
+            $this->cost_per_skit_month,
+        ];
+
+        // Filter out null values and return the highest price
+        return max(array_filter($prices, function($price) {
+            return !is_null($price);
+        }));
+    }
+
+    /**
+     * Save the maximum price in the `price` column before saving the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->price = $model->highest_price; // Use the computed highest price
+        });
+    }
 }

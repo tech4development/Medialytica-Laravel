@@ -230,16 +230,15 @@
 
 
                 <!-- Influencer Category -->
-                <div class="mb-4">
-                    <label for="influencer_category" class="block text-sm font-medium text-gray-700">Influencer Category *</label>
-                    <select id="influencer_category" name="influencer_category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
-                            <option value="Mega Influencers">Mega Influencers (More than 1M followers)</option>
-                            <option value="Macro Influencers">Macro Influencers (100K - 1M followers)</option>
-                            <option value="Micro Influencers">Micro Influencers (1K - 100K followers)</option>
-                            <option value="Nano Influencers">Nano Influencers (Below 1K followers)</option>
-
-                    </select>
-                </div>
+                  <div class="mb-4">
+                <label for="influencer_category" class="block text-sm font-medium text-gray-700">Influencer Category *</label>
+                <select id="influencer_category" name="influencer_category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
+                    <option value="Mega Influencers (More than 1M followers)">Mega Influencers (More than 1M followers)</option>
+                    <option value="Macro Influencers (100K - 1M followers)">Macro Influencers (100K - 1M followers)</option>
+                    <option value="Micro Influencers (1K - 100K followers)">Micro Influencers (1K - 100K followers)</option>
+                    <option value="Nano Influencers (Below 1K followers)">Nano Influencers (Below 1K followers)</option>
+                </select>
+            </div>
                 </div>
 
                 <!-- Post Types -->

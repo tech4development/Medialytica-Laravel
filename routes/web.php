@@ -26,15 +26,22 @@ use App\Http\Controllers\SocialPublisherPanel\ScPublisherWhatsappController;
 use App\Http\Controllers\UserPanel\UserController;
 use App\Http\Controllers\Orders\OrderController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Advertisers\GuestAuthController;
 use App\Http\Controllers\Orders\CheckoutController;
 use App\Http\Controllers\Orders\CartController;
 use App\Http\Controllers\Orders\PayPalController;
 use App\Http\Controllers\Advertisers\RedirectController;
+use App\Http\Controllers\SocialAdvertisers\Orders\SocialAdvertiserOrderController;
 use App\Http\Controllers\Orders\InvoiceController;
 use App\Http\Controllers\SocialLogin\GoogleAuthController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Http\Controllers\SocialAdvertisers\Cart\SocialAdvertiserCartController;
+use App\Http\Controllers\Advertisers\AdvertiserPagesController;
+use App\Http\Controllers\PublisherPanel\PublisherPagesController;
+use App\Http\Controllers\Pages\ContactController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +59,25 @@ Route::get('/', function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+
+/*
+|--------------------------------------------------------------------------
+                  Page Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+
+Route::get('/about-us', [ContactController::class, 'aboutUs'])->name('aboutus');
+Route::get('/what-we-do', [ContactController::class, 'whatweDo'])->name('whatwedo');
+Route::get('/contact-us', [ContactController::class, 'contactUs'])->name('contactus');
+Route::get('/services', [ContactController::class, 'services'])->name('services');
+Route::get('/write-for-me', [ContactController::class, 'writeforMe'])->name('writeforme');
+Route::get('/niches', [ContactController::class, 'niches'])->name('niches');
+
 
 
 /*
@@ -177,7 +203,7 @@ Route::middleware('auth','user_role:publisher')->group(function () {
     });
 
 
-
+ Route::get('/filter-publishers', [GuestAuthController::class, 'showFilters'])->name('filter.publishers');
 
 
 /*
@@ -342,9 +368,84 @@ Route::post('socialpublisher/tiktokgroup/store', [TiktokGroupController::class, 
 });
 
 
+/*
+|--------------------------------------------------------------------------
+                           Social Publisher Pages, Routes and Contoller
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+
     Route::get('/socialpublisher', [SocialPublisherController::class, 'guestPage'])->name('socialpublisher');
 
-    Route::get('/filter-publishers', [GuestAuthController::class, 'filterPublishers'])->name('filter.publishers');
+
+
+    Route::get('/facebook-pages', [FacebookPageController::class, 'index'])->name('facebook.pages.index');
+
+    Route::get('/facebook-profile', [FacebookProfileController::class, 'index'])->name('facebook.profiles.index');
+
+
+    Route::get('/facebook-group', [FacebookGroupController::class, 'index'])->name('facebook.groups.index');
+
+
+    Route::get('/instagram-pages', [FacebookPageController::class, 'index'])->name('instagram.pages.index');
+
+
+    Route::get('/instagram-group', [FacebookPageController::class, 'index'])->name('instagram.groups.index');
+
+
+
+    Route::get('/x-handles', [SCPublisherTwitter::class, 'index'])->name('x.handles.index');
+
+
+    Route::get('/x-community', [XCommunityController::class, 'index'])->name('x.community.index');
+
+
+    Route::get('/telegram-groups', [TelegramGoupController::class, 'index'])->name('telegram.groups.index');
+
+
+    Route::get('/telegram-channels', [ScPublisherTelegram::class, 'index'])->name('telegram.channels.index');
+
+
+    Route::get('/tiktok-pages', [ScPublisherTiktok::class, 'index'])->name('tiktok.pages.index');
+
+
+    Route::get('/tiktok-groups', [TiktokGroupController::class, 'index'])->name('tiktok.groups.index');
+
+
+    Route::get('/whatsapp-groups', [scPublisherWhatsappController::class, 'index'])->name('whatsapp.groups.index');
+
+    Route::get('/whatsapp-community', [WhatsappCommunityController::class, 'index'])->name('whatsapp.community.index');
+
+    Route::get('/whatsapp-channels', [WhatsappChannelController::class, 'index'])->name('whatsapp.channels.index');
+
+    Route::get('/youtube-channels', [ScPublisherYoutubeController::class, 'showIndex'])->name('youtube.channels.index');
+
+
+/*
+|--------------------------------------------------------------------------
+                           Social Advertiser Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+    // Checkout page route
+    Route::get('/socialadvertisers/checkout', [SocialAdvertiserOrderController::class, 'checkout'])
+        ->name('socialcheckout.index');
+
+    // Place order route
+    Route::post('/socialadvertisers/place-order', [SocialAdvertiserOrderController::class, 'placeOrder'])
+        ->name('socialorder.place');
+
+    // Thank you page route
+    Route::get('/socialadvertisers/thank-you/{orderId}', [SocialAdvertiserOrderController::class, 'thankYou'])
+        ->name('thank_you');
+
+    // Invoice route
+    Route::get('/socialadvertisers/invoice/{id}', [SocialAdvertiserOrderController::class, 'generateInvoice'])
+        ->name('invoice.show');
 
 
 
@@ -447,6 +548,31 @@ Route::post('/checkout/verify', function () {
 Route::get('/thank-you/{orderId}', [OrderController::class, 'thankYou'])->name('thank_you');
 
 
+
+/*
+|--------------------------------------------------------------------------
+                  Social Publisher Cart, Order and Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+
+*/
+
+
+    // Route to display the cart
+    Route::get('/scart', [SocialAdvertiserCartController::class, 'index'])->name('socialcart.index');
+
+    // Route to add social media channels/groups/pages to the cart
+    Route::post('socialchannel/add', [SocialAdvertiserCartController::class, 'add'])->name('socialcart.add');
+
+    // Route to remove an item from the cart
+    Route::delete('socialchannel/remove/{index}', [SocialAdvertiserCartController::class, 'remove'])->name('social.remove');
+
+    // Route to handle checkout
+    Route::post('socialadvertiser/checkout', [SocialAdvertiserOrderController::class, 'checkout'])->name('social.checkout');
+
+
+
 // Route::middleware(['returning.advertiser'])->group(function () {
 //     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.index');
 //     Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
@@ -474,6 +600,17 @@ Route::post('/order/{id}/update-status', [OrderController::class, 'updateStatus'
 |
 */
 
+Route::post('paypal', [PayPalController::class, 'paypal'])->name('paypal');
+Route::get('success', [PayPalController::class, 'success'])->name('paypal.success');
+Route::get('cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
+/*
+|--------------------------------------------------------------------------
+                Social Advertiser Paypal Checkout Routes
+|--------------------------------------------------------------------------
+|
+|
+
+*/
 Route::post('paypal', [PayPalController::class, 'paypal'])->name('paypal');
 Route::get('success', [PayPalController::class, 'success'])->name('paypal.success');
 Route::get('cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
@@ -517,6 +654,57 @@ Route::prefix('invoice')->group(function () {
     Route::get('email/{id}', [InvoiceController::class, 'email'])->name('invoice.email');
 });
 
+
+/*
+|--------------------------------------------------------------------------
+                  Advertiser Page Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+
+ Route::get('/for-advertisers', [AdvertiserPagesController::class, 'forAdvertisers'])->name('for.advertisers');
+
+
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+                 Publisher Page Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+ Route::get('/for-publishers', [PublisherPagesController::class, 'forPublishers'])->name('for.publishers');
+
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+                  Social Publisher Page Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+
+
+
+
+
+
+
+
+
+
 /*
 |--------------------------------------------------------------------------
                 400, 404 Error and 500 Error pages routes
@@ -524,6 +712,10 @@ Route::prefix('invoice')->group(function () {
 |
 |
 */
+
+
+
+
 
 // Optionally, define a route for 404 errors if you need specific handling
 Route::get('/404', function () {

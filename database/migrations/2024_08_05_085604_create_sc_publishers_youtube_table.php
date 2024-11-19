@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('contact_person_phone')->nullable();
             $table->string('language')->nullable();
             $table->string('country');
-            $table->enum('influencer_type', [
+            $table->longText('influencer_type', [
                 'Musician/Artist',
                 'DJ/MC',
                 'TV Personality',
@@ -44,25 +44,13 @@ return new class extends Migration
             $table->string('youtube_channel_name');
             $table->string('youtube_channel_url')->unique();
             $table->unsignedBigInteger('number_of_subscribers');
-            $table->enum('influencer_category', [
-                'Mega Influencers (More than 1M followers)',
-                'Macro Influencers (100K - 1M followers)',
-                'Micro Influencers (1K - 100K followers)',
-                'Nano Influencers (Below 1K followers)'
-            ]);
-
-
-            $table->enum('target_audience', [
+            $table->string('influencer_category');
+            $table->longText('target_audience', [
                 'Below 18 years',
                 '18 to 35 years',
                 'Over 35 years'
             ]);
-            $table->enum('post_types', [
-                'Skits',
-                'Video Ads',
-                'Youtube Shorts',
-                'Image/Poster/Banner/Text posts'
-            ]);
+            $table->longText('post_types', ['Skits', 'Video Ads', 'Reels', 'Image/Poster/Banner/Text posts'])->nullable();
             $table->decimal('cost_per_post', 8, 2)->nullable();
             $table->decimal('cost_per_hour', 8, 2)->nullable();
             $table->decimal('cost_per_day', 8, 2)->nullable();
@@ -87,6 +75,8 @@ return new class extends Migration
             $table->decimal('cost_per_skit_week', 8, 2)->nullable();
             $table->decimal('cost_per_skit_month', 8, 2)->nullable();
             $table->decimal('cpm_rate_skits', 8, 2)->nullable();
+            $table->unsignedDecimal('price', 8, 2)->nullable();
+
             $table->timestamps();
 
         });

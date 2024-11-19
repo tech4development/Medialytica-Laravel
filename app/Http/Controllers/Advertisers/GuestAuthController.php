@@ -14,34 +14,46 @@ class GuestAuthController extends Controller
         return view('pages.advertisers.guest');
     }
 
-    public function fetchPublishers(Request $request)
-{
+   public function showFilters(Request $request)
+    {
+         // Get filter inputs
+    $country = $request->input('country');
+    $niche = $request->input('niche');
+    $minPrice = $request->input('min_price');
+    $maxPrice = $request->input('max_price');
+
+    // Base query
     $query = Publisher::query();
 
-    // Apply filters
-    if ($request->has('country') && $request->country != '') {
-        $query->where('country', $request->country);
-    }
-    if ($request->has('niche') && $request->niche != '') {
-        $query->where('niches', 'like', '%' . $request->niche . '%');
-    }
-    if ($request->has('min_price') && $request->min_price != '') {
-        $query->where('price', '>=', $request->min_price);
-    }
-    if ($request->has('max_price') && $request->max_price != '') {
-        $query->where('price', '<=', $request->max_price);
-    }
-    if ($request->has('da') && $request->da != '') {
-        $query->where('moz_da', '>=', $request->da);
-    }
-    if ($request->has('dr') && $request->dr != '') {
-        $query->where('ahref_dr', '>=', $request->dr);
+    // Apply filters if provided
+    if ($country) {
+        $query->where('country', $country);
     }
 
-    // Fetch the filtered data
-    $publishers = $query->get();
+    if ($niche) {
+        $query->where('niches', 'like', '%' . $niche . '%');
+    }
 
-    // Return a view or partial to update the table
-    return view('partials.publisher_table', compact('publishers'));
-}
+    if ($minPrice) {
+        $query->where('price', '>=', $minPrice);
+    }
+
+    if ($maxPrice) {
+        $query->where('price', '<=', $maxPrice);
+    }
+
+
+        // Fetch the filtered data
+        $publishers = $query->get();
+
+        // If the request is AJAX, return only the table partial
+        if ($request->ajax()) {
+            return view('partials.publisher_table', compact('publishers'))->render();
+        }
+
+        // Otherwise return the full page
+        return view('pages.advertisers.guest', compact('publishers'));
+    }
+
+
 }

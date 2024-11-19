@@ -30,6 +30,16 @@
         <span class="font-bold">Success</span> {{ session('success') }}
     </div>
 @endif
+@if($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <h4 class="font-bold text-lg mb-2">Please fix the following errors:</h4>
+        <ul class="list-none space-y-2">
+            @foreach ($errors->all() as $error)
+                <li><strong>Oh Snap!</strong> {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <div class="container mx-auto p-6 max-w-4xl">
         <div class="bg-white p-8 rounded-lg shadow-md">
             <h1 class="text-2xl font-bold mb-4 text-center">Add your Tiktok Group Details</h1>
@@ -47,7 +57,7 @@
                  <!-- Email -->
                  <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700">Enter your email address</label>
-                    <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <input type="email" id="email" name="email_address" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
 
                 <!-- Phone Number -->
@@ -109,7 +119,7 @@
                             'Travel Blogger'
                         ] as $category)
                             <div class="flex items-center">
-                                <input type="checkbox" id="influencer_type_{{ $loop->index }}" name="influencer_types[]" value="{{ $category }}" class="mr-2">
+                                <input type="checkbox" id="influencer_type_{{ $loop->index }}" name="influencer_type[]" value="{{ $category }}" class="mr-2">
                                 <label for="influencer_type_{{ $loop->index }}" class="text-gray-600">{{ $category }}</label>
                             </div>
                         @endforeach
@@ -197,16 +207,15 @@
 
 
                 <!-- Influencer Category -->
-                <div class="mb-4">
-                    <label for="influencer_category" class="block text-sm font-medium text-gray-700">Influencer Category *</label>
-                    <select id="influencer_category" name="influencer_category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                        <option value="" disabled selected>Select your influencer category</option>
-                        <option value="Mega Influencers">Mega Influencers (More than 1M followers)</option>
-                        <option value="Macro Influencers">Macro Influencers (100K - 1M followers)</option>
-                        <option value="Micro Influencers">Micro Influencers (1K - 100K followers)</option>
-                        <option value="Nano Influencers">Nano Influencers (Below 1K followers)</option>
-                    </select>
-                </div>
+                    <div class="mb-4">
+                <label for="influencer_category" class="block text-sm font-medium text-gray-700">Influencer Category *</label>
+                <select id="influencer_category" name="influencer_category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >
+                    <option value="Mega Influencers (More than 1M followers)">Mega Influencers (More than 1M followers)</option>
+                    <option value="Macro Influencers (100K - 1M followers)">Macro Influencers (100K - 1M followers)</option>
+                    <option value="Micro Influencers (1K - 100K followers)">Micro Influencers (1K - 100K followers)</option>
+                    <option value="Nano Influencers (Below 1K followers)">Nano Influencers (Below 1K followers)</option>
+                </select>
+            </div>
                 </div>
 
                 <!-- Post Types -->
@@ -215,15 +224,15 @@
                         <span class="block text-sm font-medium text-gray-700">Which type of posts do you make on yourTiktok group? Select all that apply *</span>
                         <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
                             <div class="flex items-center">
-                                <input type="checkbox" id="post_type_skits" name="post_types[]" value="Skits" class="mr-2" onchange="toggleDivs()">
+                                <input type="checkbox" id="post_type_skits" name="postTypes[]" value="Skits" class="mr-2" onchange="toggleDivs()">
                                 <label for="post_type_skits" class="text-gray-600">Skits</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox" id="post_type_video_ads" name="post_types[]" value="Video Ads" class="mr-2" onchange="toggleDivs()">
+                                <input type="checkbox" id="post_type_video_ads" name="postTypes[]" value="Video Ads" class="mr-2" onchange="toggleDivs()">
                                 <label for="post_type_video_ads" class="text-gray-600">Video Ads</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="checkbox" id="post_type_posts" name="post_types[]" value="Image/Poster/Banner/Text posts" class="mr-2" onchange="toggleDivs()">
+                                <input type="checkbox" id="post_type_posts" name="postTypes[]" value="Image/Poster/Banner/Text posts" class="mr-2" onchange="toggleDivs()">
                                 <label for="post_type_image_poster_banner_text" class="text-gray-600">Image/Poster/Banner/Text posts</label>
                             </div>
                         </div>
@@ -392,7 +401,7 @@
                             <!-- CPM Rate Posts -->
                             <div class="mb-4">
                                 <label for="cpm_rate_video_ads" class="block text-sm font-medium text-gray-700">What is the CPM Rate for Tiktok video ads on your group? *</label>
-                                <input type="number" id="cpm_rate_video_ads" name="cpm_rate_viedo_ads" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
+                                <input type="number" id="cpm_rate_video_ads" name="cpm_rate_video_ads" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" step="0.01" required>
                             </div>
 
                         </div>
