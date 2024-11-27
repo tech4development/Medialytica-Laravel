@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Advertiser;
 use App\Models\Publisher;
 use App\Models\Cart;
+use App\Models\Invoice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -48,7 +49,70 @@ class AdvertiserAuthController extends Controller
         return view('advertisers.auth.register', compact('countries'));
     }
 
- public function register(Request $request)
+
+   // Add the createOrderFromCart method to your controller
+    private function createOrderFromCart($cartItems, $advertiser)
+    {
+        // Group the cart items by `website_url`
+        $groupedItems = [];
+        foreach ($cartItems as $item) {
+            if (isset($item['website_name'], $item['website_url'], $item['price'])) {
+                $key = $item['website_url'];
+                if (!isset($groupedItems[$key])) {
+                    $groupedItems[$key] = [
+                        'website_name' => $item['website_name'],
+                        'website_url' => $item['website_url'],
+                        'price' => 0,
+                    ];
+                }
+                $groupedItems[$key]['price'] += $item['price'];
+            }
+        }
+
+        // Calculate total price and prepare order details
+        $totalPrice = collect($groupedItems)->sum('price');
+        $firstPublisher = reset($groupedItems);
+        $publisherWebsiteUrl = implode(', ', array_keys($groupedItems));
+
+        // Create the order
+        $order = Order::create([
+            'advertiser_id' => $advertiser->id,
+            'publisher_website_name' => $firstPublisher['website_name'],
+            'publisher_website_url' => $publisherWebsiteUrl,
+            'price' => $totalPrice,
+            'status' => 'placed',  // Order status
+        ]);
+
+        // Add order items
+        foreach ($groupedItems as $item) {
+            $order->items()->create([
+                'website_name' => $item['website_name'],
+                'website_url' => $item['website_url'],
+                'price' => $item['price'],
+            ]);
+        }
+
+        // Clear the cart
+        session()->forget('cart');
+
+        // Generate an invoice
+        $invoice = Invoice::create([
+            'order_id' => $order->id,
+            'price' => $totalPrice,
+            'status' => 'generated',  // Invoice status
+            'payment_method' => 'credit_card',  // Example payment method, adjust accordingly
+            'isPaymentReceived' => false,
+            'user_name' => $advertiser->name,
+            'user_email' => $advertiser->email,
+            'publisher_website_name' => $order->publisher_website_name,
+            'publisher_website_url' => $order->publisher_website_url,
+        ]);
+
+        // Return the order so you can use it to redirect
+        return $order;
+    }
+
+public function register(Request $request)
 {
     // Validate the request data
     $request->validate([
@@ -68,19 +132,82 @@ class AdvertiserAuthController extends Controller
         'phone' => $request->phone,
     ]);
 
+     // Prepare advertiser details for the email
+        $advertiserDetails = [
+            'name' => $advertiser->name,
+            'email' => $advertiser->email,
+            'created_at' => $advertiser->created_at->format('Y-m-d H:i:s'),
+        ];
+
+
+
+
+        // Send an email notification to the admin
+        Mail::to('letstalk@medialytica.com')->send(new NewAdvertiserNotificationToAdmin($advertiserDetails));
+
     // Log the advertiser in
     Auth::guard('advertiser')->login($advertiser);
 
     // Check if there are cart items in the session
     $cartItems = session()->get('cart', []);
     if (is_array($cartItems) && !empty($cartItems)) {
-        // Redirect to the checkout page
-        return redirect()->route('checkout.index')->with('message', 'Registration successful! Proceed to checkout.');
+        // Create the order from cart items
+        $order = $this->createOrderFromCart($cartItems, $advertiser);
+
+        // Clear the cart after order creation
+        session()->forget('cart');
+
+        // Redirect to the order.place function
+        return redirect()->route('order.place')->with('message', 'Registration successful! Your order has been placed.');
     }
 
-    // Redirect to a default page if no items in the cart
-    return redirect()->route('guest.page')->with('message', 'Registration successful!');
+    // Redirect to the 'order.place function if no items in cart (just in case they want to place an order later)
+    return redirect()->route('order.place')->with('message', 'Registration successful!');
 }
+
+
+public function login(Request $request)
+{
+    // Validate the incoming request
+    $request->validate([
+        'email' => 'required|string|email',
+        'password' => 'required|string',
+    ]);
+
+
+    // Attempt to authenticate the advertiser
+    if (Auth::guard('advertiser')->attempt($request->only('email', 'password'))) {
+        // Get the cart items from the session
+        $cartItems = session()->get('cart', []);
+
+        // Ensure the cart items are an array
+        if (!is_array($cartItems)) {
+            $cartItems = [];
+        }
+
+        // Redirect to 'order.place function if there are items in the cart
+        if (!empty($cartItems)) {
+            // Create the order from cart items
+            $order = $this->createOrderFromCart($cartItems, Auth::guard('advertiser')->user());
+
+            // Clear the cart after order creation
+            session()->forget('cart');
+
+            // Redirect to the 'order.place page with success message
+            return redirect()->route('order.place')->with('toast_success', 'Login successful! Your order has been placed.');
+        }
+
+        // Redirect to the 'order.place function if no items in the cart (they might add items to cart later)
+        return redirect()->route('order.place')->with('toast_success', 'Login successful!');
+    }
+
+    // If authentication fails
+    throw ValidationException::withMessages([
+        'email' => [trans('auth.failed')],
+    ]);
+}
+
+
 
 
      // Show the login form
@@ -89,38 +216,6 @@ class AdvertiserAuthController extends Controller
          return view('advertisers.auth.login');
      }
 
-    public function login(Request $request)
-    {
-        // Validate the incoming request
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-
-        // Attempt to authenticate the advertiser
-        if (Auth::guard('advertiser')->attempt($request->only('email', 'password'))) {
-            // Get the cart items from the session
-            $cartItems = session()->get('cart', []);
-
-            // Ensure the cart items are an array
-            if (!is_array($cartItems)) {
-                $cartItems = [];
-            }
-
-            // Redirect to the checkout page if there are items in the cart
-            if (!empty($cartItems)) {
-                return redirect()->route('checkout.index')->with('toast_success', 'Login successful! Please proceed to checkout.');
-            }
-
-            // Redirect to a default page if no items in the cart
-            return redirect()->route('home')->with('toast_success', 'Login successful!');
-        }
-
-        // If authentication fails
-        throw ValidationException::withMessages([
-            'email' => [trans('auth.failed')],
-        ]);
-    }
 
 
 

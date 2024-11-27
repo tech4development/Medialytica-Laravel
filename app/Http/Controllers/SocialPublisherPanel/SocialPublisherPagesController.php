@@ -10,17 +10,17 @@ class SocialPublisherPagesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function forSocialPublishers()
     {
-        //
+        return view ('pages.socialpublishers.forsocialpublishers');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function getstartedasSocialPublisher()
     {
-        //
+       return view ('pages.socialpublishers.getstartedsocialpublishers');
     }
 
     /**

@@ -10,6 +10,8 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\SocialAdvertisers\auth\SocialAdvertiserAuthController;
+use App\Http\Controllers\Advertisers\AdvertiserAuthController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +37,7 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
-
+});
     /*
     |--------------------------------------------------------------------------
                        Advertiser Routes and Middleware
@@ -44,6 +46,7 @@ Route::middleware('guest')->group(function () {
     |
     */
 
+Route::middleware(['advertiser.auth'])->group(function () {
 
     Route::get('advertiser/register', [AdvertiserAuthController::class, 'showRegisterForm'])->name('advertiserregister');
     Route::post('advertiser/register', [AdvertiserAuthController::class, 'register'])->name('register.submit');
@@ -66,6 +69,30 @@ Route::middleware('guest')->group(function () {
     // Logout Route
     Route::post('advertiser/logout', [AdvertiserAuthController::class, 'logout'])->name('advertiserlogout');
     // Route::get('/guest', [AdvertiserAuthController::class, 'showGuestPage'])->name('guest.page');
+
+});
+
+    /*
+    |--------------------------------------------------------------------------
+                       Advertiser Guest Routes and Middleware
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+
+
+
+    // In routes/web.php
+
+Route::middleware(['guest.auth'])->group(function () {
+    // Routes for guest users only (not logged in)
+    Route::get('advertiser/login',  [AdvertiserAuthController::class, 'showLoginForm'])->name('advertiserlogin');
+    Route::post('advertiser/login', [AdvertiserAuthController::class, 'login'])->name('login.submit');
+    Route::get('advertiser/register',[AdvertiserAuthController::class, 'showRegisterForm'])->name('advertiserregister');
+    Route::post('advertiser/register', [AdvertiserAuthController::class, 'register'])->name('register.submit');
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -75,26 +102,26 @@ Route::middleware('guest')->group(function () {
     |
     */
 
-    Route::get('socialadvertiser/register', [SocialAdvertiserAuthController::class, 'showRegisterForm'])->name('socialadvertiserregister');
-    Route::post('socialadvertiser/register', [SocialAdvertiserAuthController::class, 'register'])->name('socialregister.submit');
+    // Route::get('socialadvertiser/register', [SocialAdvertiserAuthController::class, 'showRegisterForm'])->name('socialadvertiserregister');
+    // Route::post('socialadvertiser/register', [SocialAdvertiserAuthController::class, 'register'])->name('socialregister.submit');
 
     // Login Routes
-    Route::get('socialadvertiser/login', [SocialAdvertiserAuthController::class, 'showLoginForm'])->name('socialadvertiserlogin');
-    Route::post('socialadvertiser/login', [SocialAdvertiserAuthController::class, 'login'])->name('sociallogin.submit');
+    // Route::get('socialadvertiser/login', [SocialAdvertiserAuthController::class, 'showLoginForm'])->name('socialadvertiserlogin');
+    // Route::post('socialadvertiser/login', [SocialAdvertiserAuthController::class, 'login'])->name('sociallogin.submit');
 
     // Logout Route
-    Route::post('socialadvertiser/logout', [SocialAdvertiserAuthController::class, 'logout'])->name('socialadvertiserlogout');
+    //Route::post('socialadvertiser/logout', [SocialAdvertiserAuthController::class, 'logout'])->name('socialadvertiserlogout');
     // Route::get('/guest', [SocialAdvertiserAuthController::class, 'showGuestPage'])->name('guest.page');
 
-    Route::get('socialadvertiser/register', [SocialAdvertiserAuthController::class, 'showRegisterForm'])->name('socialadvertiserregister');
-    Route::post('advertiser/register', [SocialAdvertiserAuthController::class, 'register'])->name('socialregister.submit');
+    //Route::get('socialadvertiser/register', [SocialAdvertiserAuthController::class, 'showRegisterForm'])->name('socialadvertiserregister');
+    //Route::post('socialadvertiser/register', [SocialAdvertiserAuthController::class, 'register'])->name('socialregister.submit');
 
     // Login Routes
-    Route::get('socialadvertiser/login', [SocialAdvertiserAuthController::class, 'showLoginForm'])->name('socialadvertiserlogin');
-    Route::post('socialadvertiser/login', [SocialAdvertiserAuthController::class, 'login'])->name('sociallogin.submit');
+    //Route::get('socialadvertiser/login', [SocialAdvertiserAuthController::class, 'showLoginForm'])->name('socialadvertiserlogin');
+    //Route::post('socialadvertiser/login', [SocialAdvertiserAuthController::class, 'login'])->name('sociallogin.submit');
 
     // Logout Route
-    Route::post('socialadvertiser/logout', [SocialAdvertiserAuthController::class, 'logout'])->name('socialadvertiserlogout');
+    //Route::post('socialadvertiser/logout', [SocialAdvertiserAuthController::class, 'logout'])->name('socialadvertiserlogout');
     // Route::get('/guest', [SocialAdvertiserAuthController::class, 'showGuestPage'])->name('guest.page');
 
 

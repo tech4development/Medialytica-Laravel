@@ -15,7 +15,7 @@ class AdvertiserPagesController extends Controller
         return view ('pages.advertisers.foradvertisers');
     }
 
-     public function index()
+     public function getstartedasAdvertiser()
     {
         return view ('pages.advertisers.getstartedadvertisers');
     }

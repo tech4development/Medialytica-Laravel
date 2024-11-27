@@ -48,10 +48,10 @@
             <div class="authentication-page w-full">
                 <!-- ========== MAIN CONTENT ========== -->
                     <main id="content"  class="w-full max-w-md mx-auto p-6">
-                        <a href="index.html" class="header-logo lg:hidden">
+                        {{-- <a href="index.html" class="header-logo lg:hidden">
                             <img src="../assets/img/brand-logos/desktop-logo.png" alt="logo" class="mx-auto block dark:hidden">
                             <img src="../assets/img/brand-logos/desktop-dark.png" alt="logo" class="mx-auto hidden dark:block">
-                        </a>
+                        </a> --}}
                         <div class="mt-3">
                             <div class="p-2 sm:p-7">
                                 <div class="text-center">

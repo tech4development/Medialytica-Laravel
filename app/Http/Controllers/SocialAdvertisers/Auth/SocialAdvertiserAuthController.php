@@ -50,31 +50,49 @@ class SocialAdvertiserAuthController extends Controller
 
 public function register(Request $request)
 {
-    // Validate the request data and check for uniqueness in both tables
+    // Validate the request data
     $request->validate([
         'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:social_advertisers,email|unique:users,email', // Check for uniqueness in both tables
+        'email' => 'required|string|email|max:255',
         'password' => 'required|string|min:8|confirmed',
         'country' => 'required|string|max:255',
         'phone' => 'required|string|max:20',
     ]);
 
-    // Create a new advertiser
-    $socialAdvertiser = SocialAdvertiser::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'country' => $request->country,
-        'phone' => $request->phone,
-    ]);
+    // Check if the email already exists in the `users` table
+    $existingUser = User::where('email', $request->email)->first();
 
-    // Create the same entry in the users table
-    User::create([
-        'name' => $socialAdvertiser->name,
-        'email' => $socialAdvertiser->email,
-        'password' => $socialAdvertiser->password, // Password is already hashed
-        'user_role' => 'social_advertiser',
-    ]);
+    if ($existingUser) {
+        // Flash an error message and suggest the user log in
+        session()->flash('error', 'Email already registered. Please log in.');
+        return redirect()->route('login'); // Redirect to the login page
+    }
+
+    // Check if the email already exists in the `social_advertisers` table
+    $existingAdvertiser = SocialAdvertiser::where('email', $request->email)->first();
+
+    if (!$existingAdvertiser) {
+        // Create a new advertiser
+        $socialAdvertiser = SocialAdvertiser::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'country' => $request->country,
+            'phone' => $request->phone,
+        ]);
+    } else {
+        $socialAdvertiser = $existingAdvertiser; // Use the existing advertiser
+    }
+
+    // Ensure the user is added to the `users` table
+    $user = User::firstOrCreate(
+        ['email' => $request->email], // Find a user with this email
+        [
+            'name' => $request->name,
+            'password' => $socialAdvertiser->password, // Password is already hashed
+            'user_role' => 'social_advertiser',
+        ]
+    );
 
     // Log the advertiser in
     Auth::guard('social_advertiser')->login($socialAdvertiser);
@@ -92,5 +110,6 @@ public function register(Request $request)
     // Redirect to the guest page if no items in the cart
     return redirect()->route('guest.page');
 }
+
 
 }

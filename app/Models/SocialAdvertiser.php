@@ -62,7 +62,7 @@ class SocialAdvertiser extends Authenticatable // Extend from Authenticatable in
                 'name' => $socialAdvertiser->name,
                 'email' => $socialAdvertiser->email,
                 'password' => Hash::make($socialAdvertiser->password), // Ensure password is hashed
-                'role' => 'social_advertiser',
+                'user_role' => 'social_advertiser',
             ]);
         });
     }

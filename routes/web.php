@@ -43,6 +43,8 @@ use App\Http\Controllers\PublisherPanel\PublisherPagesController;
 use App\Http\Controllers\Pages\ContactController;
 
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -75,8 +77,30 @@ Route::get('/about-us', [ContactController::class, 'aboutUs'])->name('aboutus');
 Route::get('/what-we-do', [ContactController::class, 'whatweDo'])->name('whatwedo');
 Route::get('/contact-us', [ContactController::class, 'contactUs'])->name('contactus');
 Route::get('/services', [ContactController::class, 'services'])->name('services');
-Route::get('/write-for-me', [ContactController::class, 'writeforMe'])->name('writeforme');
 Route::get('/niches', [ContactController::class, 'niches'])->name('niches');
+Route::get('/who-we-are', [ContactController::class, 'whoweAre'])->name('whoweare');
+Route::get('/faqs', [ContactController::class, 'faqs'])->name('faqs');
+
+
+
+/*
+|--------------------------------------------------------------------------
+                  Services Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::get('/guest-posting', [ContactController::class, 'guestPosting'])->name('guest.posts');
+Route::get('/sponsored-posts', [ContactController::class, 'sponsoredPosts'])->name('sponsored.posts');
+Route::get('/influencer-marketing', [ContactController::class, 'influencerMarketing'])->name('influencer.marketing');
+Route::get('/banner-advertising', [ContactController::class, 'bannerAdvertising'])->name('banner.advertising');
+Route::get('/digital-marketing', [ContactController::class, 'digitalMarketing'])->name('digital.marketing');
+Route::get('/cpm-campaigns', [ContactController::class, 'cpmCampaigns'])->name('cpm.campaigns');
+Route::get('/social-publishers', [ContactController::class, 'socialPublishers'])->name('social.publishers');
+Route::get('/write-for-me', [ContactController::class, 'writeforMe'])->name('writeforme');
+Route::get('/outdoor-advertisng', [ContactController::class, 'outdoorAdvertising'])->name('outdoor.advertising');
+Route::get('/tv-radio-advertising', [ContactController::class, 'tvAdvertising'])->name('tvradio.advertising');
+Route::get('/link-insertion', [ContactController::class, 'linkInsertion'])->name('link.insertion');
 
 
 
@@ -522,11 +546,8 @@ Route::get('/redirect-to-register', [AdvertiserAuthController::class, 'redirectT
 |
 
 */
-Route::middleware(['check.advertiser'])->group(function () {
+Route::middleware(['advertiser.auth'])->group(function () {
 // Route::post('cart/add/{publisherId}', [CartController::class, 'add'])->name('cart.add');
-});
-
-
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::delete('/cart/remove/{Id}', [CartController::class, 'remove'])->name('cart.remove');
@@ -535,17 +556,26 @@ Route::put('/cart/update/{cartId}', [CartController::class, 'update'])->name('ca
 Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
 Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.index');
 
-Route::post('/checkout/verify', function () {
-    if (!auth()->guard('advertiser')->check()) {
-        // Store the intended URL to redirect after login
-        session()->put('url.intended', route('checkout.index'));
-        return redirect()->route('advertiserregister')->with('error', 'You must be logged in to proceed to checkout.');
-    }
+// Route::post('/checkout/verify', function () {
+//     if (!auth()->guard('advertiser')->check()) {
+//         // Store the intended URL to redirect after login
+//         session()->put('url.intended', route('checkout.index'));
+//         return redirect()->route('advertiserregister')->with('error', 'You must be logged in to proceed to checkout.');
+//     }
 
-    return redirect()->route('checkout.index');  // Redirect to checkout if authenticated
-})->name('checkout.verify');
+//     return redirect()->route('checkout.index');  // Redirect to checkout if authenticated
+// })->name('checkout.verify');
 
 Route::get('/thank-you/{orderId}', [OrderController::class, 'thankYou'])->name('thank_you');
+
+Route::post('/check-advertiser-status', [OrderController::class, 'checkAdvertiserStatus'])->name('check.advertiser.status');
+
+Route::get('order/{order}/summary', [OrderController::class, 'showOrderSummary'])->name('order.summary');
+
+});
+
+
+
 
 
 
@@ -665,6 +695,8 @@ Route::prefix('invoice')->group(function () {
 
 
  Route::get('/for-advertisers', [AdvertiserPagesController::class, 'forAdvertisers'])->name('for.advertisers');
+  Route::get('/get-started-as-an-advertiser', [AdvertiserPagesController::class, 'getstartedasAdvertiser'])->name('getstarted.avdertiser');
+
 
 
 
@@ -681,6 +713,8 @@ Route::prefix('invoice')->group(function () {
 */
 
  Route::get('/for-publishers', [PublisherPagesController::class, 'forPublishers'])->name('for.publishers');
+  Route::get('/get-started-as-a-publisher', [PublisherPagesController::class, 'getstartedasPublisher'])->name('getstarted.publisher');
+
 
 
 
@@ -696,10 +730,8 @@ Route::prefix('invoice')->group(function () {
 */
 
 
-
-
-
-
+ Route::get('/for-socialpublishers', [SocialPublisherPagesController::class, 'forSocialPublishers'])->name('for.socialpublishers');
+  Route::get('/get-started-as-a-publisher-a-socialpublisher', [SocialPublisherPagesController::class, 'getstartedasSocialPublisher'])->name('getstarted.socialpublisher');
 
 
 
@@ -712,6 +744,20 @@ Route::prefix('invoice')->group(function () {
 |
 |
 */
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+                400, 404 Error and 500 Error pages routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
 
 
 

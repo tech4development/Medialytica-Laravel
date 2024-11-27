@@ -61,90 +61,236 @@ use PDF;
                  * @param Request $request
                  * @return \Illuminate\Http\Response
                  */
-            public function placeOrder(Request $request)
-            {
-                // Ensure the user is authenticated as an advertiser
-                if (!auth()->guard('advertiser')->check()) {
-                    return redirect()->route('login')->with('error', 'You must be logged in as an advertiser to place an order.');
-                }
+//          public function placeOrder(Request $request)
+// {
+//     // Ensure the user is authenticated as an advertiser
+//     if (!auth()->guard('advertiser')->check()) {
+//         return redirect()->route('advertiserlogin')->with('error', 'You must be logged in as an advertiser to place an order.');
+//     }
 
-                // Retrieve the authenticated advertiser
-                $advertiser = auth()->guard('advertiser')->user();
+//     // Retrieve the authenticated advertiser
+//     $advertiser = auth()->guard('advertiser')->user();
 
-                // Get the existing cart from the session
-                $cartItems = session()->get('cart', []);
+//     // Get the existing cart from the session
+//     $cartItems = session()->get('cart', []);
 
-                // If the cart is empty, redirect to the guest page instead of cart page
-                if (empty($cartItems)) {
-                    return redirect()->route('guest.page')->with('error', 'Your cart is empty.'); // Change route to guest page
-                }
+//     // Redirect to guest page if the cart is empty
+//     if (empty($cartItems)) {
+//         return redirect()->route('guest.page')->with('error', 'Your cart is empty.');
+//     }
 
-                // Group the cart items by website_url
-                $groupedItems = [];
-                foreach ($cartItems as $item) {
-                    if (isset($item['website_name'], $item['website_url'], $item['price'])) {
-                        $key = $item['website_url'];
-                        if (!isset($groupedItems[$key])) {
-                            $groupedItems[$key] = [
-                                'website_name' => $item['website_name'],
-                                'website_url' => $item['website_url'],
-                                'price' => 0,
-                            ];
-                        }
-                        $groupedItems[$key]['price'] += $item['price'];
-                    }
-                }
+//     // Group the cart items by `website_url`
+//     $groupedItems = [];
+//     foreach ($cartItems as $item) {
+//         if (isset($item['website_name'], $item['website_url'], $item['price'])) {
+//             $key = $item['website_url'];
+//             if (!isset($groupedItems[$key])) {
+//                 $groupedItems[$key] = [
+//                     'website_name' => $item['website_name'],
+//                     'website_url' => $item['website_url'],
+//                     'price' => 0,
+//                 ];
+//             }
+//             $groupedItems[$key]['price'] += $item['price'];
+//         }
+//     }
 
-                // Create a new order with the total price of the grouped items
-                $totalPrice = collect($groupedItems)->sum('price');
-                $firstPublisher = reset($groupedItems);
-                $publisherWebsiteUrl = implode(', ', array_keys($groupedItems));
+//     // Calculate total price and prepare order details
+//     $totalPrice = collect($groupedItems)->sum('price');
+//     $firstPublisher = reset($groupedItems);
+//     $publisherWebsiteUrl = implode(', ', array_keys($groupedItems));
 
-                // Create the order
-                $order = Order::create([
-                    'advertiser_id' => $advertiser->id,
-                    'publisher_website_name' => $firstPublisher['website_name'],
-                    'publisher_website_url' => $publisherWebsiteUrl,
-                    'price' => $totalPrice,
-                    'payment_method' => $request->input('payment_method'),
-                    'status' => 'placed',
-                ]);
+//     // Create the order
+//     $order = Order::create([
+//         'advertiser_id' => $advertiser->id,
+//         'publisher_website_name' => $firstPublisher['website_name'],
+//         'publisher_website_url' => $publisherWebsiteUrl,
+//         'price' => $totalPrice,
+//         'payment_method' => $request->input('payment_method'),
+//         'status' => 'placed',
+//     ]);
 
-                // Create order items
-                foreach ($groupedItems as $item) {
-                    $order->items()->create([
-                        'website_name' => $item['website_name'],
-                        'website_url' => $item['website_url'],
-                        'price' => $item['price'],
-                    ]);
-                }
+//     // Add order items
+//     foreach ($groupedItems as $item) {
+//         $order->items()->create([
+//             'website_name' => $item['website_name'],
+//             'website_url' => $item['website_url'],
+//             'price' => $item['price'],
+//         ]);
+//     }
 
-                // Clear the cart
-                session()->forget('cart');
+//     // Clear the cart
+//     session()->forget('cart');
 
-                // Create an invoice
-                $invoice = Invoice::create([
-                    'order_id' => $order->id,
-                    'price' => $totalPrice,
-                    'isSent' => false,
-                    'status' => 'generated',
-                    'payment_method' => 'offline',
-                    'isPaymentReceived' => false,
-                    'user_name' => $advertiser->name,
-                    'user_email' => $advertiser->email,
-                    'publisher_website_name' => $order->publisher_website_name,
-                    'publisher_website_url' => $order->publisher_website_url,
-                ]);
+//     // Generate an invoice
+//     $invoice = Invoice::create([
+//         'order_id' => $order->id,
+//         'price' => $totalPrice,
+//         'isSent' => false,
+//         'status' => 'generated',
+//         'payment_method' => $request->input('payment_method'),
+//         'isPaymentReceived' => false,
+//         'user_name' => $advertiser->name,
+//         'user_email' => $advertiser->email,
+//         'publisher_website_name' => $order->publisher_website_name,
+//         'publisher_website_url' => $order->publisher_website_url,
+//     ]);
 
-                // Send the invoice to the advertiser's email
-               // Mail::to($advertiser->email)->send(new InvoiceSentToAdvertiser($invoice));
+//     // Uncomment to send an email notification
+//     // Mail::to($advertiser->email)->send(new InvoiceSentToAdvertiser($invoice));
 
-                // Redirect to the invoice view
-return redirect()->route('invoice.show', $invoice->id)
-                 ->with('success', 'Invoice created successfully!')
-                 ->header('Refresh', '60;url='.route('thank_you', ['orderId' => $order->id]));  // Redirect to thank you page after 1 minute
+//     // Redirect to the invoice view with a success message
+//     return redirect()->route('invoice.show', $invoice->id)
+//         ->with('success', 'Invoice created successfully!')
+//         ->header('Refresh', '60;url='.route('thank_you', ['orderId' => $order->id])); // Redirect to thank you page after 1 minute
+// }
 
+public function placeOrder(Request $request)
+{
+    // Ensure the user is authenticated as an advertiser
+    if (!auth()->guard('advertiser')->check()) {
+        return redirect()->route('advertiserlogin')->with('error', 'You must be logged in as an advertiser to place an order.');
+    }
+
+    // Retrieve the authenticated advertiser
+    $advertiser = auth()->guard('advertiser')->user();
+
+    // Get the existing cart from the session
+    $cartItems = session()->get('cart', []);
+
+    // Redirect to guest page if the cart is empty
+    if (empty($cartItems)) {
+        return redirect()->route('guest.page')->with('error', 'Your cart is empty.');
+    }
+
+    // Create the order from the cart
+    $order = $this->createOrderFromCart($cartItems, $advertiser);
+
+    // Redirect to the order summary page with the order ID
+    return redirect()->route('order.summary', ['order' => $order->id])
+        ->with('success', 'Your order has been placed successfully!');
+
+        
+}
+
+private function createOrderFromCart($cartItems, $advertiser)
+{
+    // Group the cart items by `website_url`
+    $groupedItems = [];
+    foreach ($cartItems as $item) {
+        if (isset($item['website_name'], $item['website_url'], $item['price'])) {
+            $key = $item['website_url'];
+            if (!isset($groupedItems[$key])) {
+                $groupedItems[$key] = [
+                    'website_name' => $item['website_name'],
+                    'website_url' => $item['website_url'],
+                    'price' => 0,
+                ];
             }
+            $groupedItems[$key]['price'] += $item['price'];
+        }
+    }
+
+    // Calculate total price and prepare order details
+    $totalPrice = collect($groupedItems)->sum('price');
+    $firstPublisher = reset($groupedItems);
+    $publisherWebsiteUrl = implode(', ', array_keys($groupedItems));
+
+    // Create the order
+    $order = Order::create([
+        'advertiser_id' => $advertiser->id,
+        'publisher_website_name' => $firstPublisher['website_name'],
+        'publisher_website_url' => $publisherWebsiteUrl,
+        'price' => $totalPrice,
+        'status' => 'placed',  // Order status
+    ]);
+
+    // Add order items
+    foreach ($groupedItems as $item) {
+        $order->items()->create([
+            'website_name' => $item['website_name'],
+            'website_url' => $item['website_url'],
+            'price' => $item['price'],
+        ]);
+    }
+
+    // Clear the cart
+    session()->forget('cart');
+
+    // Generate an invoice
+    $invoice = Invoice::create([
+        'order_id' => $order->id,
+        'price' => $totalPrice,
+        'status' => 'generated',  // Invoice status
+        'payment_method' => 'credit_card',  // Example payment method, adjust accordingly
+        'isPaymentReceived' => false,
+        'user_name' => $advertiser->name,
+        'user_email' => $advertiser->email,
+        'publisher_website_name' => $order->publisher_website_name,
+        'publisher_website_url' => $order->publisher_website_url,
+    ]);
+
+    // Return the order so you can use it to redirect
+    return $order;
+}
+
+
+private function sendOrderEmails($advertiser, $order)
+{
+    // Email to the advertiser
+    Mail::send('emails.advertiser.order_confirmation', ['order' => $order], function ($message) use ($advertiser) {
+        $message->to($advertiser->email)
+                ->subject('Order Confirmation');
+    });
+
+    // Email to the admin
+    Mail::send('emails.admin.new_advertiser', ['advertiser' => $advertiser], function ($message) {
+        $message->to('admin@example.com') // Replace with actual admin email
+                ->subject('New Advertiser Account');
+    });
+}
+
+
+
+
+public function showOrderSummary($orderId)
+{
+    // Retrieve the order details
+    $order = Order::with('items')->findOrFail($orderId);
+
+    // Show the order summary for 10 seconds
+    sleep(10);
+
+    // Generate the invoice
+    $invoice = Invoice::where('order_id', $orderId)->firstOrFail();
+
+    // Display the invoice
+    sleep(30);
+
+    // Redirect back to the guest page after 30 seconds
+    return redirect()->route('guest.page')->with('success', 'Thank you for your order! Feel free to place another one.');
+}
+
+
+
+
+public function checkAdvertiserStatus(Request $request)
+{
+    // Check if the advertiser is logged in
+    if (auth()->guard('advertiser')->check()) {
+        return response()->json(['status' => 'authenticated'], 200);
+    }
+
+    // Check if the website URL exists for any advertiser
+    $websiteUrl = $request->input('website_url');
+    $isReturning = Order::where('publisher_website_url', 'LIKE', "%$websiteUrl%")->exists();
+
+    if ($isReturning) {
+        return response()->json(['status' => 'returning'], 200);
+    }
+
+    return response()->json(['status' => 'new'], 200);
+}
 
 
 
@@ -245,4 +391,6 @@ return redirect()->route('invoice.show', $invoice->id)
             return response()->json(['message' => 'Order not found'], 404);
         }
     }
+
+    
 }

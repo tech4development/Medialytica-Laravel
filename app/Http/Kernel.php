@@ -72,6 +72,7 @@ class Kernel extends HttpKernel
         'advertiser.auth' => \App\Http\Middleware\AdvertiserAuth::class,
         'check.advertiser' => \App\Http\Middleware\CheckAdvertiser::class,
         'returning.advertiser' => \App\Http\Middleware\ReturningAdvertiserMiddleware::class,
+        'guest.auth' => \App\Http\Middleware\GuestAuth::class,
 
     ];
 
