@@ -9,19 +9,45 @@
  <meta name="csrf-token" content="{{ csrf_token() }}" />
  <meta name="description" content="" />
  <meta name="keywords" content="" />
- @vite('resources/css/app.css')
+
+ <!-- Primary CSS -->
+ @vite('resources/css/app.css') <!-- Loads the main CSS file via Vite -->
+
+ <!-- Compiled Tailwind CSS -->
+ <link href="{{ asset('build/assets/style.css') }}" rel="stylesheet" />
+
+ <!-- FontAwesome for Icons -->
  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.2.2/dist/cdn.min.js" defer></script>
- {{-- <link href="{{ asset('backend/assets/css/style.css') }}" rel="stylesheet" /> --}}
- <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+ <!-- Keen Slider CSS -->
  <link href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.css" rel="stylesheet" />
 
+ <!-- Alpine.js for Interactive Components -->
+ <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.2.2/dist/cdn.min.js" defer></script>
 
  <style>
   .hover-border-fill {
-   border: gray;
+   border-color: #d1d5db;
+   /* Tailwind's gray-300 */
    transition: all 0.3s ease-in-out;
+  }
+
+  .hover-border-fill h2 {
+   color: #b78700;
+  }
+
+  .hover-border-fill p {
+   color: #6b7280;
+   /* Tailwind's gray-500 */
+   transition: color 0.3s ease-in-out;
+   /* Smooth transition for color */
+  }
+
+  .hover-border-fill a {
+   color: #b78700;
+   display: flex;
+   align-items: center;
+   transition: color 0.3s ease-in-out;
   }
 
   .hover-border-fill:hover {
@@ -32,8 +58,11 @@
   .hover-border-fill:hover h2,
   .hover-border-fill:hover p,
   .hover-border-fill:hover a {
-   color: inherit;
-   /* Inherit white color from parent on hover */
+   color: white;
+  }
+
+  .hover-border-fill:hover svg {
+   fill: white;
   }
  </style>
 
@@ -92,7 +121,7 @@
      <div class="flex-1 rounded-lg bg-white p-6 text-center shadow-lg">
       <h2 class="mb-4 text-xl font-bold">Advertiser or Brand</h2>
       <p class="mb-4 text-gray-600">
-       I am an SEO or media buying professional interested in paid content partnerships, including sponsored posts, link
+       I am an SEO or media buying professional interested in paid content partnerships like sponsored posts, link
        insertion, and influencer marketing.
       </p>
       <a href="{{ route('guest.page') }}">
@@ -106,22 +135,28 @@
      <div class="flex-1 rounded-lg bg-white p-6 text-center shadow-lg">
       <h2 class="mb-4 text-xl font-bold">Website or Blog</h2>
       <p class="mb-4 text-gray-600">
-       I have a blog or website and would like to receive orders, publish advertiser content, and get paid.
+       I have a blog or website and would like to submit my details, receive orders, publish relevant advertiser
+       content, and get paid.
       </p>
-      <button class="rounded bg-[#004466] px-4 py-2 text-white transition hover:bg-[#b78700]">
-       Get Started
-      </button>
+      <a href="{{ route('for.publishers') }}">
+       <button class="rounded bg-[#004466] px-4 py-2 text-white transition hover:bg-[#b78700]">
+        Get Started
+       </button>
+      </a>
      </div>
 
      <!-- Card 3 -->
      <div class="flex-1 rounded-lg bg-white p-6 text-center shadow-lg">
       <h2 class="mb-4 text-xl font-bold">Social Publishers</h2>
       <p class="mb-4 text-gray-600">
-       I am a social media influencer and would like to publish branded content on my social pages and get paid.
+       I am a social media influencer and would like to receive orders, publish branded content on my social pages and
+       get paid.
       </p>
-      <button class="rounded bg-[#004466] px-4 py-2 text-white transition hover:bg-[#b78700]">
-       Get Started
-      </button>
+      <a href="{{ route('for.socialpublishers') }}">
+       <button class="rounded bg-[#004466] px-4 py-2 text-white transition hover:bg-[#b78700]">
+        Get Started
+       </button>
+      </a>
      </div>
 
      <!-- Card 4 -->
@@ -131,9 +166,11 @@
        I am a brand manager or business owner seeking professional, SEO-friendly content that effectively promotes my
        brand, products, and services.
       </p>
-      <button class="rounded bg-[#004466] px-4 py-2 text-white transition hover:bg-[#b78700]">
-       Get Started
-      </button>
+      <a href="{{ route('writeforme') }}">
+       <button class="rounded bg-[#004466] px-4 py-2 text-white transition hover:bg-[#b78700]">
+        Get Started
+       </button>
+      </a>
      </div>
     </div>
    </div>
@@ -228,7 +265,7 @@
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
          <path d="M9 11l3 3L22 4"></path>
         </svg>
-        <h4 class="text-lg font-medium text-[#004466]">Get listed on a database of 10K+ publishers</h4>
+        <h4 class="text-lg font-medium text-[#004466]">Submit your website/blog details</h4>
        </div>
 
        <div class="flex items-center space-x-4">
@@ -244,7 +281,7 @@
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
          <path d="M9 11l3 3L22 4"></path>
         </svg>
-        <h4 class="text-lg font-medium text-[#004466]">Host advertisers' content on your blog/website</h4>
+        <h4 class="text-lg font-medium text-[#004466]">Post advertisers' content on your blog/website</h4>
        </div>
 
        <div class="flex items-center space-x-4">
@@ -257,10 +294,10 @@
 
        <!-- Call to Action -->
 
-       <div class="mt-32 flex flex-col items-start justify-end">
+       <div class="mt-8 flex flex-col items-start justify-end">
         <a
-         class="max-w-fit rounded-lg bg-[#004466] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#b78700]"
-         href="#">
+         class="max-w-fit rounded-lg bg-[#b78700] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#004466]"
+         href="{{ route('getstarted.publisher') }}">
          Get Started as a Publisher
         </a>
        </div>
@@ -325,7 +362,7 @@
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
          <path d="M9 11l3 3L22 4"></path>
         </svg>
-        <h4 class="text-lg font-medium text-[#004466]">Get listed in a database of 10K+ social publishers</h4>
+        <h4 class="text-lg font-medium text-[#004466]">Submit your details</h4>
        </div>
 
        <div class="flex items-center space-x-4">
@@ -341,7 +378,7 @@
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
          <path d="M9 11l3 3L22 4"></path>
         </svg>
-        <h4 class="text-lg font-medium text-[#004466]">Host advertisers' content on your social media pages
+        <h4 class="text-lg font-medium text-[#004466]">Post advertisers' content on your social media pages
         </h4>
        </div>
 
@@ -355,10 +392,10 @@
 
        <!-- Call to Action -->
 
-       <div class="mt-32 flex flex-col items-start justify-end">
+       <div class="mt-8 flex flex-col items-start justify-end">
         <a
-         class="max-w-fit rounded-lg bg-[#004466] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#b78700]"
-         href="#">
+         class="max-w-fit rounded-lg bg-[#b78700] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#004466]"
+         href="{{ route('getstarted.socialpublisher') }}">
          Get Started as a Influencer
         </a>
        </div>
@@ -412,7 +449,7 @@
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
          <path d="M9 11l3 3L22 4"></path>
         </svg>
-        <h4 class="text-lg font-medium text-[#004466]">Browse our database with 10K+ publishers</h4>
+        <h4 class="text-lg font-medium text-[#004466]">Browse our live database of over 10K publishers</h4>
        </div>
 
        <div class="flex items-center space-x-4">
@@ -420,7 +457,7 @@
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
          <path d="M9 11l3 3L22 4"></path>
         </svg>
-        <h4 class="text-lg font-medium text-[#004466]">Select a site and make your order
+        <h4 class="text-lg font-medium text-[#004466]">Select a site/influencer and make your order
         </h4>
        </div>
 
@@ -438,7 +475,7 @@
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
          <path d="M9 11l3 3L22 4"></path>
         </svg>
-        <h4 class="text-lg font-medium text-[#004466]">Get your content published within 24 hours</h4>
+        <h4 class="text-lg font-medium text-[#004466]">Make payment</h4>
        </div>
 
        <div class="flex items-center space-x-4">
@@ -446,16 +483,16 @@
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
          <path d="M9 11l3 3L22 4"></path>
         </svg>
-        <h4 class="text-lg font-medium text-[#004466]">Free account. No credit card needed. order
+        <h4 class="text-lg font-medium text-[#004466]">Get your content published within 24 hours
         </h4>
        </div>
 
        <!-- Call to Action -->
 
-       <div class="mt-32 flex flex-col items-start justify-end">
+       <div class="mt-8 flex flex-col items-start justify-end">
         <a
-         class="max-w-fit rounded-lg bg-[#004466] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#b78700]"
-         href="#">
+         class="max-w-fit rounded-lg bg-[#b78700] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#004466]"
+         href="{{ route('getstarted.advertiser') }}">
          Get Started as an Advertiser
         </a>
        </div>
@@ -470,6 +507,7 @@
   </section>
  </div>
  <!-- End::Advertiser Section -->
+ <!-- End::Advertiser Section -->
 
 
  <div class="grid grid-cols-12 gap-6">
@@ -482,7 +520,7 @@
      <!-- Heading with hover effect -->
      <h2
       class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#004466] px-4 py-2 text-xl font-bold text-white hover:border-[#004466] hover:bg-[#b78700] hover:text-white dark:text-white">
-      Browse our 10k+ publishers Database
+      Browse over 10K publishers
      </h2>
 
 
@@ -491,7 +529,7 @@
     </div>
 
 
-    <p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+    <p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600">
 
     </p>
 
@@ -591,7 +629,7 @@
 																				<div class="rounded-lg bg-white p-6 shadow-lg">
 																								<div class="mb-4">
 																												<h5 class="text-center text-lg font-bold text-[#004466]">
-																																Browse our database of 10K+ Social Publishers
+																																Browse our database of over 10K Social Publishers
 																												</h5>
 																								</div>
 
@@ -730,169 +768,168 @@
 
 
 
+
+
+
+
  <!-- Services Section -->
  <div class="bg-white py-16">
   <div class="container mx-auto text-center">
-   <div class="mb-4 flex w-full items-center justify-center">
-    <!-- Left Divider -->
+   <!-- Section Heading -->
+   <div class="mb-8 flex w-full items-center justify-center">
     <span class="h-1 w-64 rounded bg-[#b78700]"></span>
-
-    <!-- Heading with hover effect -->
     <h2
-     class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#004466] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] hover:text-white dark:text-white">
+     class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#004466] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] hover:text-white">
      Our Services
     </h2>
-
-
-    <!-- Right Divider -->
     <span class="h-1 w-64 rounded bg-[#b78700]"></span>
    </div>
 
-
-
-
-   <div class="grid grid-cols-1 gap-6 md:grid-cols-4">
-    <!-- First Card -->
-    <div class="border-gray border p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white">
-
-
-     <h2 class="mt-2 text-left font-medium uppercase text-[#b78700]">Sponsored Posts
-
-     </h2>
-     <p class="mb-3 mt-3 text-left text-sm font-light text-gray-500 group-hover:text-white">Unlock a wider, targeted
-      audience, gain credibility, and amplify online brand presence.</p>
-     <a class="flex items-center text-left text-[#b78700] hover:text-[#004466]" href="/">Explore More
-      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+   <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <!-- Individual Service -->
+    <a href="{{ route('sponsored.posts') }}"
+     class="block border border-gray-300 p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white hover:shadow-lg">
+     <h2 class="text-left font-medium uppercase text-[#b78700] hover:text-white">Sponsored Posts</h2>
+     <p class="my-3 text-left text-sm font-light text-gray-500 hover:text-white group-hover:text-white">
+      Boost your DR, DA, and organic traffic with relevant high-quality posts.
+     </p>
+     <div class="flex items-center text-left text-[#b78700] hover:text-white">
+      Learn More
+      <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
        <path fill-rule="evenodd"
         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
         clip-rule="evenodd" />
       </svg>
-     </a>
-    </div>
-
-    <!-- Second Card -->
-    <div class="border-gray border p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white">
-
-
-
-     <h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">Guest Posting
-     </h2>
-     <p class="mb-3 mt-3 text-left text-sm font-light text-gray-500 group-hover:text-white">Reach a broad audience,
-      boost organic traffic, and secure high-quality backlinks.</p>
-     <a class="flex items-center text-left text-[#b78700] hover:text-[#004466]" href="/">Explore More
-      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+     </div>
+    </a>
+    <!-- Guest Posting -->
+    <a href="{{ route('guest.posts') }}"
+     class="block border border-gray-300 p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white hover:shadow-lg">
+     <h2 class="text-left font-medium uppercase text-[#b78700] hover:text-white">Guest Posting</h2>
+     <p class="my-3 text-left text-sm font-light text-gray-500 hover:text-white group-hover:text-white">
+      Reach a broad audience,
+      boost organic traffic, and secure high-quality backlinks.
+     </p>
+     <div class="flex items-center text-left text-[#b78700] hover:text-white">
+      Learn More
+      <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
        <path fill-rule="evenodd"
         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
         clip-rule="evenodd" />
       </svg>
-     </a>
-    </div>
-
-    <!-- Third Card -->
-    <div class="border-gray border p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white">
-
-
-     <h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">Affiliate Marketing
-     </h2>
-     <p class="mb-3 mt-3 text-left text-sm font-light text-gray-500 group-hover:text-white">Expand your client base,
-      increase sales, and accelerate business growth.</p>
-     <a class="flex items-center text-left text-[#b78700] hover:text-[#004466]" href="/">Explore More
-      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+     </div>
+    </a>
+    <!-- Influencer Marketing -->
+    <a href="{{ route('influencer.marketing') }}"
+     class="block border border-gray-300 p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white hover:shadow-lg">
+     <h2 class="text-left font-medium uppercase text-[#b78700] hover:text-white">Influencer Marketing</h2>
+     <p class="my-3 text-left text-sm font-light text-gray-500 hover:text-white group-hover:text-white">
+      Amplify brand awareness through top influencers with authentic storytelling and loyal audiences.
+     </p>
+     <div class="flex items-center text-left text-[#b78700] hover:text-white">
+      Learn More
+      <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
        <path fill-rule="evenodd"
         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
         clip-rule="evenodd" />
       </svg>
-     </a>
-    </div>
-    <!-- Fourth Card -->
-    <div class="border-gray border p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white">
-
-
-     <h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">Influencer Marketing
-     </h2>
-     <p class="mb-3 mt-3 text-left text-sm font-light text-gray-500 group-hover:text-white">Amplify brand awareness
-      through top influencers with authentic storytelling and loyal audiences.</p>
-     <a class="flex items-center text-left text-[#b78700] hover:text-[#004466]" href="/">Explore More
-      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+     </div>
+    </a>
+    <!-- Affiliate Marketing -->
+    <a href="{{ route('affiliate.marketing') }}"
+     class="block border border-gray-300 p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white hover:shadow-lg">
+     <h2 class="text-left font-medium uppercase text-[#b78700] hover:text-white">Affiliate Marketing</h2>
+     <p class="my-3 text-left text-sm font-light text-gray-500 hover:text-white group-hover:text-white">
+      Let others spread the word and accelerate business growth.
+     </p>
+     <div class="flex items-center text-left text-[#b78700] hover:text-white">
+      Learn More
+      <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
        <path fill-rule="evenodd"
         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
         clip-rule="evenodd" />
       </svg>
-     </a>
-    </div>
-    <!-- Fifth Card -->
-    <div class="border-gray border p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white">
-
-
-     <h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">Link Insertions
-     </h2>
-     <p class="mb-3 mt-3 text-left text-sm font-light text-gray-500 group-hover:text-white">Boost your DR, DA, and
-      organic traffic with relevant high-quality backlinks.</p>
-     <a class="flex items-center text-left text-[#b78700] hover:text-[#004466]" href="/">Explore More
-      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+     </div>
+    </a>
+    <!-- Link Insertion and Exchanges -->
+    <a href="{{ route('link.insertion') }}"
+     class="block border border-gray-300 p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white hover:shadow-lg">
+     <h2 class="text-left font-medium uppercase text-[#b78700] hover:text-white">Link Insertion</h2>
+     <p class="my-3 text-left text-sm font-light text-gray-500 hover:text-white group-hover:text-white">
+      Boost your DR, DA, and organic traffic with relevant high-quality backlinks.
+     </p>
+     <div class="flex items-center text-left text-[#b78700] hover:text-white">
+      Learn More
+      <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
        <path fill-rule="evenodd"
         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
         clip-rule="evenodd" />
       </svg>
-     </a>
-    </div>
-    <!-- Sixth Card -->
-    <div class="border-gray border p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white">
-
-
-     <h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">TV/Radio Advertising
-     </h2>
-     <p class="mb-3 mt-3 text-left text-sm font-light text-gray-500 group-hover:text-white">Project your brand in
-      front of a wide audience, boost awareness, and stay ahead of the competition.</p>
-     <a class="flex items-center text-left text-[#b78700] hover:text-[#004466]" href="/">Explore More
-      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+     </div>
+    </a>
+    <!-- TV/Radio Advertising -->
+    <a href="{{ route('tvradio.advertising') }}"
+     class="block border border-gray-300 p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white hover:shadow-lg">
+     <h2 class="text-left font-medium uppercase text-[#b78700] hover:text-white">TV/Radio Advertising</h2>
+     <p class="my-3 text-left text-sm font-light text-gray-500 hover:text-white group-hover:text-white">
+      Showcase your brand in front of a wide audience, boost awareness, and stay ahead of the competition.
+     </p>
+     <div class="flex items-center text-left text-[#b78700] hover:text-white">
+      Learn More
+      <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
        <path fill-rule="evenodd"
         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
         clip-rule="evenodd" />
       </svg>
-     </a>
-    </div>
-    <!-- Seventh Card -->
-    <div class="border-gray border p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white">
-
-
-     <h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">CPM Campaigns
-     </h2>
-     <p class="mb-3 mt-3 text-left text-sm font-light text-gray-500 group-hover:text-white">Generate more traffic,
-      make more sales, and increase online brand visibility.</p>
-     <a class="flex items-center text-left text-[#b78700] hover:text-[#004466]" href="/">Explore More
-      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+     </div>
+    </a>
+    <!-- CPM Campaigns -->
+    <a href="{{ route('cpm.campaigns') }}"
+     class="block border border-gray-300 p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white hover:shadow-lg">
+     <h2 class="text-left font-medium uppercase text-[#b78700] hover:text-white">CPM Campaigns</h2>
+     <p class="my-3 text-left text-sm font-light text-gray-500 hover:text-white group-hover:text-white">
+      Leverage mordern results-based marketing models, make more sales, and grow your business.
+     </p>
+     <div class="flex items-center text-left text-[#b78700] hover:text-white">
+      Learn More
+      <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
        <path fill-rule="evenodd"
         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
         clip-rule="evenodd" />
       </svg>
-     </a>
-    </div>
-    <!-- Eighth Card -->
-    <div class="border-gray border p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white">
-
-
-     <h2 class="mb-2 text-left font-medium uppercase text-[#b78700]">Outdoor Advertising
-     </h2>
-     <p class="mb-3 mt-3 text-left text-sm font-light text-gray-500 group-hover:text-white">Keep your brand top of
-      people's minds with high-visibility outdoor placements.</p>
-     <a class="flex items-center text-left text-[#b78700] hover:text-[#004466]" href="/">Explore More
-      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+     </div>
+    </a>
+    <!-- Outdoor Advertisng -->
+    <a href="{{ route('outdoor.advertising') }}"
+     class="block border border-gray-300 p-6 transition-all duration-300 hover:bg-[#004466] hover:text-white hover:shadow-lg">
+     <h2 class="text-left font-medium uppercase text-[#b78700] hover:text-white">Outdoor Advertising</h2>
+     <p class="my-3 text-left text-sm font-light text-gray-500 hover:text-white group-hover:text-white">
+      Keep your brand top of people's minds with high-visibility outdoor placements.
+     </p>
+     <div class="flex items-center text-left text-[#b78700] hover:text-white">
+      Learn More
+      <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
        <path fill-rule="evenodd"
         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
         clip-rule="evenodd" />
       </svg>
-     </a>
-    </div>
+     </div>
+    </a>
 
-
-
-
+    <!-- Add similar <a> elements for other services -->
    </div>
-
+  </div>
+  <div class="mt-8 flex justify-center">
+   <a
+    class="max-w-fit rounded-lg bg-[#b78700] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#004466]"
+    href="{{ route('services') }}">
+    View All Services
+   </a>
   </div>
  </div>
+
  <!-- Services Section -->
+
 
  <!-- Why Choose Medialytica -->
  <div class="mt-8 bg-white py-10" id="advertiser">
@@ -913,23 +950,23 @@
    </div>
 
 
-   <p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+   <p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600">
 
    </p>
    <div class="grid items-center gap-6 lg:grid-cols-2">
     <div class="flex justify-center">
-     <img class="w-360 h-80 object-cover shadow-lg" src="{{ asset('backend/assets/Contact-banner.jpg') }}"
+     <img class="w-360 h-80 object-cover shadow-lg" src="{{ asset('backend/assets/Contact-banner.webp') }}"
       alt="Advertiser meeting" />
     </div>
     <div class="space-y-4 text-left">
-     <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+     <p class="flex items-center text-lg text-gray-700">
       <svg class="mr-2 h-6 w-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
        <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
       </svg>
       We have taken time to build an extensive network
       of publishers, media outlets, and influencers.
      </p>
-     <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+     <p class="flex items-center text-lg text-gray-700">
       <svg class="mr-2 h-6 w-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
        <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
       </svg>
@@ -937,14 +974,14 @@
       communication through regular updates and
       detailed reports.
      </p>
-     <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+     <p class="flex items-center text-lg text-gray-700">
       <svg class="mr-2 h-6 w-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
        <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
       </svg>
       We assign every project a dedicated Account
       Manager for efficiency and personalized support.
      </p>
-     <p class="flex items-center text-lg text-gray-700 dark:text-gray-300">
+     <p class="flex items-center text-lg text-gray-700">
       <svg class="mr-2 h-6 w-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
        <path d="M10 15l-3.5-3.5 1.41-1.42L10 12.17l6.59-6.59L18 7l-8 8z" />
       </svg>
@@ -991,13 +1028,14 @@
      <div
       class="mt-20 w-full space-y-6 pb-6 sm:max-w-md sm:pr-5 md:space-y-4 md:pb-0 lg:max-w-lg lg:space-y-8 lg:pr-0 xl:space-y-9">
       <h1 class="text-2xl font-light text-white sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl">
-       Boost your search ranking through professionally written SEO-friendly blog posts.
-       We are the final and decisive piece in your online content strategy.
+       Boost your search engine ranking through expertly written SEO-friendly blog articles, essays, website content,
+       resumes, white papers, and other marketing material.
+
       </h1>
 
       <p class="mx-auto font-thin text-white sm:max-w-md md:max-w-3xl lg:text-xl">
-       Contact us today and get a deal for a continuous flow of original, compelling, and engaging content for your
-       brand or business.
+       Get in touch today for a steady flow of original, captivating human-written content that attracts a broad
+       audience and boosts brand visibility.
       </p>
 
       <div class="relative flex flex-col sm:flex-row sm:space-x-4">
@@ -1045,7 +1083,7 @@
    </div>
 
 
-   <p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+   <p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600">
 
    </p>
 
@@ -1601,6 +1639,14 @@
       <button id="view-less" class="mt-2 hidden rounded-lg bg-[#004466] px-4 py-2 text-white hover:bg-[#003344]">View
        Less</button>
      </div>
+
+     <div class="mt-8 flex justify-center">
+      <a
+       class="max-w-fit rounded-lg bg-[#b78700] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[#004466]"
+       href="{{ route('niches') }}">
+       View All Niches
+      </a>
+     </div>
     </div>
    </section>
 
@@ -1649,7 +1695,7 @@
     <span class="h-1 w-64 rounded bg-[#b78700]"></span>
    </div>
 
-   <p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+   <p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600">
 
    </p>
 
@@ -1776,7 +1822,7 @@
     <span class="h-1 w-64 rounded bg-[#b78700]"></span>
    </div>
 
-   <p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600 dark:text-gray-300">
+   <p class="font-bold-300 mb-6 text-center text-lg italic text-gray-600">
    </p>
    <section class="bg-gray-50">
     <div class="mx-auto max-w-[1340px] px-4 py-12 sm:px-6 lg:me-0 lg:py-16 lg:pe-0 lg:ps-8 xl:py-24">
@@ -1911,6 +1957,9 @@
 
 
 </body>
+
+<!-- Compiled JS -->
+<script src="{{ asset('assets/script.js') }}"></script>
 
 @include('partials.footer')
 

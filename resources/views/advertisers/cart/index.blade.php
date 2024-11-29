@@ -9,16 +9,23 @@
  <meta name="csrf-token" content="{{ csrf_token() }}" />
  <meta name="description" content="" />
  <meta name="keywords" content="" />
- @vite('resources/css/app.css')
+ <!-- Primary CSS -->
+ @vite('resources/css/app.css') <!-- Loads the main CSS file via Vite -->
+
+ <!-- Compiled Tailwind CSS -->
+ <link href="{{ asset('build/assets/style.css') }}" rel="stylesheet" />
+
+ <!-- FontAwesome for Icons -->
  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.2.2/dist/cdn.min.js" defer></script>
- {{-- <link href="{{ asset('backend/assets/css/style.css') }}" rel="stylesheet" /> --}}
- <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+ <!-- Keen Slider CSS -->
  <link href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.css" rel="stylesheet" />
 
+ <!-- Alpine.js for Interactive Components -->
+ <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.2.2/dist/cdn.min.js" defer></script>
 
  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
  <!-- Favicon -->
  <link href="{{ asset('backend/assets/logo.png') }}" rel="shortcut icon" />

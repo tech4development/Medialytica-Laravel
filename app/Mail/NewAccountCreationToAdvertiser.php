@@ -34,16 +34,18 @@ class NewAccountCreationToAdvertiser extends Mailable
     /**
      * Get the message content definition.
      */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.new_account_advertiser',
-            with: [
-                'name' => $this->advertiser['name'],
-                'email' => $this->advertiser['email'],
-            ],
-        );
-    }
+public function build()
+{
+    return $this->subject('New Advertiser Notification')
+                ->view('emails')
+                ->with([
+                    'advertiser' => $this->advertiserDetails['name'],
+                    'email' => $this->advertiserDetails['email'],
+                    'website' => $this->advertiserDetails['website'],
+                    'price' => $this->advertiserDetails['price'],
+                ]);
+}
+
 
     /**
      * Get the attachments for the message.

@@ -1,7 +1,7 @@
 <!-- Start Navigation -->
-<nav class="border-white-200 border-white-300 border-b bg-white py-2.5 dark:bg-gray-900">
+<nav class="border-b border-white border-white bg-white py-2.5">
  <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between px-4">
-  <a href="#" class="flex items-center">
+  <a href="{{ route('home') }}" class="flex items-center">
    <img src="{{ asset('backend/assets/LOGO-no-backround.webp') }}" class="mr-3 h-6 sm:h-9" alt="Medialytica Logo">
   </a>
   <div class="flex items-center space-x-2 lg:order-2">
@@ -21,7 +21,7 @@
   </div>
   <div id="mobile-menu" class="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto">
    <ul class="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-2">
-    <li class="border-b border-white py-1"><a href="#"
+    <li class="border-b border-white py-1"><a href="{{ route('home') }}"
       class="font-semi block pl-1 pr-2 text-gray-700 hover:text-[#b78700] hover:underline">Home</a>
     </li>
 
@@ -88,7 +88,7 @@
        </a>
       </li>
       <li>
-       <a href="#"
+       <a href="{{ route('whatwedo') }}"
         class="hover:underline-[#b78700] block flex items-center px-4 py-2 text-gray-700 hover:text-[#b78700] hover:underline">
 
        </a>
@@ -108,21 +108,21 @@
      </ul>
     </li>
 
-    <li class="border-b border-white py-1"><a href="#"
+    <li class="border-b border-white py-1"><a href="{{ route('whatwedo') }}"
       class="font-semi block pl-1 pr-2 text-gray-700 hover:text-[#b78700] hover:underline">What We
       Do</a></li>
-    <li class="border-b border-white py-1"><a href="#"
+    <li class="border-b border-white py-1"><a href="{{ route('for.advertisers') }}"
       class="font-semi block pl-1 pr-2 text-gray-700 hover:text-[#b78700] hover:underline">For
       Advertisers</a></li>
-    <li class="border-b border-white py-1"><a href="#"
+    <li class="border-b border-white py-1"><a href="{{ route('for.publishers') }}"
       class="font-semi block pl-1 pr-2 text-gray-700 hover:text-[#b78700] hover:underline">For
       Publishers</a></li>
-    <li class="border-b border-white py-1"><a href="#"
+    <li class="border-b border-white py-1"><a href="{{ route('for.socialpublishers') }}"
       class="font-semi block pl-1 pr-2 text-gray-700 hover:text-[#b78700] hover:underline">For
       Social Publishers</a></li>
     <!-- About Us Dropdown -->
     <li class="group relative border-b border-white py-1">
-     <a href="{{ route('aboutus') }}"
+     <a href="#"
       class="font-semi block flex items-center pl-1 pr-2 text-gray-700 hover:text-[#b78700] hover:underline"
       id="about-us-menu">
       About Us
@@ -137,7 +137,7 @@
       id="about-us-submenu">
       <li><a href="{{ route('whoweare') }}" class="block px-4 py-2 hover:text-[#b78700] hover:underline">Who We Are</a>
       </li>
-      <li><a href="#" class="block px-4 py-2 hover:text-[#b78700] hover:underline">Our Blog</a>
+      <li><a href="{{ route('whatwedo') }}" class="block px-4 py-2 hover:text-[#b78700] hover:underline">Our Blog</a>
       </li>
       <li><a href="{{ route('niches') }}" class="block px-4 py-2 hover:text-[#b78700] hover:underline">Our Niches</a>
       </li>
@@ -147,7 +147,7 @@
 
      </ul>
     </li>
-    <li class="border-b border-white py-1"><a href="#"
+    <li class="border-b border-white py-1"><a href="{{ route('contactus') }}"
       class="font-semi block pl-1 pr-2 text-gray-700 hover:text-[#b78700] hover:underline">Contact
       Us</a></li>
    </ul>

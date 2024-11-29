@@ -70,21 +70,17 @@
    <div class="relative w-full px-4 py-44 sm:px-6 lg:px-8">
     <!-- About Us Heading -->
     <h1 class="-mt-24 mb-28 text-center text-3xl font-extrabold text-white sm:text-5xl">
-     Guest Posting
+     CPM Campaigns
     </h1>
 
     <!-- About Us Content -->
     <div class="flex w-full sm:text-center">
      <p class="mb-8 text-center leading-loose text-white sm:text-lg">
-      Medialytica.com is a modern and dynamic media-tech agency. We connect content creators to advertisers.
+      Leverage mordern results-based marketing models, make more sales, and grow your business.
       <br>
-      With a passion for driving results and commitment to innovation, we have been helping individuals and businesses
-      succeed in the digital landscape since 2016.
+      Get the best click-through rates from CPM Campaigns on our high-traffic websites.
       <br><br>
-      Talk to us for tech and media services including Contextual Guest Posts, Link Insertion, Niche Edits, Banner
-      Advertising, Influencer Marketing, Product Placement in Films and Music Videos, CPM Campaigns, SEO, TV and Radio
-      advertising, Outdoor Advertising, Website & Software Development, Digital Marketing, and Performance-Based
-      Marketing.
+      Accelerate your web traffic and drive higher conversions with specially-tailored CPM deals.
      </p>
     </div>
    </div>
@@ -117,13 +113,17 @@
      <header class="container flex h-full flex-col items-center justify-center px-4 lg:mt-0">
       <div class="w-full text-center">
        <h1 class="text-3xl font-bold lg:text-3xl">
-        Find your <span class="text-[#004466]">Medialytica</span> stuff for your room
+
        </h1>
        <div class="mx-auto my-4 h-2 w-20 bg-[#004466]"></div>
        <p class="mb-10 text-xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae maiores neque eaque
-        ea odit placeat, tenetur illum distinctio nulla voluptatum a corrupti beatae tempora aperiam quia id aliquam
-        possimus aut.
+        Our team brings over 10 years of combined experience in media and technology.
+        We publish a wide range of niches including fashion, lifestyle, betting/casino, crypto/forex, and real estate to
+        meet your traffic needs.
+        We have over 10K High-DA sites and blogs organized by niche and country.
+        Our constantly updated database adds new sites daily, giving you unlimited options.
+        We are dedicated to helping you achieve exceptional results within your budget.
+
        </p>
        <button class="bg- rounded bg-[#004466] px-4 py-2 text-xl font-medium text-white shadow">
         Learn More
@@ -161,7 +161,7 @@
 
     <div class="flex h-full items-center justify-center">
      <h2 class="font-display text-center text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-      Our Key Areas
+
      </h2>
     </div>
 
@@ -169,13 +169,13 @@
      <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
       style="height: 200px; width: 100%;">
       <img src="https://www.svgrepo.com/show/530438/ddos-protection.svg" alt="" class="h-10 w-10">
-      <h3 class="font-display mt-3 text-center font-medium">A mega ever-updating database of 10K+ sites and blogs</h3>
+      <h3 class="font-display mt-3 text-center font-medium">A live updating database of over 10,000 sites and blogs</h3>
      </li>
 
      <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
       style="height: 200px; width: 100%;">
       <img src="https://www.svgrepo.com/show/530442/port-detection.svg" alt="" class="mx-auto h-10 w-10">
-      <h3 class="font-display my-3 font-medium">Filter high traffic, DA, PA and DR websites</h3>
+      <h3 class="font-display my-3 font-medium">Filter for high-traffic websites with excellent DA, PA, and DR</h3>
      </li>
 
      <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
@@ -196,7 +196,8 @@
       style="height: 200px; width: 100%;">
       <a href="/templates" class="group">
        <img src="https://www.svgrepo.com/show/530450/page-analysis.svg" alt="" class="mx-auto h-10 w-10">
-       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">An experienced team in media buying</h3>
+       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">An experienced team in SEO and media buying
+       </h3>
       </a>
      </li>
 
@@ -204,7 +205,7 @@
       style="height: 200px; width: 100%;">
       <a href="/download" class="group">
        <img src="https://www.svgrepo.com/show/530453/mail-reception.svg" alt="" class="mx-auto h-10 w-10">
-       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">Relevant high-quality contextual links
+       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">Relevant high-quality backlinks
        </h3>
       </a>
      </li>
@@ -228,7 +229,7 @@
    <!-- Heading with hover effect -->
    <h2
     class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#004466] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] dark:text-white">
-    How does our guest posting service work?
+    How does our CPM campaign service work?
    </h2>
 
    <!-- Right Divider -->
@@ -244,7 +245,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/one.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Browse our database with 10K+ Content Creators</h3>
+      <h3 class="font-bold">Browse our database with over 10K publishers</h3>
      </div>
     </div>
    </div>
@@ -254,7 +255,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/two.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Select a site and make your order</h3>
+      <h3 class="font-bold">Select a site and make an order</h3>
      </div>
     </div>
    </div>
@@ -263,7 +264,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/three.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Share the content for featuring</h3>
+      <h3 class="font-bold">Make payment</h3>
      </div>
     </div>
    </div>
@@ -272,7 +273,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/four.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Get published within 24 hours</h3>
+      <h3 class="font-bold">Share content for publishing</h3>
      </div>
     </div>
    </div>
@@ -281,7 +282,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/five.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Review and approve the published content</h3>
+      <h3 class="font-bold">Get your content published within 24 hours</h3>
      </div>
     </div>
    </div>
@@ -290,7 +291,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/six.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Make payment</h3>
+      <h3 class="font-bold">Review and approve published content</h3>
      </div>
     </div>
    </div>
@@ -320,7 +321,7 @@
    <div class="mx-auto max-w-2xl lg:max-w-5xl">
     <div class="text-center">
      <h1 class="text-3xl font-bold text-gray-800 sm:text-4xl">Contact us</h1>
-     <p class="text-gray mt-1">We'd love to talk about how we can help you.</p>
+     <p class="text-gray mt-1">Need assistance? Please feel free to contact us..</p>
     </div>
 
     <div class="mt-12 grid items-center gap-6 lg:grid-cols-2 lg:gap-16">
@@ -571,55 +572,4 @@
 @section('js_content')
 
 
- <script>
-  // Counter js section
-
-  function runCounter(counterElement, targetNumber, duration = 1000, frameRate = 60, count = 0) {
-
-   let increment = targetNumber / (duration / (1000 / frameRate));
-   let startTime = null;
-
-   function updateCounter(timestamp) {
-    if (!startTime) startTime = timestamp;
-    const elapsed = timestamp - startTime;
-
-    if (elapsed < duration) {
-     count += increment;
-     counterElement.textContent = Math.floor(count).toLocaleString();
-     requestAnimationFrame(updateCounter);
-    } else {
-     counterElement.textContent = targetNumber.toLocaleString();
-    }
-   }
-
-   requestAnimationFrame(updateCounter);
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-     //Course Counter
-     runCounter(document.getElementById('Courses_counter'), 1500, 3000)
-
-     //Learners Counter
-     runCounter(document.getElementById('Learners_counter'), 5000000, 3000)
-
-     //Companies Counter
-     runCounter(document.getElementById('Companies_counter'), 876, 3000)
-
-     //Venues
-     runCounter(document.getElementById('Venues_counter'), 20, 3000)
-
-     //Sectors
-     runCounter(document.getElementById('Sectors_counter'), 17, 3000)
-
-     //Services
-     runCounter(document.getElementById('Services_counter'), 1000, 3000)
-    }
-   });
-  });
-
-  const badges = document.querySelector('#badges_of_quality')
-  observer.observe(badges)
- </script>
 @endsection

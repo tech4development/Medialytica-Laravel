@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Guest Posting')
+@section('title', 'Contact Us')
 
 @section('css')
 
@@ -17,7 +17,7 @@
       class="flex items-center text-sm hover:text-white focus:text-[#004466] focus:outline-none dark:text-neutral-500 dark:hover:text-[#004466] dark:focus:text-[#004466]">
       Home
      </a>
-     <svg class="size-4 dark:text-neutral mx-2 shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24"
+     <svg class="size-4 dark:text-neutral text-white-400 mx-2 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24"
       height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
       stroke-linejoin="round">
       <path d="m9 18 6-6-6-6"></path>
@@ -37,7 +37,7 @@
         class="flex items-center text-sm text-white hover:text-[#004466] focus:text-[#004466] focus:outline-none dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500">
         {{ ucwords(str_replace('-', ' ', $segment)) }}
        </a>
-       <svg class="size-4 dark:text-neutral mx-2 shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+       <svg class="size-4 dark:text-neutral text-white-400 mx-2 shrink-0" xmlns="http://www.w3.org/2000/svg"
         width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round">
         <path d="m9 18 6-6-6-6"></path>
@@ -62,11 +62,11 @@
   <div
    class="flex w-full flex-1 flex-col items-center justify-center bg-[#004466] via-teal-50 to-green-50/50 px-4 py-20 text-center dark:from-gray-800 dark:via-gray-700 dark:to-gray-800">
    <a href=""
-    class="border-white-700 text-white-400 mb-5 rounded-lg border px-4 py-2 text-sm transition duration-300 ease-in-out hover:text-gray-500 dark:border-gray-300 dark:text-gray-300 dark:hover:text-gray-400">
+    class="border-white-700 hover:text-white-500 dark:text-white-300 dark:hover:text-white-400 mb-5 rounded-lg border px-4 py-2 text-sm text-white transition duration-300 ease-in-out dark:border-gray-300">
     Medialytica
    </a>
    <h1
-    class="font-display text-white-300 mx-auto max-w-4xl text-5xl font-bold tracking-normal dark:text-gray-300 sm:text-7xl">
+    class="font-display text-white-300 dark:text-white-300 mx-auto max-w-4xl text-5xl font-bold tracking-normal sm:text-7xl">
 
     <span class="relative whitespace-nowrap text-orange-500 dark:text-orange-300">
      <svg aria-hidden="true" viewBox="0 0 418 42"
@@ -79,18 +79,16 @@
      <span class="relative"> Contact Us</span>
     </span>
    </h1>
-   <p class="mx-auto mt-12 w-full py-12 text-center text-lg leading-relaxed text-white dark:text-gray-300">
-    We connect content creators to advertisers and are committed to helping both parties succeed in the digital space.
-
-    We publish advertisers’ content on 10K+ high-quality, high-authority sites within 24 hours.
-
-    We do genuine manual outreach to create long-term link-building connections for our clients.
-
-    We will help content creators get discovered by advertisers and monetize their content.
+   <p class="dark:text-white-300 mx-auto mt-12 w-full py-12 text-center text-lg leading-relaxed text-white">
+    We connect content creators to advertisers.
+    <br><br>
+    Contact us today for tech and media services including Contextual Guest Posts, Link Insertion, Niche Edits, Banner
+    Advertising, Influencer Marketing, Product Placement in Films and Music Videos, CPM Campaigns, SEO, TV and Radio
+    advertising, Outdoor Advertising, Website & Software Development, and Performance-Based Marketing.
    </p>
 
    {{-- <a
-    class="mt-8 rounded-xl bg-orange-600 px-4 py-3 font-medium text-white transition hover:bg-orange-500 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-600 sm:mt-10"
+    class="mt-8 rounded-xl bg-orange px-4 py-3 font-medium text-white transition hover:bg-orange-500 dark:bg-gray-800 dark:text-white-300 dark:hover:bg-gray sm:mt-10"
     href="">Get started</a> --}}
   </div>
   <!-- End:Main Section -->
@@ -115,20 +113,27 @@
   </div>
   <!-- End Header Section -->
 
-  <section class="bg-blue-50 dark:bg-slate-800" id="contact">
+  <section class="bg-[#004466]" id="contact">
    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+
+    <!-- Success Message -->
+    {{-- @if (session('success'))
+     <div class="mb-4 rounded-lg bg-green-500 p-4 text-white">
+      {{ session('success') }}
+     </div>
+    @endif --}}
+
 
     <div class="flex items-stretch justify-center">
      <div class="grid md:grid-cols-2">
       <div class="h-full pr-6">
-       <p class="mb-12 mt-3 text-lg text-gray-600 dark:text-slate-400">
-        Class aptent taciti sociosqu ad
-        litora torquent per conubia nostra, per inceptos himenaeos. Duis nec ipsum orci. Ut scelerisque
-        sagittis ante, ac tincidunt sem venenatis ut.
+       <p class="mb-12 mt-3 text-lg text-white">
+        We’d love to hear from you. Whether you have a quick question, an inquiry, or just want to say hello, reach out
+        to us today.
        </p>
        <ul class="mb-6 md:mb-0">
         <li class="flex">
-         <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-900 text-gray-50">
+         <div class="text-white-50 flex h-10 w-10 items-center justify-center rounded bg-[#b78700]">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
            <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
@@ -137,14 +142,14 @@
           </svg>
          </div>
          <div class="mb-4 ml-4">
-          <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-white">Our Address
+          <h3 class="text-white-900 mb-2 text-lg font-medium leading-6 dark:text-white">Our Address
           </h3>
-          <p class="text-gray-600 dark:text-slate-400">1230 Maecenas Street Donec Road</p>
-          <p class="text-gray-600 dark:text-slate-400">New York, EEUU</p>
+          <p class="text-white">Runda, Tala Road - Off Kiambu Road</p>
+          <p class="text-white">Nairobi, Kenya</p>
          </div>
         </li>
         <li class="flex">
-         <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-900 text-gray-50">
+         <div class="text-white-50 flex h-10 w-10 items-center justify-center rounded bg-[#b78700]">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
            <path
@@ -155,14 +160,16 @@
           </svg>
          </div>
          <div class="mb-4 ml-4">
-          <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-white">Contact
+          <h3 class="text-white-900 mb-2 text-lg font-medium leading-6 dark:text-white">Contact
           </h3>
-          <p class="text-gray-600 dark:text-slate-400">Mobile: +1 (123) 456-7890</p>
-          <p class="text-gray-600 dark:text-slate-400">Mail: tailnext@gmail.com</p>
+          <p class="text-white">Mobile: +254 725966032
+
+          </p>
+          <p class="text-white">Email: letstalk@medialytica.com</p>
          </div>
         </li>
         <li class="flex">
-         <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-900 text-gray-50">
+         <div class="text-white-50 flex h-10 w-10 items-center justify-center rounded bg-[#b78700]">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
@@ -170,43 +177,66 @@
           </svg>
          </div>
          <div class="mb-4 ml-4">
-          <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-white">Working
+          <h3 class="text-white-900 mb-2 text-lg font-medium leading-6 dark:text-white">Working
            hours</h3>
-          <p class="text-gray-600 dark:text-slate-400">Monday - Friday: 08:00 - 17:00</p>
-          <p class="text-gray-600 dark:text-slate-400">Saturday &amp; Sunday: 08:00 - 12:00</p>
+          <p class="text-white">Monday - Friday: 08:00 - 17:00</p>
+          <p class="text-white">Saturday &amp; Sunday: 08:00 - 12:00</p>
          </div>
         </li>
        </ul>
       </div>
       <div class="card h-fit max-w-6xl p-5 md:p-12" id="form">
-       <h2 class="mb-4 text-2xl font-bold dark:text-white">Ready to Get Started?</h2>
-       <form id="contactForm">
-        <div class="mb-6">
-         <div class="mx-0 mb-1 sm:mb-4">
-          <div class="mx-0 mb-1 sm:mb-4">
-           <label for="name" class="pb-1 text-xs uppercase tracking-wider"></label><input type="text"
-            id="name" autocomplete="given-name" placeholder="Your name"
-            class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
-            name="name">
+       <h2 class="-mt-10 mb-4 text-center text-2xl font-bold text-white">Ready to Get Started?</h2>
+       <!-- Form Card -->
+       <div class="flex flex-col rounded-xl border border-gray-300 bg-white p-4 sm:p-6 lg:p-8">
+        <!-- Success Message -->
+        @if (session('success'))
+         <div id="success-message" class="mb-4 rounded-lg bg-green-500 p-4 text-white">
+          {{ session('success') }}
+         </div>
+        @endif
+
+        <h2 class="text-gray mb-8 text-center text-xl font-semibold">Fill in the form</h2>
+        <form action="{{ route('contactus.store') }}" method="POST">
+         @csrf
+         <div class="grid gap-4">
+          <!-- Grid -->
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+           <div>
+            <label class="sr-only" for="first_name">First Name</label>
+            <input
+             class="block w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
+             id="first_name" name="first_name" type="text" placeholder="First Name" required>
+           </div>
+           <div>
+            <label class="sr-only" for="last_name">Last Name</label>
+            <input
+             class="block w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
+             id="last_name" name="last_name" type="text" placeholder="Last Name" required>
+           </div>
           </div>
-          <div class="mx-0 mb-1 sm:mb-4">
-           <label for="email" class="pb-1 text-xs uppercase tracking-wider"></label><input type="email"
-            id="email" autocomplete="email" placeholder="Your email address"
-            class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
-            name="email">
+          <!-- End Grid -->
+          <div>
+           <label class="sr-only" for="email">Email</label>
+           <input
+            class="block w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
+            id="email" name="email" type="email" placeholder="Email" required>
+          </div>
+          <div>
+           <label class="sr-only" for="message">Message</label>
+           <textarea
+            class="block w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
+            id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
           </div>
          </div>
-         <div class="mx-0 mb-1 sm:mb-4">
-          <label for="textarea" class="pb-1 text-xs uppercase tracking-wider"></label>
-          <textarea id="textarea" name="textarea" cols="30" rows="5" placeholder="Write your message..."
-           class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"></textarea>
-         </div>
-        </div>
-        <div class="text-center">
-         <button type="submit" class="font-xl w-full rounded-md bg-blue-800 px-6 py-3 text-white sm:mb-0">Send
-          Message</button>
-        </div>
-       </form>
+         <button type="submit"
+          class="hover:bg-yellow mt-4 w-full rounded-lg bg-yellow-500 px-4 py-3 text-sm font-medium text-white focus:ring-4 focus:ring-yellow-400">
+          Submit
+         </button>
+        </form>
+       </div>
+       <!-- End Form Card -->
+
       </div>
      </div>
     </div>
@@ -233,37 +263,22 @@
   <!-- End Header Section -->
 
   <section class="bg-gray-100">
-   <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+   <div class="mx-auto -mt-10 max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
     <div class="mt-16 lg:mt-20">
-     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+     <div class="grid grid-cols-1 gap-8 md:grid-cols-1">
+      <!-- Removed unnecessary divs for performance -->
       <div class="overflow-hidden rounded-lg">
+       <!-- iframe with lazy loading enabled -->
        <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11672.945750644447!2d-122.42107853750231!3d37.7730507907087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858070cc2fbd55%3A0xa71491d736f62d5c!2sGolden%20Gate%20Bridge!5e0!3m2!1sen!2sus!4v1619524992238!5m2!1sen!2sus"
-        width="100%" height="480" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-      </div>
-      <div>
-       <div class="mx-auto max-w-full overflow-hidden rounded-lg">
-        <div class="px-6 py-4">
-         <h3 class="text-lg font-medium text-gray-900">Our Address</h3>
-         <p class="mt-1 text-gray-600">123 Main St, San Francisco, CA 94105</p>
-        </div>
-        <div class="border-t border-gray-200 px-6 py-4">
-         <h3 class="text-lg font-medium text-gray-900">Hours</h3>
-         <p class="mt-1 text-gray-600">Monday - Friday: 9am - 5pm</p>
-         <p class="mt-1 text-gray-600">Saturday: 10am - 4pm</p>
-         <p class="mt-1 text-gray-600">Sunday: Closed</p>
-        </div>
-        <div class="border-t border-gray-200 px-6 py-4">
-         <h3 class="text-lg font-medium text-gray-900">Contact</h3>
-         <p class="mt-1 text-gray-600">Email: info@example.com</p>
-         <p class="mt-1 text-gray-600">Phone: +1 23494 34993</p>
-        </div>
-       </div>
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9955.094698361625!2d36.833908396186644!3d-1.2300533134744576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f179a08f92317%3A0x176220d1b30ee92c!2sTech%20For%20Development!5e0!3m2!1sen!2ske!4v1732888399450!5m2!1sen!2ske"
+        width="100%" height="500px" style="border:0;" allowfullscreen="" loading="lazy">
+       </iframe>
       </div>
      </div>
     </div>
    </div>
   </section>
+
 
   <!-- End: Advertisers -->
 
@@ -289,6 +304,19 @@
 
 @section('js_content')
 
+ <script>
+  window.onload = function() {
+   // Check if the success message exists
+   var successMessage = document.getElementById('success-message');
+   if (successMessage) {
+    // Scroll to the success message section
+    successMessage.scrollIntoView({
+     behavior: 'smooth',
+     block: 'center'
+    });
+   }
+  };
+ </script>
 
 
 @endsection

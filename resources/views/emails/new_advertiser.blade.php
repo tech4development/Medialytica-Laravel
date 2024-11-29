@@ -7,10 +7,10 @@
 
 <body>
  <h2>New Advertiser Account Created</h2>
- <p><strong>Advertiser Name:</strong> {{ $advertiser }}</p>
+ {{-- <p><strong>Advertiser Name:</strong> {{ $name }}</p> --}}
  <p><strong>Email Address:</strong> {{ $email }}</p>
- <p><strong>Publisher Website:</strong> {{ $website }}</p>
- <p><strong>Order Total:</strong> KES {{ number_format($price, 2) }}</p>
+ {{-- <p><strong>Publisher Website:</strong> {{ $website }}</p> --}}
+ {{-- <p><strong>Order Total:</strong> KES {{ number_format($price, 2) }}</p> --}}
 
  <p>Please review the advertiser's account and ensure everything is in order.</p>
 

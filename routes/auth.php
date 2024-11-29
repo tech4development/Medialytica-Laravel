@@ -15,7 +15,7 @@ use App\Http\Controllers\Advertisers\AdvertiserAuthController;
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
+
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
@@ -37,7 +37,7 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
-});
+
     /*
     |--------------------------------------------------------------------------
                        Advertiser Routes and Middleware
@@ -46,7 +46,7 @@ Route::middleware('guest')->group(function () {
     |
     */
 
-Route::middleware(['advertiser.auth'])->group(function () {
+
 
     Route::get('advertiser/register', [AdvertiserAuthController::class, 'showRegisterForm'])->name('advertiserregister');
     Route::post('advertiser/register', [AdvertiserAuthController::class, 'register'])->name('register.submit');
@@ -70,7 +70,6 @@ Route::middleware(['advertiser.auth'])->group(function () {
     Route::post('advertiser/logout', [AdvertiserAuthController::class, 'logout'])->name('advertiserlogout');
     // Route::get('/guest', [AdvertiserAuthController::class, 'showGuestPage'])->name('guest.page');
 
-});
 
     /*
     |--------------------------------------------------------------------------
@@ -85,7 +84,6 @@ Route::middleware(['advertiser.auth'])->group(function () {
 
     // In routes/web.php
 
-Route::middleware(['guest.auth'])->group(function () {
     // Routes for guest users only (not logged in)
     Route::get('advertiser/login',  [AdvertiserAuthController::class, 'showLoginForm'])->name('advertiserlogin');
     Route::post('advertiser/login', [AdvertiserAuthController::class, 'login'])->name('login.submit');
@@ -125,7 +123,7 @@ Route::middleware(['guest.auth'])->group(function () {
     // Route::get('/guest', [SocialAdvertiserAuthController::class, 'showGuestPage'])->name('guest.page');
 
 
-});
+
 
 
 

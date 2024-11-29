@@ -14,7 +14,7 @@
     <!-- Home -->
     <li class="inline-flex items-center">
      <a href="{{ url('/') }}"
-      class="flex items-center text-sm hover:text-white focus:text-[#004466] focus:outline-none dark:text-neutral-500 dark:hover:text-[#004466] dark:focus:text-[#004466]">
+      class="flex items-center text-sm text-white hover:text-white focus:text-[#004466] focus:outline-none dark:hover:text-[#004466] dark:focus:text-[#004466]">
       Home
      </a>
      <svg class="size-4 dark:text-neutral mx-2 shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -59,37 +59,43 @@
 
 
   <!-- Start:Main Section -->
-  <section class="relative w-full bg-cover bg-center bg-no-repeat"
-   style="background-image: url('{{ asset('backend/assets/About-banner-Jim-Fahad-Digital.webp') }}');">
-   <!-- Gradient Overlay -->
-   <div
-    class="absolute inset-0 bg-black/75 sm:from-black/90 sm:to-black/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l">
-   </div>
+  <div
+   class="flex w-full flex-1 flex-col items-center justify-center bg-[#004466] via-teal-50 to-green-50/50 px-4 py-20 text-center dark:from-gray-800 dark:via-gray-700 dark:to-gray-800">
+   <a href=""
+    class="border-white-700 text-white-400 mb-5 rounded-lg border px-4 py-2 text-sm transition duration-300 ease-in-out hover:text-gray-500 dark:border-gray-300 dark:text-gray-300 dark:hover:text-gray-400">
+    Medialytica
+   </a>
+   <h1
+    class="font-display text-white-300 mx-auto max-w-4xl text-5xl font-bold tracking-normal dark:text-gray-300 sm:text-7xl">
 
-   <!-- Content Wrapper -->
-   <div class="relative w-full px-4 py-44 sm:px-6 lg:px-8">
-    <!-- About Us Heading -->
-    <h1 class="-mt-24 mb-28 text-center text-3xl font-extrabold text-white sm:text-5xl">
-     Guest Posting
-    </h1>
+    <span class="relative whitespace-nowrap text-orange-500 dark:text-orange-300">
+     <svg aria-hidden="true" viewBox="0 0 418 42"
+      class="absolute left-0 top-2/3 h-[0.58em] w-full fill-orange-500 dark:fill-orange-300/60"
+      preserveAspectRatio="none">
+      <path
+       d="M203.371.916c-26.013-2.078-76.686 1.963-124.73 9.946L67.3 12.749C35.421 18.062 18.2 21.766 6.004 25.934 1.244 27.561.828 27.778.874 28.61c.07 1.214.828 1.121 9.595-1.176 9.072-2.377 17.15-3.92 39.246-7.496C123.565 7.986 157.869 4.492 195.942 5.046c7.461.108 19.25 1.696 19.17 2.582-.107 1.183-7.874 4.31-25.75 10.366-21.992 7.45-35.43 12.534-36.701 13.884-2.173 2.308-.202 4.407 4.442 4.734 2.654.187 3.263.157 15.593-.780 35.401-2.686 57.944-3.488 88.365-3.143 46.327.526 75.721 2.23 130.788 7.584 19.787 1.924 20.814 1.98 24.557 1.332l.066-.011c1.201-.203 1.53-1.825.399-2.335-2.911-1.31-4.893-1.604-22.048-3.261-57.509-5.556-87.871-7.36-132.059-7.842-23.239-.254-33.617-.116-50.627.674-11.629.540-42.371 2.494-46.696 2.967-2.359.259 8.133-3.625 26.504-9.810 23.239-7.825 27.934-10.149 28.304-14.005 .417-4.348-3.529-6-16.878-7.066Z">
+      </path>
+     </svg>
+     <span class="relative">Guest Posting</span>
+    </span>
+   </h1>
+   <p class="mx-auto mt-12 w-full py-12 text-center text-lg leading-relaxed text-white dark:text-gray-300">
+    Reach a broad audience, boost organic traffic, and secure high-quality backlinks.
+    <br> <br>
 
-    <!-- About Us Content -->
-    <div class="flex w-full sm:text-center">
-     <p class="mb-8 text-center leading-loose text-white sm:text-lg">
-      Medialytica.com is a modern and dynamic media-tech agency. We connect content creators to advertisers.
-      <br>
-      With a passion for driving results and commitment to innovation, we have been helping individuals and businesses
-      succeed in the digital landscape since 2016.
-      <br><br>
-      Talk to us for tech and media services including Contextual Guest Posts, Link Insertion, Niche Edits, Banner
-      Advertising, Influencer Marketing, Product Placement in Films and Music Videos, CPM Campaigns, SEO, TV and Radio
-      advertising, Outdoor Advertising, Website & Software Development, Digital Marketing, and Performance-Based
-      Marketing.
-     </p>
-    </div>
-   </div>
-  </section>
+    Get quality guest posts with do-follow contextual links on over 10K niche-targeted websites, sorted by country.
+    <br><br>
+    Boost your online presence with our indexable guest posts today.
+    <br><br>
+
+   </p>
+
+   {{-- <a
+    class="mt-8 rounded-xl bg-orange-600 px-4 py-3 font-medium text-white transition hover:bg-orange-500 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-600 sm:mt-10"
+    href="">Get started</a> --}}
+  </div>
   <!-- End:Main Section -->
+
 
 
 
@@ -117,17 +123,23 @@
      <header class="container flex h-full flex-col items-center justify-center px-4 lg:mt-0">
       <div class="w-full text-center">
        <h1 class="text-3xl font-bold lg:text-3xl">
-        Find your <span class="text-[#004466]">Medialytica</span> stuff for your room
+
        </h1>
-       <div class="mx-auto my-4 h-2 w-20 bg-[#004466]"></div>
+
        <p class="mb-10 text-xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae maiores neque eaque
-        ea odit placeat, tenetur illum distinctio nulla voluptatum a corrupti beatae tempora aperiam quia id aliquam
-        possimus aut.
+        Our team brings over 10 years of combined experience in media and technology.
+        <br><br>
+        We publish a wide range of niches including betting/casino, crypto/forex, fashion, and real estate to meet all
+        your content needs.
+        <br><br>
+        We have over 10K High-DA sites and blogs organized by niche and country.
+        <br><br>
+        Our constantly updated database adds new sites daily, giving you endless options for guest posting.
+        <br><br>
+        We're dedicated to helping you achieve exceptional results within your budget.
        </p>
-       <button class="bg- rounded bg-[#004466] px-4 py-2 text-xl font-medium text-white shadow">
-        Learn More
-       </button>
+
+
       </div>
      </header>
     </div>
@@ -161,7 +173,7 @@
 
     <div class="flex h-full items-center justify-center">
      <h2 class="font-display text-center text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-      Our Key Areas
+
      </h2>
     </div>
 
@@ -169,13 +181,13 @@
      <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
       style="height: 200px; width: 100%;">
       <img src="https://www.svgrepo.com/show/530438/ddos-protection.svg" alt="" class="h-10 w-10">
-      <h3 class="font-display mt-3 text-center font-medium">A mega ever-updating database of 10K+ sites and blogs</h3>
+      <h3 class="font-display mt-3 text-center font-medium">A live updating database of over 10K sites and blogs</h3>
      </li>
 
      <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
       style="height: 200px; width: 100%;">
       <img src="https://www.svgrepo.com/show/530442/port-detection.svg" alt="" class="mx-auto h-10 w-10">
-      <h3 class="font-display my-3 font-medium">Filter high traffic, DA, PA and DR websites</h3>
+      <h3 class="font-display my-3 font-medium">Filter for high-traffic websites with excellent DA, PA, and DR.</h3>
      </li>
 
      <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
@@ -196,7 +208,8 @@
       style="height: 200px; width: 100%;">
       <a href="/templates" class="group">
        <img src="https://www.svgrepo.com/show/530450/page-analysis.svg" alt="" class="mx-auto h-10 w-10">
-       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">An experienced team in media buying</h3>
+       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">An experienced team in SEO and media buying
+       </h3>
       </a>
      </li>
 
@@ -204,7 +217,7 @@
       style="height: 200px; width: 100%;">
       <a href="/download" class="group">
        <img src="https://www.svgrepo.com/show/530453/mail-reception.svg" alt="" class="mx-auto h-10 w-10">
-       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">Relevant high-quality contextual links
+       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">Relevant high-quality backlinks
        </h3>
       </a>
      </li>
@@ -244,7 +257,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/one.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Browse our database with 10K+ Content Creators</h3>
+      <h3 class="font-bold">Browse our database with over 10K publishers</h3>
      </div>
     </div>
    </div>
@@ -263,7 +276,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/three.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Share the content for featuring</h3>
+      <h3 class="font-bold">Make payment</h3>
      </div>
     </div>
    </div>
@@ -272,7 +285,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/four.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Get published within 24 hours</h3>
+      <h3 class="font-bold">Submit guest article for publishing</h3>
      </div>
     </div>
    </div>
@@ -281,7 +294,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/five.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Review and approve the published content</h3>
+      <h3 class="font-bold">Get your article published within 24 hours</h3>
      </div>
     </div>
    </div>
@@ -290,7 +303,7 @@
     <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
      <img src="{{ asset('backend/assets/six.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
      <div class="space-y-2 text-center">
-      <h3 class="font-bold">Make payment</h3>
+      <h3 class="font-bold">Review and approve published content</h3>
      </div>
     </div>
    </div>
@@ -320,7 +333,7 @@
    <div class="mx-auto max-w-2xl lg:max-w-5xl">
     <div class="text-center">
      <h1 class="text-3xl font-bold text-gray-800 sm:text-4xl">Contact us</h1>
-     <p class="text-gray mt-1">We'd love to talk about how we can help you.</p>
+     <p class="text-gray mt-1">Looking for assistance? Please feel free to contact us.</p>
     </div>
 
     <div class="mt-12 grid items-center gap-6 lg:grid-cols-2 lg:gap-16">
@@ -571,55 +584,5 @@
 @section('js_content')
 
 
- <script>
-  // Counter js section
 
-  function runCounter(counterElement, targetNumber, duration = 1000, frameRate = 60, count = 0) {
-
-   let increment = targetNumber / (duration / (1000 / frameRate));
-   let startTime = null;
-
-   function updateCounter(timestamp) {
-    if (!startTime) startTime = timestamp;
-    const elapsed = timestamp - startTime;
-
-    if (elapsed < duration) {
-     count += increment;
-     counterElement.textContent = Math.floor(count).toLocaleString();
-     requestAnimationFrame(updateCounter);
-    } else {
-     counterElement.textContent = targetNumber.toLocaleString();
-    }
-   }
-
-   requestAnimationFrame(updateCounter);
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-     //Course Counter
-     runCounter(document.getElementById('Courses_counter'), 1500, 3000)
-
-     //Learners Counter
-     runCounter(document.getElementById('Learners_counter'), 5000000, 3000)
-
-     //Companies Counter
-     runCounter(document.getElementById('Companies_counter'), 876, 3000)
-
-     //Venues
-     runCounter(document.getElementById('Venues_counter'), 20, 3000)
-
-     //Sectors
-     runCounter(document.getElementById('Sectors_counter'), 17, 3000)
-
-     //Services
-     runCounter(document.getElementById('Services_counter'), 1000, 3000)
-    }
-   });
-  });
-
-  const badges = document.querySelector('#badges_of_quality')
-  observer.observe(badges)
- </script>
 @endsection

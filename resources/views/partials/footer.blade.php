@@ -1,10 +1,3 @@
-<!--
-  Heads up! 👋
-
-  Plugins:
-    - @tailwindcss/forms
--->
-
 <footer class="bg-[#004466]">
  <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
   <div class="lg:flex lg:items-start lg:gap-8">
@@ -17,33 +10,27 @@
    <div class="mt-8 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
     <div class="col-span-2">
      <div>
-      <h2 class="text-2xl font-bold text-white">Get the latest news!</h2>
-
-      <p class="mt-4 text-white">
-       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non cupiditate quae nam
-       molestias.
-      </p>
+      <h2 class="text-2xl font-bold text-white">Stay Updated with the Latest Insights!</h2>
      </div>
     </div>
-
     <div class="col-span-2 lg:col-span-3 lg:flex lg:items-end">
      <form class="w-full">
-      <label class="sr-only" for="UserEmail"> Email </label>
+      <label class="sr-only" for="UserEmail">Email</label>
 
       <div
-       class="rounded-lg border border-gray-200 bg-white p-4 shadow-md focus-within:ring-2 focus-within:ring-[#b78700] sm:flex sm:items-center sm:gap-4">
+       class="flex flex-col items-center rounded-lg border border-gray-200 bg-white p-4 shadow-md focus-within:ring-2 focus-within:ring-[#b78700] sm:flex-row">
        <input
-        class="w-full rounded-lg border-none bg-gray-100 p-3 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-[#b78700] sm:text-sm"
-        id="UserEmail" type="email" placeholder="" />
+        class="w-full rounded-lg border-none bg-gray-100 p-3 text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b78700] sm:flex-grow sm:text-sm"
+        id="UserEmail" type="email" placeholder="Enter your email" />
 
        <button
-        class="mt-2 w-full rounded-full bg-[#b78700] px-6 py-2 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[#004466] sm:mt-0 sm:w-auto sm:shrink-0">
+        class="mt-3 w-full rounded-full bg-[#b78700] px-6 py-2 text-sm font-bold uppercase tracking-wide text-white transition duration-200 hover:bg-[#004466] focus:ring-2 focus:ring-[#b78700] focus:ring-offset-2 sm:ml-4 sm:mt-0 sm:w-auto sm:shrink-0">
         Sign Up
        </button>
       </div>
-
      </form>
     </div>
+
 
     <div class="col-span-2 sm:col-span-1">
      <p class="font-bold text-white">Services</p>
@@ -141,8 +128,30 @@
      </ul>
     </div>
 
-    <a class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:text-gray-700"
-     href="{{ route('services') }}">Services</a>
+
+    <div class="col-span-2 sm:col-span-1">
+     <p class="font-medium text-white">Get In Touch</p>
+
+     <ul class="mt-6 space-y-4 text-sm">
+      <li>
+       <a class="text-white transition hover:opacity-75" href="#">Visit Us: Runda, Tara Road - Off Kiambu
+        Road.</a>
+      </li>
+
+      <li>
+       <a class="text-white transition hover:opacity-75" href="#">Call Us: +254 706 909 947</a>
+      </li>
+
+      <li>
+       <a class="text-white transition hover:opacity-75" href="#">Email: <a
+         href="mailto:letstalk@restore.techfordevelopment.com"
+         class="text-white hover:underline">letstalk@medialytica.com</a></a>
+      </li>
+
+
+     </ul>
+    </div>
+
 
     <ul class="col-span-2 flex justify-start gap-6 lg:col-span-5 lg:justify-end">
      <!-- Facebook -->
@@ -207,6 +216,18 @@
 
    </div>
   </div>
+
+
+  <div class="mt-8 border-t border-gray-100 pt-8">
+   <div class="justify-center text-center sm:flex sm:justify-center">
+    <p class="text-center text-xs text-white">
+     All product names, logos, and brands are the property of their respective owners. All
+     company, product, and service names used in this website are for identification purposes only. Use of these names,
+     logos, and brands does not imply endorsement.
+    </p>
+   </div>
+  </div>
+
 
   <div class="mt-8 border-t border-gray-100 pt-8">
    <div class="sm:flex sm:justify-between">

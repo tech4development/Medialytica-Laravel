@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Write For Me')
+@section('title', 'Affilaite Marketing')
 
 @section('css')
 
@@ -9,12 +9,12 @@
 @section('content')
  <div class="main-body bg-white">
   <!-- Dynamic Breadcrumb -->
-  <nav aria-label="Breadcrumb" class="mb-6 mt-20 flex px-4">
-   <ol class="flex items-center whitespace-nowrap">
+  <nav aria-label="Breadcrumb" class="mb-0 mt-0 flex bg-[#004466] px-4 py-2">
+   <ol class="flex items-center whitespace-nowrap text-white">
     <!-- Home -->
     <li class="inline-flex items-center">
      <a href="{{ url('/') }}"
-      class="hover:text-blue flex items-center text-sm text-gray-500 focus:text-[#004466] focus:outline-none dark:text-neutral-500 dark:hover:text-[#004466] dark:focus:text-[#004466]">
+      class="flex items-center text-sm text-white hover:text-white focus:text-[#004466] focus:outline-none dark:hover:text-[#004466] dark:focus:text-[#004466]">
       Home
      </a>
      <svg class="size-4 dark:text-neutral mx-2 shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -34,7 +34,7 @@
       <!-- Intermediate Links -->
       <li class="inline-flex items-center">
        <a href="{{ url(implode('/', array_slice($segments, 0, $index + 1))) }}"
-        class="flex items-center text-sm text-gray-500 hover:text-[#004466] focus:text-[#004466] focus:outline-none dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500">
+        class="flex items-center text-sm text-white hover:text-[#004466] focus:text-[#004466] focus:outline-none dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500">
         {{ ucwords(str_replace('-', ' ', $segment)) }}
        </a>
        <svg class="size-4 dark:text-neutral mx-2 shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@
       </li>
      @else
       <!-- Current Page -->
-      <li class="inline-flex items-center truncate text-sm font-semibold text-gray-800 dark:text-neutral-200"
+      <li class="inline-flex items-center truncate text-sm font-semibold text-white dark:text-neutral-200"
        aria-current="page">
        {{ ucwords(str_replace('-', ' ', $segment)) }}
       </li>
@@ -53,51 +53,54 @@
     @endforeach
    </ol>
   </nav>
+  <!-- End Breadcrumb -->
+
 
 
 
   <!-- Start:Main Section -->
-  <section class="bg-white px-2 py-32 md:px-0">
-   <div class="container mx-auto max-w-6xl items-center px-8 xl:px-5">
-    <div class="flex flex-wrap items-center sm:-mx-3">
-     <div class="w-full md:w-1/2 md:px-3">
-      <div
-       class="w-full space-y-6 pb-6 sm:max-w-md sm:pr-5 md:space-y-4 md:pb-0 lg:max-w-lg lg:space-y-8 lg:pr-0 xl:space-y-9">
-       <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-4xl lg:text-5xl xl:text-6xl">
-        <span class="block xl:inline">Useful Tools to</span>
-        <span class="block text-indigo-600 xl:inline">Help You Build Faster.</span>
-       </h1>
-       <p class="mx-auto text-base text-gray-500 sm:max-w-md md:max-w-3xl lg:text-xl">It's never been easier to build
-        beautiful websites that convey your message and tell your story.</p>
-       <div class="relative flex flex-col sm:flex-row sm:space-x-4">
-        <a href="#_"
-         class="mb-3 flex w-full items-center rounded-md bg-indigo-600 px-6 py-3 text-lg text-white hover:bg-indigo-700 sm:mb-0 sm:w-auto">
-         Try It Free
-         <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 w-5" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-         </svg>
-        </a>
-        <a href="#_"
-         class="flex items-center rounded-md bg-gray-100 px-6 py-3 text-gray-500 hover:bg-gray-200 hover:text-gray-600">
-         Learn More
-        </a>
-       </div>
-      </div>
-     </div>
-     <div class="w-full md:w-1/2">
-      <div class="h-auto w-full overflow-hidden rounded-md shadow-xl sm:rounded-xl">
-       <img
-        src="https://images.unsplash.com/photo-1498049860654-af1a5c566876?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80">
-      </div>
-     </div>
-    </div>
-   </div>
-  </section>
+  <div
+   class="flex w-full flex-1 flex-col items-center justify-center bg-[#004466] via-teal-50 to-green-50/50 px-4 py-20 text-center dark:from-gray-800 dark:via-gray-700 dark:to-gray-800">
+   <a href=""
+    class="border-white-700 text-white-400 mb-5 rounded-lg border px-4 py-2 text-sm transition duration-300 ease-in-out hover:text-gray-500 dark:border-gray-300 dark:text-gray-300 dark:hover:text-gray-400">
+    Medialytica
+   </a>
+   <h1
+    class="font-display text-white-300 mx-auto max-w-4xl text-5xl font-bold tracking-normal dark:text-gray-300 sm:text-7xl">
+
+    <span class="relative whitespace-nowrap text-orange-500 dark:text-orange-300">
+     <svg aria-hidden="true" viewBox="0 0 418 42"
+      class="absolute left-0 top-2/3 h-[0.58em] w-full fill-orange-500 dark:fill-orange-300/60"
+      preserveAspectRatio="none">
+      <path
+       d="M203.371.916c-26.013-2.078-76.686 1.963-124.73 9.946L67.3 12.749C35.421 18.062 18.2 21.766 6.004 25.934 1.244 27.561.828 27.778.874 28.61c.07 1.214.828 1.121 9.595-1.176 9.072-2.377 17.15-3.92 39.246-7.496C123.565 7.986 157.869 4.492 195.942 5.046c7.461.108 19.25 1.696 19.17 2.582-.107 1.183-7.874 4.31-25.75 10.366-21.992 7.45-35.43 12.534-36.701 13.884-2.173 2.308-.202 4.407 4.442 4.734 2.654.187 3.263.157 15.593-.780 35.401-2.686 57.944-3.488 88.365-3.143 46.327.526 75.721 2.23 130.788 7.584 19.787 1.924 20.814 1.98 24.557 1.332l.066-.011c1.201-.203 1.53-1.825.399-2.335-2.911-1.31-4.893-1.604-22.048-3.261-57.509-5.556-87.871-7.36-132.059-7.842-23.239-.254-33.617-.116-50.627.674-11.629.540-42.371 2.494-46.696 2.967-2.359.259 8.133-3.625 26.504-9.810 23.239-7.825 27.934-10.149 28.304-14.005 .417-4.348-3.529-6-16.878-7.066Z">
+      </path>
+     </svg>
+     <span class="relative">Guest Posting</span>
+    </span>
+   </h1>
+   <p class="mx-auto mt-12 w-full py-12 text-center text-lg leading-relaxed text-white dark:text-gray-300">
+    Reach a broad audience, boost organic traffic, and secure high-quality backlinks.
+    <br> <br>
+
+    Get quality guest posts with do-follow contextual links on over 10K niche-targeted websites, sorted by country.
+    <br><br>
+    Boost your online presence with our indexable guest posts today.
+    <br><br>
+
+   </p>
+
+   {{-- <a
+    class="mt-8 rounded-xl bg-orange-600 px-4 py-3 font-medium text-white transition hover:bg-orange-500 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-600 sm:mt-10"
+    href="">Get started</a> --}}
+  </div>
   <!-- End:Main Section -->
 
 
+
+
+
+  <!-- Start: Why Medialytica -->
   <!-- Header Section -->
   <div class="mb-4 mt-20 flex w-full items-center justify-center">
    <!-- Left Divider -->
@@ -113,6 +116,206 @@
    <span class="h-1 w-64 rounded bg-[#b78700]"></span>
   </div>
   <!-- End Header Section -->
+
+  <div class="-mt-20 flex h-screen w-full items-center justify-center">
+   <div class="w-full">
+    <div class="container mx-auto -mt-40 h-full sm:p-10">
+     <header class="container flex h-full flex-col items-center justify-center px-4 lg:mt-0">
+      <div class="w-full text-center">
+       <h1 class="text-3xl font-bold lg:text-3xl">
+
+       </h1>
+
+       <p class="mb-10 text-xl">
+        Our team brings over 10 years of combined experience in media and technology.
+        <br><br>
+        We publish a wide range of niches including betting/casino, crypto/forex, fashion, and real estate to meet all
+        your content needs.
+        <br><br>
+        We have over 10K High-DA sites and blogs organized by niche and country.
+        <br><br>
+        Our constantly updated database adds new sites daily, giving you endless options for guest posting.
+        <br><br>
+        We're dedicated to helping you achieve exceptional results within your budget.
+       </p>
+
+
+      </div>
+     </header>
+    </div>
+   </div>
+  </div>
+
+
+  <!-- Start:  Our Key Areas -->
+
+  <!-- Header Section -->
+  <div class="mb-4 flex w-full items-center justify-center">
+   <!-- Left Divider -->
+   <span class="h-1 w-64 rounded bg-[#b78700]"></span>
+
+   <!-- Heading with hover effect -->
+   <h2
+    class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#004466] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] dark:text-white">
+    Our Key Areas
+   </h2>
+
+   <!-- Right Divider -->
+   <span class="h-1 w-64 rounded bg-[#b78700]"></span>
+  </div>
+  <!-- End Header Section -->
+
+
+
+  <div class="bg-gray-200 px-2 py-10">
+
+   <div id="features" class="mx-auto max-w-6xl">
+
+    <div class="flex h-full items-center justify-center">
+     <h2 class="font-display text-center text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+
+     </h2>
+    </div>
+
+    <ul class="mt-16 grid grid-cols-1 gap-4 text-center text-slate-700 md:grid-cols-3 md:gap-x-4">
+     <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
+      style="height: 200px; width: 100%;">
+      <img src="https://www.svgrepo.com/show/530438/ddos-protection.svg" alt="" class="h-10 w-10">
+      <h3 class="font-display mt-3 text-center font-medium">A live updating database of over 10K sites and blogs</h3>
+     </li>
+
+     <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
+      style="height: 200px; width: 100%;">
+      <img src="https://www.svgrepo.com/show/530442/port-detection.svg" alt="" class="mx-auto h-10 w-10">
+      <h3 class="font-display my-3 font-medium">Filter for high-traffic websites with excellent DA, PA, and DR.</h3>
+     </li>
+
+     <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
+      style="height: 200px; width: 100%;">
+      <img src="https://www.svgrepo.com/show/530444/availability.svg" alt="" class="mx-auto h-10 w-10">
+      <h3 class="font-display my-3 font-medium">Diverse niches</h3>
+     </li>
+
+     <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
+      style="height: 200px; width: 100%;">
+      <a href="/pricing" class="group">
+       <img src="https://www.svgrepo.com/show/530440/machine-vision.svg" alt="" class="mx-auto h-10 w-10">
+       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">Fast Turnaround Time</h3>
+      </a>
+     </li>
+
+     <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
+      style="height: 200px; width: 100%;">
+      <a href="/templates" class="group">
+       <img src="https://www.svgrepo.com/show/530450/page-analysis.svg" alt="" class="mx-auto h-10 w-10">
+       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">An experienced team in SEO and media buying
+       </h3>
+      </a>
+     </li>
+
+     <li class="flex flex-col items-center justify-center rounded-xl bg-white px-6 py-8 shadow-sm"
+      style="height: 200px; width: 100%;">
+      <a href="/download" class="group">
+       <img src="https://www.svgrepo.com/show/530453/mail-reception.svg" alt="" class="mx-auto h-10 w-10">
+       <h3 class="font-display group-hover:text-primary-500 my-3 font-medium">Relevant high-quality backlinks
+       </h3>
+      </a>
+     </li>
+    </ul>
+
+   </div>
+
+  </div>
+
+  <!-- End:  Our Key Areas -->
+
+
+
+
+  <!-- Start: How We Work -->
+  <!-- Header Section -->
+  <div class="mb-10 mt-10 flex w-full items-center justify-center">
+   <!-- Left Divider -->
+   <span class="h-1 w-64 rounded bg-[#b78700]"></span>
+
+   <!-- Heading with hover effect -->
+   <h2
+    class="mx-4 rounded-xl border-2 border-[#e8e9eb] bg-[#004466] px-4 py-2 text-xl font-bold text-white hover:border-[#b78700] hover:bg-[#b78700] dark:text-white">
+    How does our guest posting service work?
+   </h2>
+
+   <!-- Right Divider -->
+   <span class="h-1 w-64 rounded bg-[#b78700]"></span>
+  </div>
+  <!-- End Header Section -->
+
+
+
+  <div class="mx-auto grid justify-center gap-10 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
+
+   <div class="relative select-none overflow-hidden rounded-lg border bg-white p-2 hover:shadow hover:shadow-teal-200">
+    <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
+     <img src="{{ asset('backend/assets/one.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
+     <div class="space-y-2 text-center">
+      <h3 class="font-bold">Browse our database with over 10K publishers</h3>
+     </div>
+    </div>
+   </div>
+
+
+   <div class="relative select-none overflow-hidden rounded-lg border bg-white p-2 hover:shadow hover:shadow-teal-200">
+    <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
+     <img src="{{ asset('backend/assets/two.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
+     <div class="space-y-2 text-center">
+      <h3 class="font-bold">Select a site and make your order</h3>
+     </div>
+    </div>
+   </div>
+
+   <div class="relative select-none overflow-hidden rounded-lg border bg-white p-2 hover:shadow hover:shadow-teal-200">
+    <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
+     <img src="{{ asset('backend/assets/three.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
+     <div class="space-y-2 text-center">
+      <h3 class="font-bold">Make payment</h3>
+     </div>
+    </div>
+   </div>
+
+   <div class="relative select-none overflow-hidden rounded-lg border bg-white p-2 hover:shadow hover:shadow-teal-200">
+    <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
+     <img src="{{ asset('backend/assets/four.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
+     <div class="space-y-2 text-center">
+      <h3 class="font-bold">Submit guest article for publishing</h3>
+     </div>
+    </div>
+   </div>
+
+   <div class="relative select-none overflow-hidden rounded-lg border bg-white p-2 hover:shadow hover:shadow-teal-200">
+    <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
+     <img src="{{ asset('backend/assets/five.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
+     <div class="space-y-2 text-center">
+      <h3 class="font-bold">Get your article published within 24 hours</h3>
+     </div>
+    </div>
+   </div>
+
+   <div class="relative select-none overflow-hidden rounded-lg border bg-white p-2 hover:shadow hover:shadow-teal-200">
+    <div class="flex h-[180px] flex-col items-center justify-center rounded-md p-6">
+     <img src="{{ asset('backend/assets/six.webp') }}" alt="step one" class="mb-4 h-20 w-20 object-contain">
+     <div class="space-y-2 text-center">
+      <h3 class="font-bold">Review and approve published content</h3>
+     </div>
+    </div>
+   </div>
+
+  </div>
+  <!-- End: How We Work -->
+
+
+
+
+
+
 
 
 
@@ -130,7 +333,7 @@
    <div class="mx-auto max-w-2xl lg:max-w-5xl">
     <div class="text-center">
      <h1 class="text-3xl font-bold text-gray-800 sm:text-4xl">Contact us</h1>
-     <p class="text-gray mt-1">We'd love to talk about how we can help you.</p>
+     <p class="text-gray mt-1">Looking for assistance? Please feel free to contact us.</p>
     </div>
 
     <div class="mt-12 grid items-center gap-6 lg:grid-cols-2 lg:gap-16">

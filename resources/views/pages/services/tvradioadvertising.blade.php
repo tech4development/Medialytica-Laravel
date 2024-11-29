@@ -302,19 +302,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   <!-- Contact Us -->
   <div class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
    <div class="mx-auto max-w-2xl lg:max-w-5xl">
@@ -571,55 +558,4 @@
 @section('js_content')
 
 
- <script>
-  // Counter js section
-
-  function runCounter(counterElement, targetNumber, duration = 1000, frameRate = 60, count = 0) {
-
-   let increment = targetNumber / (duration / (1000 / frameRate));
-   let startTime = null;
-
-   function updateCounter(timestamp) {
-    if (!startTime) startTime = timestamp;
-    const elapsed = timestamp - startTime;
-
-    if (elapsed < duration) {
-     count += increment;
-     counterElement.textContent = Math.floor(count).toLocaleString();
-     requestAnimationFrame(updateCounter);
-    } else {
-     counterElement.textContent = targetNumber.toLocaleString();
-    }
-   }
-
-   requestAnimationFrame(updateCounter);
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-     //Course Counter
-     runCounter(document.getElementById('Courses_counter'), 1500, 3000)
-
-     //Learners Counter
-     runCounter(document.getElementById('Learners_counter'), 5000000, 3000)
-
-     //Companies Counter
-     runCounter(document.getElementById('Companies_counter'), 876, 3000)
-
-     //Venues
-     runCounter(document.getElementById('Venues_counter'), 20, 3000)
-
-     //Sectors
-     runCounter(document.getElementById('Sectors_counter'), 17, 3000)
-
-     //Services
-     runCounter(document.getElementById('Services_counter'), 1000, 3000)
-    }
-   });
-  });
-
-  const badges = document.querySelector('#badges_of_quality')
-  observer.observe(badges)
- </script>
 @endsection

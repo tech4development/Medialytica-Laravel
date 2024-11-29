@@ -41,6 +41,7 @@ use App\Http\Controllers\SocialAdvertisers\Cart\SocialAdvertiserCartController;
 use App\Http\Controllers\Advertisers\AdvertiserPagesController;
 use App\Http\Controllers\PublisherPanel\PublisherPagesController;
 use App\Http\Controllers\Pages\ContactController;
+use App\Http\Controllers\SocialPublisherPanel\SocialPublisherPagesController;
 
 
 
@@ -82,6 +83,11 @@ Route::get('/who-we-are', [ContactController::class, 'whoweAre'])->name('whowear
 Route::get('/faqs', [ContactController::class, 'faqs'])->name('faqs');
 
 
+Route::post('/contact-us', [ContactController::class, 'store'])->name('contactus.store');
+
+Route::post('/contact-submit', [ContactController::class, 'submitContactForm'])->name('contact.submit');
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +107,7 @@ Route::get('/write-for-me', [ContactController::class, 'writeforMe'])->name('wri
 Route::get('/outdoor-advertisng', [ContactController::class, 'outdoorAdvertising'])->name('outdoor.advertising');
 Route::get('/tv-radio-advertising', [ContactController::class, 'tvAdvertising'])->name('tvradio.advertising');
 Route::get('/link-insertion', [ContactController::class, 'linkInsertion'])->name('link.insertion');
+Route::get('/affiliate-marketing', [ContactController::class, 'affiliateMarketing'])->name('affiliate.marketing');
 
 
 
@@ -212,7 +219,7 @@ Route::middleware('auth', 'user_role:admin')->group(function () {
 Route::middleware('auth','user_role:publisher')->group(function () {
     // Get All the Publishers
     Route::get('publisher/view', [PublisherController::class, 'viewAll']);
-    Route::get('publisher/dashboard', [PublisherController::class, 'index'])->name('publisher.dashboard');
+    Route::get('/publisher/dashboard', [PublisherController::class, 'index'])->name('publisher.dashboard');
     //Add Publisher Details
     Route::get('publisher/create-publisher', [PublisherController::class, 'create'])->name('publisher.create');
     //Store Publishe Details
@@ -534,7 +541,10 @@ Route::middleware(['advertiser.auth'])->group(function () {
 //     Route::post('/logout', [AdvertiserAuthController::class, 'logout'])->name('logout');
 // });
 
-Route::get('/guest', [AdvertiserAuthController::class, 'showGuestPage'])->name('guest.page');
+Route::get('/guest', [PublisherController::class, 'showGuestPage'])->name('guest.page');
+Route::get('/publishers', [PublisherController::class, 'showFilter']);
+Route::get('/publishers/filter', [PublisherController::class, 'filter'])->name('publishers.filter');
+
 Route::get('/redirect-to-register', [AdvertiserAuthController::class, 'redirectToRegister'])->name('redirect.to.register');
 
 
@@ -546,7 +556,6 @@ Route::get('/redirect-to-register', [AdvertiserAuthController::class, 'redirectT
 |
 
 */
-Route::middleware(['advertiser.auth'])->group(function () {
 // Route::post('cart/add/{publisherId}', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
@@ -572,7 +581,6 @@ Route::post('/check-advertiser-status', [OrderController::class, 'checkAdvertise
 
 Route::get('order/{order}/summary', [OrderController::class, 'showOrderSummary'])->name('order.summary');
 
-});
 
 
 
@@ -603,10 +611,9 @@ Route::get('order/{order}/summary', [OrderController::class, 'showOrderSummary']
 
 
 
-// Route::middleware(['returning.advertiser'])->group(function () {
-//     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.index');
-//     Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
-// });
+    // Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.index');
+    // Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
+
 /*
 |--------------------------------------------------------------------------
                   Order and Checkout Routes
@@ -695,8 +702,9 @@ Route::prefix('invoice')->group(function () {
 
 
  Route::get('/for-advertisers', [AdvertiserPagesController::class, 'forAdvertisers'])->name('for.advertisers');
-  Route::get('/get-started-as-an-advertiser', [AdvertiserPagesController::class, 'getstartedasAdvertiser'])->name('getstarted.avdertiser');
-
+ Route::get('/get-started-as-an-advertiser', [AdvertiserPagesController::class, 'getstartedasAdvertiser'])->name('getstarted.advertiser');
+Route::get('/advertiser-login', [AdvertiserPagesController::class, 'advertiserLogin'])->name('advertiser.login');
+Route::get('/advertiser-register', [AdvertiserPagesController::class, 'advertiserRegister'])->name('advertiser.register');
 
 
 
@@ -714,7 +722,8 @@ Route::prefix('invoice')->group(function () {
 
  Route::get('/for-publishers', [PublisherPagesController::class, 'forPublishers'])->name('for.publishers');
   Route::get('/get-started-as-a-publisher', [PublisherPagesController::class, 'getstartedasPublisher'])->name('getstarted.publisher');
-
+Route::get('/publisher-login', [PublisherPagesController::class, 'publisherRegister'])->name('publisher.register');
+Route::get('/publisher-register', [PublisherPagesController::class, 'publisherLogin'])->name('publishers.login');
 
 
 
@@ -732,7 +741,8 @@ Route::prefix('invoice')->group(function () {
 
  Route::get('/for-socialpublishers', [SocialPublisherPagesController::class, 'forSocialPublishers'])->name('for.socialpublishers');
   Route::get('/get-started-as-a-publisher-a-socialpublisher', [SocialPublisherPagesController::class, 'getstartedasSocialPublisher'])->name('getstarted.socialpublisher');
-
+Route::get('/socialpublisher-login', [SocialPublisherPagesController::class, 'socialpublisherRegister'])->name('socialpublisher.register');
+Route::get('/socialpublisher-login', [SocialPublisherPagesController::class, 'socialsublisherLogin'])->name('socialpublisher.login');
 
 
 

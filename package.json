@@ -1,10 +1,12 @@
 {
     "private": true,
     "scripts": {
-        "dev": "vite",
-        "serve": "vite build",
-        "build": "npx tailwindcss -i ./resources/css/app.css -o ./public/build/assets/app-f230b7be.css --watch"
-    },
+    "dev": "vite",
+    "serve": "vite build",
+    "build": "npx tailwindcss -i ./resources/css/app.css -o ./public/build/assets/style.css",
+    "watch": "npx tailwindcss -i ./resources/css/app.css -o ./public/build/assets/style.css --watch"
+},
+
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.9",
         "autoprefixer": "^10.4.20",

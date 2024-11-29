@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Models\Order;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewAdvertiserNotificationToAdmin;
+
 
 
 class AdvertiserAuthController extends Controller
@@ -143,7 +146,7 @@ public function register(Request $request)
 
 
         // Send an email notification to the admin
-        Mail::to('letstalk@medialytica.com')->send(new NewAdvertiserNotificationToAdmin($advertiserDetails));
+        // Mail::to('letstalk@medialytica.com')->send(new NewAdvertiserNotificationToAdmin($advertiserDetails));
 
     // Log the advertiser in
     Auth::guard('advertiser')->login($advertiser);
@@ -158,11 +161,11 @@ public function register(Request $request)
         session()->forget('cart');
 
         // Redirect to the order.place function
-        return redirect()->route('order.place')->with('message', 'Registration successful! Your order has been placed.');
+        return redirect()->route('invoice.show')->with('message', 'Registration successful! Your order has been placed.');
     }
 
     // Redirect to the 'order.place function if no items in cart (just in case they want to place an order later)
-    return redirect()->route('order.place')->with('message', 'Registration successful!');
+    // return redirect()->route('')->with('message', 'Registration successful!');
 }
 
 
@@ -250,14 +253,7 @@ public function login(Request $request)
          return redirect()->route('advertiserregister')->with('redirect_url', $redirectUrl);
      }
 
-     // Show the guest page
-     public function showGuestPage(Request $request)
-     {
-         $publishers = Publisher::all(); // Or add any filter based on your logic
-             $publishers = Publisher::paginate(20);
-
-         return view('pages.advertisers.guest', compact('publishers'));
-     }
+    
 
      // Handle logout
      public function logout(Request $request)

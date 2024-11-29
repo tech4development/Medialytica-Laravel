@@ -259,21 +259,91 @@ class PublisherController extends Controller
     ]);
 }
 
+ // Show the guest page
+     public function showGuestPage(Request $request)
+     {
+         $publishers = Publisher::all(); // Or add any filter based on your logic
+          $publishers = Publisher::paginate(20);
+
+         return view('pages.advertisers.guest', compact('publishers'));
+     }
+
 public function filterPublishers(Request $request)
 {
-    $query = Publisher::query();
+    $niches = $request->get('niches', []);
 
-    if ($request->country) {
-        $query->where('country', $request->country);
+    // If niches are selected, filter the publishers
+    if (count($niches) > 0) {
+        $publishers = Publisher::where(function ($query) use ($niches) {
+            foreach ($niches as $niche) {
+                $query->orWhere('niches', 'like', '%' . $niche . '%');
+            }
+        })->get();
+    } else {
+        // If no niches are selected, return all publishers
+        $publishers = Publisher::all();
     }
 
-    if ($request->minPrice && $request->maxPrice) {
-        $query->whereBetween('price', [$request->minPrice, $request->maxPrice]);
+    // Prepare the data for the table rows
+    $tableData = view('your-table-view', compact('publishers'))->render();
+
+    // Calculate the total number of niches
+    $allNiches = [];
+    foreach ($publishers as $publisher) {
+        $niches = explode(',', $publisher->niches);
+        foreach ($niches as $niche) {
+            $allNiches[] = trim($niche);
+        }
     }
+    $totalNiches = count(array_unique($allNiches));
 
-    $publishers = $query->get();
-
-    return view('publishers.partials.publisher_list', compact('publishers'));
+    // Return the filtered data as JSON
+    return response()->json([
+        'tableData' => $tableData,
+        'totalNiches' => $totalNiches,
+    ]);
 }
+
+
+public function getNiches()
+{
+    // Assuming you have a 'niches' column in the publisher table or a separate niches table
+    $niches = Publisher::distinct()->pluck('niches'); // Adjust this to match your data model
+    return response()->json($niches);
+}
+
+public function showFilter()
+{
+    // Retrieve publishers from the database
+    $publishers = Publisher::all(); // Or apply any filtering logic if needed
+
+    return view('publishers', compact('publishers'));
+}
+
+public function filter(Request $request)
+{
+    // Get the selected niches from the AJAX request
+    $selectedNiches = $request->get('niches', []);
+
+    // If niches are selected, filter publishers by the niches
+    if (!empty($selectedNiches)) {
+        $publishers = Publisher::where(function($query) use ($selectedNiches) {
+            foreach ($selectedNiches as $niche) {
+                $query->orWhere('niches', 'LIKE', '%'. $niche .'%');
+            }
+        })->get();
+    } else {
+        // If no niches are selected, return all publishers
+        $publishers = Publisher::all();
+    }
+
+    // Return the filtered table rows (using partial view)
+    return view('partials.publisher_table', compact('publishers'));
+}
+
+
+
+
+
 
 }

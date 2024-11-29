@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Contact;
 
 class ContactController extends Controller
 {
@@ -52,6 +53,12 @@ class ContactController extends Controller
 
         return view('pages.services.banneradvertising');
     }
+
+    public function affiliateMarketing(){
+
+        return view('pages.services.affiliatemarketing');
+    }
+
 
 
     public function guestPosting(){
@@ -107,6 +114,32 @@ class ContactController extends Controller
         return view('pages.services.digitalmarketing');
     }
 
+
+    /**
+     * Store a newly created contact message in the database.
+     */
+    public function store(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string',
+        ]);
+
+        // Store the contact message
+        Contact::create([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'message' => $request->input('message'),
+        ]);
+
+        // Redirect or respond with success
+            return redirect()->route('contactus')->with('success', 'Your message has been sent successfully!');
+
+    }
 
 
 
